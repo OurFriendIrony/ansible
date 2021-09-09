@@ -1,0 +1,26 @@
+---
+
+#######################################################################
+
+primary_user:
+  name        : "Steve Stevens"
+  home        : "/home/steve.stevens"
+  id          : "steve.stevens"
+  email       : "steve.stevens@rs-components.com"
+
+#######################################################################
+
+ssh_keys:
+  - name      : "ourfriendirony"
+    value     : "AAAAB3NzaC1yc2EAAAADAQABAAABAQCVe/JrnVSiRlrzHJHW4N1Knhb37FHNzP/IL/ItoAQ319EvBrJjqYcKLcsvprbrDK5UIFjBnsmFJDTOHDUhKapDDgkx/FovCdbygRmIak8PoaIzvCIdVDmefvdBjn0si6kKj9HasP/xpTsWK1Sobobke0AguJHsI/9eCDictfUF3X+qlO2qbnnMyVn5/tqyAK7VbTEx3uA3mxtH5g9UIL/IoA2s8Am3fW8mmmyT+uOapI5x4ToK2rBG6oPZWuG6I4hK81ObTrIuxkfHGy+COXZfBzHDV2vYix6KSretRhlxWZy9e0NvLq8c3IMwO2RLhY07Lm7ct8+STH1R90ZHZqVZ"
+
+ssh_config_hosts: []
+
+#######################################################################
+
+is_proxy: False
+
+#######################################################################
+
+terraform_version : "1.0.6"
+

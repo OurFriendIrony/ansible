@@ -44,6 +44,7 @@
     - { role: dev/util                                                                                          }
     - { role: dev/framework                                                                                     }
     - { role: dev/ide                                                                                           }
+    - { role: dev/data                                                                                          }
 
     - { role: media                                                                                             }
 

@@ -2,7 +2,6 @@
   * [Tags](#tags)
   * [Playbooks](#playbooks)
     * [Ubuntu](./READMES/ubuntu.md)
-    * [Ubuntu TP](./READMES/ubuntu-tp.md)
     * [Windows](./READMES/windows.md)
     * [Retropie](./READMES/retropie.md)
   * [Help](#help)
@@ -30,9 +29,6 @@ The sections below cover install and build steps to get a full functioning linux
 ## ubuntu
 Installs Ubuntu configurations  
 [README](./READMES/ubuntu.md)
-## ubuntu-tp
-Installs Ubuntu configurations from behind a proxy  
-[README](./READMES/ubuntu-tp.md)
 ## windows
 Installs Windows configurations  
 [README](./READMES/windows.md)
