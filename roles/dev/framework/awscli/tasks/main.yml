@@ -7,12 +7,7 @@
   when:
     - dist_family in [ 'debian' ]
   tags:
-    - dev
-    - dev-framework
-    - dev-framework-awscli
-    - dev-framework-aws
-    - awscli
-    - aws
+    - "{{ awscli.tags }}"
 
 #################################################################
 
