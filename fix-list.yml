@@ -2,5 +2,4 @@ fix:
   - ansible
   - mysqlworkbench
   - mysql
-  - robo3t
 

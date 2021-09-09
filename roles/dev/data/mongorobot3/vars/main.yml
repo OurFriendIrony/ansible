@@ -2,10 +2,13 @@
 
 desktop : "robo3t"
 
+#robo3t_lib        : "robo3t-{{ robo3t_version }}-linux-x86_64-{{ robo3t_subversion }}"
 robo3t_lib        : "robo3t-{{ robo3t_version }}-linux-x86_64-{{ robo3t_subversion }}"
+                    
 
 robo3t:
-  url         : "https://download.robomongo.org/{{ robo3t_version }}/linux/"
+#               "https://download.studio3t.com/robomongo/linux/robo3t-1.4.4-linux-x86_64-e6ac9ec.tar.gz"
+  url         : "https://download.studio3t.com/robomongo/linux/"
   zip         : "{{ robo3t_lib }}.tar.gz"
   home        : "/usr/lib/robo3t"
 
