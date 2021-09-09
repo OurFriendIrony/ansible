@@ -1,0 +1,7 @@
+fix:
+  - ansible
+  - dbeaver
+  - mysqlworkbench
+  - mysql
+  - robo3t
+

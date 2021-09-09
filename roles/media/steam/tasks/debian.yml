@@ -2,25 +2,6 @@
 
 #################################################################
 
-- name: "apt > repo | prereq"
-  with_items:
-    - "{{ repositories_apt }}"
-  apt_repository:
-    repo          : "{{ item }}"
-    state         : "present"
-    update_cache  : "yes"
-  tags:
-    - "media"
-    - "steam"
-
-- name: "apt > upgrade"
-  apt:
-    update_cache  : "yes"
-    upgrade       : "dist"
-  tags:
-    - "media"
-    - "steam"
-
 - name: "apt > install > prereq"
   apt:
     name          : "{{ libraries_apt }}"
@@ -33,7 +14,8 @@
 
 - name: "apt > install"
   apt:
-    deb           : "{{ steam.deb }}"
+    name    : "{{ steam.libraries.apt }}"
+    state   : "present"
   tags:
     - "media"
     - "steam"
