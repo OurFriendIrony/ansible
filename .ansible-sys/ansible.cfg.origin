@@ -6,7 +6,8 @@ inventory           =
 roles_path          =
 callback_plugins    =
 host_key_checking   = False
-hash_behaviour      = "merge"
+# DEPRECATED: Instead of "hash_behaviour", the function "combine()" can be used instead https://stackoverflow.com/a/52487356
+#hash_behaviour      = "merge"
 stdout_callback     = "ourlog"
 retry_files_enabled = False
 
