@@ -70,7 +70,7 @@
   lineinfile:
     path    : "/etc/inputrc"
     regexp  : "set bell-style visible"
-    line    : "set bell-style visible"
+    line    : "set bell-style none"
   tags:
     - "{{ shell.tags }}"
 
