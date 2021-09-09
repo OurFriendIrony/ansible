@@ -8,7 +8,12 @@
     state     : "latest"
     executable: "pip3"
   tags:
-    - "{{ aws.tags }}"
+    - dev
+    - dev-framework
+    - dev-framework-awscli
+    - dev-framework-aws
+    - awscli
+    - aws
 
 - name: "copy > config"
   with_items:
@@ -20,7 +25,12 @@
     group : "{{ item.id }}"
     mode  : 0644
   tags:
-    - "{{ aws.tags }}"
+    - dev
+    - dev-framework
+    - dev-framework-awscli
+    - dev-framework-aws
+    - awscli
+    - aws
 
 #################################################################
 
