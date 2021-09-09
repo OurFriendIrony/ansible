@@ -126,7 +126,8 @@ export PATH="${GRADLE_HOME}/bin:${PATH}"
 {% endif %}
 {% if terraform is defined %}
 export TERRAFORM_HOME="{{ terraform.home }}"
-export PATH="${TERRAFORM_HOME}:${PATH}"
+export TERRAGRUNT_HOME="{{ terragrunt.home }}"
+export PATH="${TERRAFORM_HOME}:${TERRAGRUNT_HOME}:${PATH}"
 {% endif %}
 {% if is_proxy %}
 #####################################################################
