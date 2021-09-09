@@ -4,16 +4,11 @@
 
 - name: "pip > install"
   pip :
-    name      : "{{ libraries_pip }}"
+    name      : "{{ awscli.libraries.pip }}"
     state     : "latest"
     executable: "pip3"
   tags:
-    - dev
-    - dev-framework
-    - dev-framework-awscli
-    - dev-framework-aws
-    - awscli
-    - aws
+    - "{{ awscli.tags }}"
 
 - name: "copy > config"
   with_items:
@@ -25,12 +20,7 @@
     group : "{{ item.id }}"
     mode  : 0644
   tags:
-    - dev
-    - dev-framework
-    - dev-framework-awscli
-    - dev-framework-aws
-    - awscli
-    - aws
+    - "{{ awscli.tags }}"
 
 #################################################################
 
