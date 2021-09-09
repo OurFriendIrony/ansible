@@ -5,7 +5,7 @@
 - name: "pip > install"
   pip:
     name      : "{{ ansible.libraries.pip }}"
-    state     : "latest"
+    version   : u "{{ ansible_version }}"
     executable: "pip3"
   tags:
     - "{{ ansible.tags }}"

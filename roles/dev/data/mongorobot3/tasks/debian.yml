@@ -75,7 +75,7 @@
     dest    : "{{ item.home }}/.3T/robo-3t/{{ robo3t_version }}/robo3t.json"
     owner   : "{{ item.id }}"
     group   : "{{ item.id }}"
-    mode    : "0644"
+    mode    : "0664"
   tags:
     - "{{ robo3t.tags }}"
 

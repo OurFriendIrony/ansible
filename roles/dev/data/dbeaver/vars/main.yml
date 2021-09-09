@@ -3,7 +3,7 @@
 desktop   : "dbeaver"
 
 dbeaver:
-  url     : "https://dbeaver.jkiss.org/files/{{ dbeaver_version }}/dbeaver-ce_{{ dbeaver_version }}_amd64.deb"
+  url     : "https://dbeaver.io/files/{{ dbeaver_version }}/dbeaver-ce_{{ dbeaver_version }}_amd64.deb"
 
   libraries:
     apt:
