@@ -12,7 +12,7 @@
 - name: "apt > uninstall"
   apt:
     name    : "{{ python.libraries_remove.apt }}"
-    state   : "latest"
+    state   : "absent"
   tags:
     - "{{ python.tags }}"
 
