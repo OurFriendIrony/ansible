@@ -11,6 +11,14 @@
 
 #################################################################
 
+- name: "apt > download and install deb"
+  apt:
+    deb     : "{{ mysqlworkbench.url }}"
+  tags:
+    - "{{ mysqlworkbench.tags }}"
+
+#################################################################
+
 - name: "launcher > desktop icon"
   template:
     src   : "{{ desktop }}.desktop.j2"

@@ -3,9 +3,11 @@
 desktop : "mysql-workbench"
 
 mysqlworkbench:
+  url     : "https://repo.mysql.com//mysql-apt-config_0.8.19-1_all.deb"
+
   libraries:
     apt:
-      - "mysqlworkbench"
+      - unzip
 
   tags:
     - dev
