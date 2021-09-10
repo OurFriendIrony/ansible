@@ -12,8 +12,11 @@
     - "{{ ruby.tags }}"
 
 - name: "mkdirs"
+  with_items:
+    - "{{ primary_user.home }}/{{ ruby.rbenv.home }}/versions"
+    - "{{ primary_user.home }}/{{ ruby.rbbuild.home }}"
   file:
-    name    : "{{ ruby.rbbuild.home }}"
+    name    : "{{ item }}"
     owner   : "{{ primary_user.id }}"
     group   : "{{ primary_user.id }}"
     mode    : "0755"
@@ -30,41 +33,37 @@
   tags:
     - "{{ ruby.tags }}"
 
-#- name: "rbenv > install"
-#  apt:
-#    name    : "{{ ruby.libraries.apt }}"
-#    state   : "latest"
-#  tags:
-#    - "{{ ruby.tags }}"
+- name: "ruby > install"
+  with_items: "{{ ruby_versions }}"
+  become: yes
+  become_user: "{{ primary_user.id }}"
+  shell:
+    chdir: "{{ primary_user.home }}/{{ ruby.rbenv.home }}/versions"
+    cmd: "PATH=\"{{ primary_user.home }}/{{ ruby.rbbuild.home }}:${PATH}\" {{ primary_user.home }}/{{ ruby.rbenv.home }}/bin/rbenv install {{ item }}"
+    creates: "{{ item }}"
+  tags:
+    - "{{ ruby.tags }}"
 
-#- name: "rbenv > init"
-#  become: yes
-#  become_user: "{{ primary_user.id }}"
-#  shell: "rbenv init"
-#  tags:
-#    - "{{ ruby.tags }}"
-
-#################################################################
-
-#- name: "ruby > install"
-#  become: yes
-#  become_user: "{{ primary_user.id }}"
-#  shell: "rbenv install {{ ruby_version }}"
-#  tags:
-#    - "{{ ruby.tags }}"
+- name: "ruby > set version"
+  become: yes
+  become_user: "{{ primary_user.id }}"
+  shell:
+    cmd: "{{ primary_user.home }}/{{ ruby.rbenv.home }}/bin/rbenv global {{ ruby_version }}"
+  tags:
+    - "{{ ruby.tags }}"
 
 #################################################################
 
-#- name: "gem > install"
-#  with_items:
-#    - "{{ ruby.gems }}"
-#  become: yes
-#  become_user: "{{ primary_user.id }}"
-#  gem:
-#    name      : "{{ item }}"
-#    state     : "latest"
-#  tags:
-#    - "{{ ruby.tags }}"
+- name: "gem > install"
+  with_items:
+    - "{{ ruby.gems }}"
+  become: yes
+  become_user: "{{ primary_user.id }}"
+  gem:
+    name      : "{{ item }}"
+    state     : "latest"
+  tags:
+    - "{{ ruby.tags }}"
 
 #################################################################
 
