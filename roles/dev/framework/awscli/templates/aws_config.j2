@@ -1,0 +1,8 @@
+{{ note.cfg }}
+
+[default]
+{% if aws.region is defined %}
+region={{ aws.region }}
+{% endif %}
+output=json
+
