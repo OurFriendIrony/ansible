@@ -1,0 +1,38 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+IMAGE   = "ubuntu/focal64"
+NAME    = IMAGE.gsub('/','_')
+MEMORY  = 8192
+CPU     = 8
+USER    = "steve"
+
+Vagrant.configure("2") do |config|
+  config.vm.box = IMAGE
+
+  config.vm "disk" do |d|
+    size = '50GB'
+  end
+
+  config.vm.provider "virtualbox" do |v|
+    v.gui     = true
+    v.name    = NAME
+    v.memory  = MEMORY
+    v.cpus    = CPU
+    v.check_guest_additions = true
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get update
+    sudo apt install -y python3 python3-pip python3-setuptools git \
+      && sudo pip3 install ansible \
+      && git clone https://github.com/OurFriendIrony/ansible.git /tmp/ansible \
+      && cd /tmp/ansible
+    ./go.sh -s -p ubuntu -u #{USER}
+  SHELL
+
+  config.vm.provision "shell", inline: "sudo apt-get install -y xfce4 virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11"
+  config.vm.provision "shell", inline: "sudo sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config"
+
+end
+
