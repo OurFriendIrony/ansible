@@ -2,37 +2,43 @@
 # vi: set ft=ruby :
 
 IMAGE   = "ubuntu/focal64"
-NAME    = IMAGE.gsub('/','_')
+NAME    = "ubuntu-20.04-desktop"
 MEMORY  = 8192
-CPU     = 8
+CPUS    = 8
 USER    = "steve"
 
 Vagrant.configure("2") do |config|
   config.vm.box = IMAGE
 
+  config.vm.provider "virtualbox" do |v|
+    v.gui     = true
+    v.check_guest_additions = true
+    v.name    = NAME
+    v.memory  = MEMORY
+    v.cpus    = CPUS
+    v.customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']
+    v.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
+    v.customize ['modifyvm', :id, '--vram', '128']
+  end
+
   config.vm "disk" do |d|
     size = '50GB'
   end
 
-  config.vm.provider "virtualbox" do |v|
-    v.gui     = true
-    v.name    = NAME
-    v.memory  = MEMORY
-    v.cpus    = CPU
-    v.check_guest_additions = true
-  end
-
   config.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get update
-    sudo apt install -y python3 python3-pip python3-setuptools git \
-      && sudo pip3 install ansible \
-      && git clone https://github.com/OurFriendIrony/ansible.git /tmp/ansible \
-      && cd /tmp/ansible
-    ./go.sh -s -p ubuntu -u #{USER}
+    sudo apt update
+    sudo DEBIAN_FRONTEND=noninteractive apt install -y xfce4 virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
+    sudo sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config
   SHELL
 
-  config.vm.provision "shell", inline: "sudo apt-get install -y xfce4 virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11"
-  config.vm.provision "shell", inline: "sudo sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config"
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt install -y python3 python3-pip python3-setuptools git \
+      && sudo pip3 install ansible \
+      && rm -rf /tmp/ansible \
+      && git clone https://github.com/OurFriendIrony/ansible.git /tmp/ansible \
+      && cd /tmp/ansible
+    ./go.sh -s -p ubuntu -u #{USER} || true
+  SHELL
 
 end
 
