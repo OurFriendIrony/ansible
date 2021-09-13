@@ -12,8 +12,6 @@
 
 - name: "terragrunt > install"
   with_items: "{{ terragrunt.versions }}"
-  become: yes
-  become_user: "{{ primary_user.id }}"
   shell:
 #    chdir: "{{ primary_user.home }}/{{ terraform.home }}/versions"
     cmd: "tgswitch {{ item }}"

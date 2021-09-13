@@ -13,6 +13,16 @@
 
 #################################################################
 
+- name: "mkdirs"
+  file:
+    name    : "{{ primary_user.home }}/{{ terraform.home }}/versions"
+    state   : "directory"
+    owner   : "{{ primary_user.id }}"
+    group   : "{{ primary_user.id }}"
+    mode    : "0755"
+  tags:
+    - "{{ terraform.tags }}"
+
 - name: "terraform > install"
   with_items: "{{ terraform.versions }}"
   become: yes
