@@ -24,7 +24,7 @@
   tags:
     - "{{ ruby.tags }}"
 
-- name: "rbenv > install"
+- name: "rb-build > install"
   become: yes
   become_user: "{{ primary_user.id }}"
   git:
@@ -39,7 +39,7 @@
   become_user: "{{ primary_user.id }}"
   shell:
     chdir: "{{ primary_user.home }}/{{ ruby.rbenv.home }}/versions"
-    cmd: "PATH=\"{{ primary_user.home }}/{{ ruby.rbbuild.home }}:${PATH}\" {{ primary_user.home }}/{{ ruby.rbenv.home }}/bin/rbenv install {{ item }}"
+    cmd: "PATH=\"{{ primary_user.home }}/{{ ruby.rbbuild.home }}/bin:${PATH}\" {{ primary_user.home }}/{{ ruby.rbenv.home }}/bin/rbenv install {{ item }}"
     creates: "{{ item }}"
   tags:
     - "{{ ruby.tags }}"

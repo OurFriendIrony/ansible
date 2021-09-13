@@ -2,52 +2,43 @@
 
 #################################################################
 
+- name: "tfenv > install"
+  become: yes
+  become_user: "{{ primary_user.id }}"
+  git:
+    repo: "{{ terraform.url }}"
+    dest: "{{ primary_user.home }}/{{ terraform.home }}"
+  tags:
+    - "{{ terraform.tags }}"
+
+#################################################################
+
 - name: "mkdirs"
-  with_items:
-    - "{{ terraform.versions }}"
   file:
-    name    : "{{ terraform.home  }}/{{ item }}"
+    name    : "{{ primary_user.home }}/{{ terraform.home }}/versions"
     state   : "directory"
-    recurse : "yes"
     owner   : "{{ primary_user.id }}"
     group   : "{{ primary_user.id }}"
     mode    : "0755"
   tags:
     - "{{ terraform.tags }}"
 
-#################################################################
-
-- name: "apt > install"
-  apt:
-    name    : "{{ terraform.libraries.apt }}"
-    state   : "latest"
+- name: "terraform > install"
+  with_items: "{{ terraform.versions }}"
+  become: yes
+  become_user: "{{ primary_user.id }}"
+  shell:
+    chdir: "{{ primary_user.home }}/{{ terraform.home }}/versions"
+    cmd: "PATH=\"{{ primary_user.home }}/{{ terraform.home }}:${PATH}\" {{ primary_user.home }}/{{ terraform.home }}/bin/tfenv install {{ item }}"
+    creates: "{{ item }}"
   tags:
     - "{{ terraform.tags }}"
 
-#################################################################
-
-- name: "unpack > application"
-  with_items:
-    - "{{ terraform.versions }}"
-  unarchive:
-    src         : "{{ terraform.url  }}/{{ item }}/terraform_{{ item }}_linux_amd64.zip"
-    dest        : "{{ terraform.home }}/{{ item }}"
-    remote_src  : "yes"
-    creates     : "{{ terraform.home }}/{{ item }}/terraform"
-  tags:
-    - "{{ terraform.tags }}"
-
-#################################################################
-
-- name: "symlink"
-  file:
-    src     : "{{ terraform.home  }}/{{ terraform_version }}/terraform"
-    dest    : "{{ terraform.home  }}/terraform"
-    owner   : "{{ primary_user.id }}"
-    group   : "{{ primary_user.id }}"
-    mode    : "0755"
-    state   : "link"
-    force   : "yes"
+- name: "terraform > set version"
+  become: yes
+  become_user: "{{ primary_user.id }}"
+  shell:
+    cmd: "{{ primary_user.home }}/{{ terraform.home }}/bin/tfenv use {{ terraform_version }}"
   tags:
     - "{{ terraform.tags }}"
 

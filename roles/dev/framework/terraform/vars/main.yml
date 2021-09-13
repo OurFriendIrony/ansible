@@ -1,8 +1,8 @@
 ---
 
 terraform:
-  url             : "https://releases.hashicorp.com/terraform"
-  home            : "/usr/lib/terraform"
+  url             : "https://github.com/tfutils/tfenv.git"
+  home            : ".tfenv"
   versions        :
     - "{{ terraform_version }}"
     - "1.0.6"
