@@ -34,7 +34,7 @@
     - "{{ ruby.tags }}"
 
 - name: "ruby > install"
-  with_items: "{{ ruby_versions }}"
+  with_items: "{{ ruby.versions }}"
   become: yes
   become_user: "{{ primary_user.id }}"
   shell:

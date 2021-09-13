@@ -5,6 +5,11 @@ ruby:
     choco:
       - "ruby"
 
+  versions:
+  - "{{ ruby_version }}"
+  - "3.0.1"
+  - "2.7.0"
+
   rbenv:
     url   : "https://github.com/rbenv/rbenv.git"
     home  : ".rbenv"
