@@ -2,12 +2,57 @@
 
 #################################################################
 
-- name: "apt > install"
-  apt:
-    name    : "{{ ruby.libraries.apt }}"
-    state   : "latest"
+- name: "rbenv > install"
+  become: yes
+  become_user: "{{ primary_user.id }}"
+  git:
+    repo: "{{ ruby.rbenv.url }}"
+    dest: "{{ primary_user.home }}/{{ ruby.rbenv.home }}"
   tags:
     - "{{ ruby.tags }}"
+
+- name: "mkdirs"
+  with_items:
+    - "{{ primary_user.home }}/{{ ruby.rbenv.home }}/versions"
+    - "{{ primary_user.home }}/{{ ruby.rbbuild.home }}"
+  file:
+    name    : "{{ item }}"
+    owner   : "{{ primary_user.id }}"
+    group   : "{{ primary_user.id }}"
+    mode    : "0755"
+    state   : "directory"
+  tags:
+    - "{{ ruby.tags }}"
+
+- name: "rbenv > install"
+  become: yes
+  become_user: "{{ primary_user.id }}"
+  git:
+    repo: "{{ ruby.rbbuild.url }}"
+    dest: "{{ primary_user.home }}/{{ ruby.rbbuild.home }}"
+  tags:
+    - "{{ ruby.tags }}"
+
+- name: "ruby > install"
+  with_items: "{{ ruby.versions }}"
+  become: yes
+  become_user: "{{ primary_user.id }}"
+  shell:
+    chdir: "{{ primary_user.home }}/{{ ruby.rbenv.home }}/versions"
+    cmd: "PATH=\"{{ primary_user.home }}/{{ ruby.rbbuild.home }}:${PATH}\" {{ primary_user.home }}/{{ ruby.rbenv.home }}/bin/rbenv install {{ item }}"
+    creates: "{{ item }}"
+  tags:
+    - "{{ ruby.tags }}"
+
+- name: "ruby > set version"
+  become: yes
+  become_user: "{{ primary_user.id }}"
+  shell:
+    cmd: "{{ primary_user.home }}/{{ ruby.rbenv.home }}/bin/rbenv global {{ ruby_version }}"
+  tags:
+    - "{{ ruby.tags }}"
+
+#################################################################
 
 - name: "gem > install"
   with_items:
