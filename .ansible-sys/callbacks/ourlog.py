@@ -193,8 +193,8 @@ class CallbackModule(CallbackBase):
         if 'results' in result._result:
             for item in result._result.get('results', None):
                 if item.get('failed', False):
-                    return item.get('msg').split('\n')[0]
-        return result._result.get('msg', None)
+                    return item.get('stderr', None)
+        return result._result.get('stderr', None)
 
 
     #
