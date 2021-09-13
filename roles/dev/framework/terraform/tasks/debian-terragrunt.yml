@@ -1,54 +1,54 @@
 ---
 
 #################################################################
-
-- name: "mkdirs"
-  with_items:
-    - "{{ terragrunt.versions }}"
-  file:
-    name    : "{{ terragrunt.home  }}/{{ item }}"
-    state   : "directory"
-    recurse : "yes"
-    owner   : "{{ primary_user.id }}"
-    group   : "{{ primary_user.id }}"
-    mode    : "0755"
-  tags:
-    - "{{ terraform.tags }}"
-
-#################################################################
-
-- name: "apt > install"
-  apt:
-    name    : "{{ terraform.libraries.apt }}"
-    state   : "latest"
-  tags:
-    - "{{ terraform.tags }}"
-
-#################################################################
-
-- name: "unpack > application"
-  with_items:
-    - "{{ terragrunt.versions }}"
-  get_url:
-    url         : "{{ terragrunt.url  }}/v{{ item }}/terragrunt_linux_amd64"
-    dest        : "{{ terragrunt.home }}/{{ item }}/terragrunt"
-    mode        : "0755"
-  tags:
-    - "{{ terraform.tags }}"
-
-#################################################################
-
-- name: "symlink"
-  file:
-    src     : "{{ terragrunt.home  }}/{{ terragrunt_version }}/terragrunt"
-    dest    : "{{ terragrunt.home  }}/terragrunt"
-    owner   : "{{ primary_user.id }}"
-    group   : "{{ primary_user.id }}"
-    mode    : "0755"
-    state   : "link"
-    force   : "yes"
-  tags:
-    - "{{ terraform.tags }}"
-
+#
+#- name: "mkdirs"
+#  with_items:
+#    - "{{ terragrunt.versions }}"
+#  file:
+#    name    : "{{ terragrunt.home  }}/{{ item }}"
+#    state   : "directory"
+#    recurse : "yes"
+#    owner   : "{{ primary_user.id }}"
+#    group   : "{{ primary_user.id }}"
+#    mode    : "0755"
+#  tags:
+#    - "{{ terraform.tags }}"
+#
+##################################################################
+#
+#- name: "apt > install"
+#  apt:
+#    name    : "{{ terraform.libraries.apt }}"
+#    state   : "latest"
+#  tags:
+#    - "{{ terraform.tags }}"
+#
+##################################################################
+#
+#- name: "unpack > application"
+#  with_items:
+#    - "{{ terragrunt.versions }}"
+#  get_url:
+#    url         : "{{ terragrunt.url  }}/v{{ item }}/terragrunt_linux_amd64"
+#    dest        : "{{ terragrunt.home }}/{{ item }}/terragrunt"
+#    mode        : "0755"
+#  tags:
+#    - "{{ terraform.tags }}"
+#
+##################################################################
+#
+#- name: "symlink"
+#  file:
+#    src     : "{{ terragrunt.home  }}/{{ terragrunt_version }}/terragrunt"
+#    dest    : "{{ terragrunt.home  }}/terragrunt"
+#    owner   : "{{ primary_user.id }}"
+#    group   : "{{ primary_user.id }}"
+#    mode    : "0755"
+#    state   : "link"
+#    force   : "yes"
+#  tags:
+#    - "{{ terraform.tags }}"
+#
 #################################################################
 

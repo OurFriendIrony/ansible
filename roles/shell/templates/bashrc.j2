@@ -124,16 +124,18 @@ export PATH="${JAVA_HOME}/bin:${PATH}"
 export GRADLE_HOME="{{ gradle.home }}/gradle-{{ gradle_version }}"
 export PATH="${GRADLE_HOME}/bin:${PATH}"
 {% endif %}
-{% if terraform is defined %}
-export TERRAFORM_HOME="{{ terraform.home }}"
-export TERRAGRUNT_HOME="{{ terragrunt.home }}"
-export PATH="${TERRAFORM_HOME}:${TERRAGRUNT_HOME}:${PATH}"
-{% endif %}
+
+if [[ -f ~/.tfenv/bin/terraform ]]; then
+  export TERRAFORM_HOME="${HOME}/{{ terraform.home }}/bin"
+  export PATH="${TERRAFORM_HOME}:${PATH}"
+fi
+
 if [[ -f ~/.rbenv/bin/rbenv ]]; then
   export PATH="${HOME}/.rbenv/bin:${PATH}"
   export PATH="${HOME}/.rbenv/plugins/bin:${PATH}"
   eval "$(rbenv init - bash)"
 fi
+
 {% if is_proxy %}
 #####################################################################
 # Proxy
