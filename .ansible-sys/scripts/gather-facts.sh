@@ -17,7 +17,7 @@ for host in ${hosts}; do
     continue
   fi
   echo "${host} - Recording Facts: All"
-  json="$( cut -d ' ' -f5- <<< $resp )"
+  json="$( cut -d ' ' -f5- <<< $resp | sed 's/.*=>//g' )"
   mkdir -p "${fact_dir}/all/"
   echo "$json" | jq -r '.' > "${fact_dir}/all/${host}"
 
@@ -29,7 +29,7 @@ for host in ${hosts}; do
     continue
   fi
   echo "${host} - Recording Facts: Distribution"
-  json="$( cut -d ' ' -f5- <<< $resp )"
+  json="$( cut -d ' ' -f5- <<< $resp | sed 's/.*=>//g' )"
   mkdir -p "${fact_dir}/dist/"
   echo "$json" | jq -r '.' > "${fact_dir}/dist/${host}"
 done
