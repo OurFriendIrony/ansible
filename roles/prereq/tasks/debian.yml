@@ -59,5 +59,23 @@
   tags:
     - "prereq"
 
+- name: Generate locales
+  debconf:
+    name     : locales
+    question : locales/locales_to_be_generated
+    value    : en_GB.UTF-8 UTF-8
+    vtype    : multiselect
+  tags:
+    - "prereq"
+
+- name: Set locale
+  debconf:
+    name     : locales
+    question : locales/default_environment_locale
+    value    : en_GB.UTF-8
+    vtype    : select
+  tags:
+    - "prereq"
+
 #################################################################
 
