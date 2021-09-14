@@ -21,6 +21,7 @@
   Plugin 'pearofducks/ansible-vim'
   Plugin 'ekalinin/dockerfile.vim'
   Plugin 'pprovost/vim-ps1'
+  Plugin 'godlygeek/tabular'
 
 " Plugin config
   " Airline
@@ -33,11 +34,6 @@
     let g:airline_theme = 'term'
     let g:airline_section_y = []
 
-  " Nerdtree git
-    let g:NERDTreeIndicatorMapCustom = {
-        \ "Untracked" : "?"
-        \ }
-
 "-----------------------------------------------------
 " MAPPINGS
 "-----------------------------------------------------
@@ -47,10 +43,10 @@
   map <S-Right>   :wnext<CR>|           " Save - Move to prev file
   map <S-Left>    :wprev<CR>|           " Save - Move to next file
 
-  map <F2>        :NERDTreeToggle<CR>|  " Show nerdtree
-  map <F3>        <C-W><C-W>|           " Change window
+  map <F2>        :Tab /=<CR>|          " Tabulate =
+  map <F3>        :Tab /:<CR>|          " Tabulate :
+  map <F4>        :Tab /,<CR>|          " Tabulate ,
 
-  map <F4>        :%s/\t/  /g<CR>|      " Convert tabs to spaces
   map <F5>        :w<CR>|               " Save file
   map <F6>        <S-I>//<ESC>|         " Block comment with '//'
   map <F7>        <S-I>#<ESC>|          " Block comment with '#'
