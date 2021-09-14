@@ -19,7 +19,7 @@
     - { k: "dist_os_version_m",   v: "{{ ansible_distribution_major_version                   | default() | lower }}" }
     - { k: "dist_os_version",     v: "{{ ansible_distribution_version                         | default() | lower }}" }
     - { k: "machine_arch",        v: "{{ ansible_architecture                                 | default() | lower }}" }
-    - { k: "desktop_environment", v: "{{ lookup('env', 'XDG_CURRENT_DESKTOP').split(':')[-1]  | default() | lower }}" }
+    - { k: "desktop_environment", v: "{{ ansible_env.DISPLAY                                  | default() | lower }}" }
     - { k: "vm_type",             v: "{{ ansible_virtualization_role       | replace('NA','') | default() | lower }}" }
   set_fact:
     "{{ item.k }}": "{{ item.v }}"
@@ -46,7 +46,6 @@
     - { k: "OS Full Version     ", v: "{{ dist_os_version     }}" }
     - { k: "Machine Architecture", v: "{{ machine_arch        }}" }
     - { k: "GUI?                ", v: "{{ is_gui              }}" }
-    - { k: "GUI Env             ", v: "{{ desktop_environment }}" }
     - { k: "VM?                 ", v: "{{ is_vm               }}" }
     - { k: "VM Env              ", v: "{{ vm_type             }}" }
     - { k: "Proxy?              ", v: "{{ is_proxy            }}" }

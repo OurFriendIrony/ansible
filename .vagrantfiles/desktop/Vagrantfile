@@ -1,15 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-IMAGE   = "ubuntu/focal64"
+IMAGE   = "chenhan/ubuntu-desktop-20.04"
+
 NAME    = "ubuntu-20.04-desktop"
 MEMORY  = 8192
 CPUS    = 8
 
 USER      = "steve"
 PLAYBOOK  = "ubuntu"
-
-VIRTUALBOX_VERSION = "6.1.26"
 
 Vagrant.configure("2") do |config|
   config.vm.box = IMAGE
@@ -20,7 +19,7 @@ Vagrant.configure("2") do |config|
     v.name    = NAME
     v.memory  = MEMORY
     v.cpus    = CPUS
-    v.customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']
+#    v.customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']
     v.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
     v.customize ['modifyvm', :id, '--vram', '128']
   end
@@ -35,23 +34,23 @@ Vagrant.configure("2") do |config|
   SHELL
 
   # Guest Additions
-  config.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get install linux-headers-$(uname -r) build-essential dkms
-
-    wget --quiet http://download.virtualbox.org/virtualbox/#{VIRTUALBOX_VERSION}/VBoxGuestAdditions_#{VIRTUALBOX_VERSION}.iso
-    sudo mkdir -p /media/VBoxGuestAdditions
-    sudo mount -o loop,ro VBoxGuestAdditions_#{VIRTUALBOX_VERSION}.iso /media/VBoxGuestAdditions
-    sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
-    rm VBoxGuestAdditions_#{VIRTUALBOX_VERSION}.iso
-    sudo umount /media/VBoxGuestAdditions
-    sudo rmdir /media/VBoxGuestAdditions
-  SHELL
-
-  # GUI
-  config.vm.provision "shell", inline: <<-SHELL
-    sudo DEBIAN_FRONTEND=noninteractive apt install -y xfce4 virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
-    sudo sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config
-  SHELL
+#  config.vm.provision "shell", inline: <<-SHELL
+#    sudo apt-get install linux-headers-$(uname -r) build-essential dkms
+#
+#    wget --quiet http://download.virtualbox.org/virtualbox/#{VIRTUALBOX_VERSION}/VBoxGuestAdditions_#{VIRTUALBOX_VERSION}.iso
+#    sudo mkdir -p /media/VBoxGuestAdditions
+#    sudo mount -o loop,ro VBoxGuestAdditions_#{VIRTUALBOX_VERSION}.iso /media/VBoxGuestAdditions
+#    sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
+#    rm VBoxGuestAdditions_#{VIRTUALBOX_VERSION}.iso
+#    sudo umount /media/VBoxGuestAdditions
+#    sudo rmdir /media/VBoxGuestAdditions
+#  SHELL
+#
+#  # GUI
+#  config.vm.provision "shell", inline: <<-SHELL
+#    sudo DEBIAN_FRONTEND=noninteractive apt install -y xfce4 virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
+#    sudo sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config
+#  SHELL
 
   # Ansible
   config.vm.provision "shell", inline: <<-SHELL
