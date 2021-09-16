@@ -6,6 +6,7 @@ dependencies:
   - role: "dev/framework/ansible"
   - role: "dev/framework/awscli"
   - role: "dev/framework/gradle"
+  - role: "dev/framework/hashicorp"
   - role: "dev/framework/maven"
   - role: "dev/framework/terraform"
 

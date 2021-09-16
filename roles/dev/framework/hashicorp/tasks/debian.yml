@@ -1,0 +1,29 @@
+---
+
+#################################################################
+
+- name: "apt > key"
+  apt_key:
+    url           : "{{ hashicorp.key_server }}"
+    state         : "present"
+  tags:
+    - "{{ hashicorp.tags }}"
+
+- name: "apt > repo"
+  apt_repository:
+    repo          : "{{ hashicorp.repo }}"
+    state         : "present"
+  tags:
+    - "{{ hashicorp.tags }}"
+
+- name: "apt > install"
+  with_items: "{{ hashicorp.libraries.apt }}"
+  apt:
+    name          : "{{ item }}"
+    state         : "present"
+    update_cache  : "yes"
+  tags:
+    - "{{ hashicorp.tags }}"
+
+#################################################################
+

@@ -8,6 +8,9 @@
 # python
 *.pyc
 
+# vagrant
+**/.vagrant
+
 # build
 .ansible-sys/facts/**/*
 .ansible-sys/ansible.cfg

@@ -1,0 +1,66 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+IMAGE   = "chenhan/ubuntu-desktop-20.04"
+NAME    = "ubuntu-20.04-desktop"
+MEMORY  = 8192
+CPUS    = 8
+
+USER      = "steve"
+PLAYBOOK  = "ubuntu"
+
+Vagrant.configure("2") do |config|
+  config.vm.box = IMAGE
+
+  config.vm.provider "virtualbox" do |v|
+    v.gui     = true
+    v.check_guest_additions = true
+    v.name    = NAME
+    v.memory  = MEMORY
+    v.cpus    = CPUS
+#    v.customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']
+    v.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
+    v.customize ['modifyvm', :id, '--vram', '128']
+  end
+
+  config.vm "disk" do |d|
+    size = '50GB'
+  end
+
+  # APT Update
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt update
+  SHELL
+
+  # Guest Additions
+#  config.vm.provision "shell", inline: <<-SHELL
+#    sudo apt-get install linux-headers-$(uname -r) build-essential dkms
+#
+#    wget --quiet http://download.virtualbox.org/virtualbox/#{VIRTUALBOX_VERSION}/VBoxGuestAdditions_#{VIRTUALBOX_VERSION}.iso
+#    sudo mkdir -p /media/VBoxGuestAdditions
+#    sudo mount -o loop,ro VBoxGuestAdditions_#{VIRTUALBOX_VERSION}.iso /media/VBoxGuestAdditions
+#    sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
+#    rm VBoxGuestAdditions_#{VIRTUALBOX_VERSION}.iso
+#    sudo umount /media/VBoxGuestAdditions
+#    sudo rmdir /media/VBoxGuestAdditions
+#  SHELL
+#
+#  # GUI
+#  config.vm.provision "shell", inline: <<-SHELL
+#    sudo DEBIAN_FRONTEND=noninteractive apt install -y xfce4 virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
+#    sudo sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config
+#  SHELL
+
+  # Ansible
+  config.vm.provision "shell", env: { "IS_GUI" => True }, inline: <<-SHELL
+    sudo apt install -y python3 python3-pip python3-setuptools git \
+      && sudo pip3 install ansible \
+      && rm -rf /tmp/ansible \
+      && git clone https://github.com/OurFriendIrony/ansible.git /tmp/ansible \
+      && cd /tmp/ansible
+    git checkout feature/vagrant_vm_creation
+    ./go.sh -p #{PLAYBOOK} -u #{USER}
+  SHELL
+
+end
+

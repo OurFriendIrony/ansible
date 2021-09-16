@@ -1,0 +1,46 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+IMAGE   = "ubuntu/focal64"
+NAME    = "ubuntu-20.04-cli"
+MEMORY  = 8192
+CPUS    = 8
+
+USER      = "steve"
+PLAYBOOK  = "ubuntu"
+
+Vagrant.configure("2") do |config|
+  config.vm.box = IMAGE
+
+  config.vm.provider "virtualbox" do |v|
+    v.gui     = false
+    v.check_guest_additions = false
+    v.name    = NAME
+    v.memory  = MEMORY
+    v.cpus    = CPUS
+    v.customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']
+    v.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
+    v.customize ['modifyvm', :id, '--vram', '128']
+  end
+
+  config.vm "disk" do |d|
+    size = '50GB'
+  end
+
+  # APT Update
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt update
+  SHELL
+
+  # Ansible
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt install -y python3 python3-pip python3-setuptools git \
+      && sudo pip3 install ansible \
+      && rm -rf /tmp/ansible \
+      && git clone https://github.com/OurFriendIrony/ansible.git /tmp/ansible \
+      && cd /tmp/ansible
+    ./go.sh -p #{PLAYBOOK} -u #{USER}
+  SHELL
+
+end
+

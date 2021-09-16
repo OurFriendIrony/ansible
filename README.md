@@ -4,6 +4,7 @@
     * [Ubuntu](./READMES/ubuntu.md)
     * [Windows](./READMES/windows.md)
     * [Retropie](./READMES/retropie.md)
+  * [Vagrant](#vagrant)
   * [Help](#help)
   * [Ansible Module Index](#ansible-module-index)
 ___
@@ -35,6 +36,13 @@ Installs Windows configurations
 ## retropie
 Installs all configurations for a [**Retropie 4.4**](https://retropie.org.uk/2018/04/retropie-4-4-is-released/) install  
 [README](./READMES/retropie.md)
+___
+# Vagrant
+If you want to get up and running quickly, try using the Vagrantfile in `.vagrantfiles/cli`.
+```
+cd .vagrantfiles/cli
+vagrant up
+```
 ___
 # Help
 `./go.sh -h`

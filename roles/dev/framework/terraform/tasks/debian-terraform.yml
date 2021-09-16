@@ -2,6 +2,15 @@
 
 #################################################################
 
+- name: "apt > install"
+  apt:
+    name    : "{{ terraform.libraries.apt }}"
+    state   : "latest"
+  tags:
+    - "{{ terraform.tags }}"
+
+#################################################################
+
 - name: "tfenv > install"
   become: yes
   become_user: "{{ primary_user.id }}"

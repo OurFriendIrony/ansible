@@ -28,6 +28,7 @@
 - name: "apt > install > ubuntu > gnome"
   when:
     - desktop_environment == "gnome"
+    - is_gui
   apt:
     name  : "{{ libraries_apt.ubuntu_gnome }}"
     state : "latest"
@@ -39,6 +40,40 @@
     autoclean : yes
     autoremove: yes
   changed_when: False
+  tags:
+    - "prereq"
+
+- name: Set keyboard layout
+  with_items:
+  - { key: "altgr",         value : "The default for the keyboard layout", vtype : "select" }
+  - { key: "compose",       value : "No compose key",                      vtype : "select" }
+  - { key: "ctrl_alt_bksp", value : "false",                               type: "boolean" }
+  - { key: "variant",       value : "English (UK)",                        vtype : "select" }
+  - { key: "layout",        value : "English (UK)",                        vtype : "select" }
+  - { key: "model",         value : "Generic 105-key PC (intl.)",          vtype : "select" }
+  debconf:
+    name: "keyboard-configuration"
+    question: "keyboard-configuration/{{ item.key }}"
+    value: "{{ item.value }}"
+    vtype: "{{ item.type | default('string') }}"
+  tags:
+    - "prereq"
+
+- name: Generate locales
+  debconf:
+    name     : locales
+    question : locales/locales_to_be_generated
+    value    : en_GB.UTF-8 UTF-8
+    vtype    : multiselect
+  tags:
+    - "prereq"
+
+- name: Set locale
+  debconf:
+    name     : locales
+    question : locales/default_environment_locale
+    value    : en_GB.UTF-8
+    vtype    : select
   tags:
     - "prereq"
 

@@ -17,15 +17,6 @@
 
 #################################################################
 
-- name: "apt > install"
-  apt:
-    name    : "{{ terraform.libraries.apt }}"
-    state   : "latest"
-  tags:
-    - "{{ terraform.tags }}"
-
-#################################################################
-
 - name: "unpack > application"
   with_items:
     - "{{ terragrunt.versions }}"

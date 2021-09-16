@@ -7,7 +7,7 @@
   when:
     - dist_family in [ 'debian' ]
   tags:
-    - "prereq"
+    - "{{ hashicorp.tags }}"
 
 #################################################################
 
