@@ -10,3 +10,7 @@ alias docker.clean='docker system prune -f'
 
 alias xclip="xclip -selection clipboard"
 
+if [[ "$(which vault >/dev/null; echo $?)" == "0" ]]; then
+  alias vl="vault login -method=aws role={{ primary_user.id }}"
+fi
+
