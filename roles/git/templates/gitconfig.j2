@@ -47,6 +47,7 @@
   d           = diff
   dn          = diff --name-only
   p           = prune
+  parent      = log -1 HEAD^ --first-parent --pretty='format:%D'
   po          = remote prune origin
   pu          = remote prune upstream
   s           = status -s -b
