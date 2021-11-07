@@ -175,26 +175,34 @@ class CallbackModule(CallbackBase):
 
     def _get_extra_msgs(self, result):
         extra_msg = ""
-        if 'results' in result._result:
-            for item in result._result.get('results', None):
-                if 'msg' in item:
-                    if self._is_verbose(item):
-                        extra_msg += "\n  " + item.get('msg')
+        try:
+            if 'results' in result._result:
+                for item in result._result.get('results', None):
+                    if 'msg' in item:
+                        if self._is_verbose(item):
+                            extra_msg += "\n  " + item.get('msg')
 
-        elif 'msg' in result._result:
-            if self._is_verbose(result._result):
-                extra_msg += "\n  " + result._result.get('msg')
-
-        if extra_msg != "":
-            return extra_msg.lstrip('\n')
-        return None
+            elif 'msg' in result._result:
+                if self._is_verbose(result._result):
+                    extra_msg += "\n  " + result._result.get('msg')
+            if extra_msg != "":
+                return extra_msg.lstrip('\n')
+            return None
+        except Exception as e:
+            return str(e)
 
     def _get_error_from_list(self, result):
-        if 'results' in result._result:
-            for item in result._result.get('results', None):
-                if item.get('failed', False):
-                    return item.get('stderr', item.get('msg', None))
-        return result._result.get('stderr', item.get('msg', None))
+        try:
+            if 'reason' in result._result:
+                return result._result.get('reason', None)
+            elif 'results' in result._result:
+                for item in result._result.get('results', None):
+                    if item.get('failed', False):
+                        return item.get('stderr', item.get('msg', None))
+            else:
+                return result._result.get('stderr', item.get('msg', None))
+        except Exception as e:
+            return str(e)
 
 
     #
