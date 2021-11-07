@@ -1,0 +1,13 @@
+#################################################################
+
+# curl -sLO https://github.com/shihanng/tfvar/releases/latest/download/tfvar_linux_amd64.deb
+# dpkg -i tfvar_linux_amd64.deb
+
+- name: "tfvar > install"
+  apt:
+    deb: "https://github.com/shihanng/tfvar/releases/latest/download/tfvar_linux_amd64.deb"
+  tags:
+    - "{{ terraform.tags }}"
+
+#################################################################
+

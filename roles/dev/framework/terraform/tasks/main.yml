@@ -16,5 +16,12 @@
   tags:
     - "{{ terraform.tags }}"
 
+- name: " "
+  include_tasks : "{{ dist_family }}-tfvar.yml"
+  when:
+    - dist_family in [ 'debian' ]
+  tags:
+    - "{{ terraform.tags }}"
+
 #################################################################
 
