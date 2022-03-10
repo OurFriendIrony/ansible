@@ -17,6 +17,8 @@ terraform:
     apt:
       - unzip
 
+  cache: "{{ primary_user.home }}/.terraform-provider-cache"
+
   tags:
     - dev
     - dev-framework

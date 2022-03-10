@@ -53,3 +53,24 @@
 
 #################################################################
 
+- name: "mkdirs > cache"
+  file:
+    name    : "{{ terraform.cache }}"
+    state   : "directory"
+    owner   : "{{ primary_user.id }}"
+    group   : "{{ primary_user.id }}"
+    mode    : "0755"
+  tags:
+    - "{{ terraform.tags }}"
+
+- name: "config > properties"
+  with_items:
+    - "{{ all_users }}"
+  template:
+    src     : ".terraformrc"
+    dest    : "{{ item.home }}/.terraformrc"
+    owner   : "{{ item.id   }}"
+    group   : "{{ item.id   }}"
+  tags:
+    - "{{ terraform.tags }}"
+
