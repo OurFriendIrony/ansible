@@ -2,8 +2,8 @@
 
 #################################################################
 
-- name: "apt > install"
-  apt:
+- name: "pkg > install"
+  ansible.builtin.package:
     name  : "{{ libraries }}"
     state : "latest"
   tags:

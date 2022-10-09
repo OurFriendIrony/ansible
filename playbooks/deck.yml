@@ -14,8 +14,6 @@
         - "{{ root_user     }}"
         - "{{ primary_user  }}"
 
-
-
 #################################################################
 
   roles:
@@ -25,7 +23,7 @@
     - { role: git      }
     - { role: ssh      }
 #    - { role: shell,                    bash_welcome        : "retropie"                                        }
-#    - { role: vim                                                                                               }
+    - { role: vim,      vim_airline: False     }
 #    - { role: powerline                                                                                         }
 #    - { role: general                                                                                           }
 #

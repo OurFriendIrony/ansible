@@ -29,6 +29,7 @@
   " Powershell
   Plugin 'pprovost/vim-ps1'
 
+{% if vim_airline %}
 " Plugin config
   " Airline
     let g:airline#extensions#tabline#enabled = 1
@@ -39,6 +40,7 @@
 {% endif %}
     let g:airline_theme = 'term'
     let g:airline_section_y = []
+{% endif %}
 
 "-----------------------------------------------------
 " MAPPINGS
