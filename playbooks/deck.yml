@@ -22,7 +22,7 @@
     - { role: checks                                                                                            }
 #    - { role: users                                                                                             }
 #
-#    - { role: prereq                                                                                            }
+    - { role: prereq                                                                                            }
 #
 #
 #

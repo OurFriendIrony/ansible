@@ -1,13 +1,19 @@
 ---
 
-libraries_apt:
-  ubuntu:
-    - "aptitude"
-    - "libc6-i386"
-    - "lib32z1"
-    - "lib32stdc++6"
-  ubuntu_gnome:
-    - "gnome-panel"
-  all:
-    - "python3-pip"
+libraries:
+  pacman:
+    all:
+      - "python3"
+      - "python-pip"
+  apt:
+    ubuntu:
+      - "aptitude"
+      - "libc6-i386"
+      - "lib32z1"
+      - "lib32stdc++6"
+    ubuntu_gnome:
+      - "gnome-panel"
+    all:
+      - "python3"
+      - "python3-pip"
 

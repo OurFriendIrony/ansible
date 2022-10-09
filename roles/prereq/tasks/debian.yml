@@ -2,16 +2,16 @@
 
 #################################################################
 
-- name: "apt > update cache"
-  apt:
+- name: "pkg > update cache"
+  ansible.builtin.package:
     update_cache: yes
   changed_when: False
   tags:
     - "prereq"
 
-- name: "apt > install"
-  apt:
-    name  : "{{ libraries_apt.all }}"
+- name: "pkg > install"
+  ansible.builtin.package:
+    name  : "{{ libraries.apt.all }}"
     state : "latest"
   tags:
     - "prereq"
@@ -20,7 +20,7 @@
   when:
     - ansible_distribution      | lower == "ubuntu"
   apt:
-    name  : "{{ libraries_apt.ubuntu }}"
+    name  : "{{ libraries.apt.ubuntu }}"
     state : "latest"
   tags:
     - "prereq"
@@ -30,13 +30,13 @@
     - desktop_environment == "gnome"
     - is_gui
   apt:
-    name  : "{{ libraries_apt.ubuntu_gnome }}"
+    name  : "{{ libraries.apt.ubuntu_gnome }}"
     state : "latest"
   tags:
     - "prereq"
 
-- name: "apt > autoclean"
-  apt:
+- name: "pkg > autoclean"
+  ansible.builtin.package:
     autoclean : yes
     autoremove: yes
   changed_when: False

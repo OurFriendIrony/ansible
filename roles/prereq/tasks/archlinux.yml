@@ -1,0 +1,28 @@
+---
+
+#################################################################
+
+- name: "pkg > key > create"
+  ansible.builtin.command:
+    cmd: "pacman-key --init"
+
+- name: "pkg > key > populate"
+  ansible.builtin.command:
+    cmd: "pacman-key --populate archlinux"
+
+- name: "pkg > update cache"
+  ansible.builtin.package:
+    update_cache: yes
+  changed_when: False
+  tags:
+    - "prereq"
+
+- name: "pkg > install"
+  ansible.builtin.package:
+    name  : "{{ libraries.pacman.all }}"
+    state : "latest"
+  tags:
+    - "prereq"
+
+#################################################################
+
