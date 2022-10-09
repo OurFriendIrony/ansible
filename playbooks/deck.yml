@@ -20,15 +20,9 @@
 
   roles:
     - { role: checks                                                                                            }
-#    - { role: users                                                                                             }
-#
     - { role: prereq                                                                                            }
-#
-#
-#
-#
-#
-#    - { role: git                                                                                               }
+
+    - { role: git                                                                                               }
 #    - { role: ssh                                                                                               }
 #    - { role: shell,                    bash_welcome        : "retropie"                                        }
 #    - { role: vim                                                                                               }

@@ -3,6 +3,9 @@
   name        = {{ primary_user.name }}
   email       = {{ primary_user.email }}
 
+[init]
+  defaultBranch = {{ git_branch }}
+
 [push]
   default     = simple
 

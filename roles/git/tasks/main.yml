@@ -10,5 +10,13 @@
     - "git"
     - "proxy"
 
+- name: " "
+  include_tasks : "debian.yml"
+  when:
+    - dist_family in [ 'archlinux' ]
+  tags:
+    - "git"
+    - "proxy"
+
 #################################################################
 
