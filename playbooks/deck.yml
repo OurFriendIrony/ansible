@@ -19,11 +19,11 @@
 #################################################################
 
   roles:
-    - { role: checks                                                                                            }
-    - { role: prereq                                                                                            }
+    - { role: checks   }
+    - { role: prereq   }
 
-    - { role: git                                                                                               }
-#    - { role: ssh                                                                                               }
+    - { role: git      }
+    - { role: ssh      }
 #    - { role: shell,                    bash_welcome        : "retropie"                                        }
 #    - { role: vim                                                                                               }
 #    - { role: powerline                                                                                         }

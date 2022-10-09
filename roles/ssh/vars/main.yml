@@ -11,6 +11,8 @@ ssh:
   libraries:
     apt:
       - "ssh"
+    pacman:
+      - "openssh"
     choco:
       - "openssh"
 

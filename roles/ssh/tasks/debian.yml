@@ -2,10 +2,21 @@
 
 #################################################################
 
-- name: "apt > install"
-  apt:
+- name: "pkg > install"
+  ansible.builtin.package:
     name    : "{{ ssh.libraries.apt }}"
     state   : "latest"
+  when: 
+    - pkg_mgr in [ 'apt' ]
+  tags:
+    - "{{ ssh.tags }}"
+
+- name: "pkg > install"
+  ansible.builtin.package:
+    name    : "{{ ssh.libraries.pacman }}"
+    state   : "latest"
+  when: 
+    - pkg_mgr in [ 'pacman' ]
   tags:
     - "{{ ssh.tags }}"
 
@@ -35,7 +46,7 @@
     dest    : "{{ item[0].home }}/.ssh/{{ item[1] }}"
     owner   : "{{ item[0].id }}"
     group   : "{{ item[0].id }}"
-    mode    : "0664"
+    mode    : "0644"
   tags:
     - "{{ ssh.tags }}"
 
@@ -50,7 +61,7 @@
     dest    : "{{ item[0].home }}/.ssh/{{ item[1].name }}.pub"
     owner   : "{{ item[0].id }}"
     group   : "{{ item[0].id }}"
-    mode    : "0664"
+    mode    : "0644"
   tags:
     - "{{ ssh.tags }}"
 
@@ -64,7 +75,7 @@
     dest    : "{{ item.home }}/.hushlogin"
     owner   : "{{ item.id }}"
     group   : "{{ item.id }}"
-    mode    : "0664"
+    mode    : "0644"
     force   : "no"
   tags:
     - "{{ ssh.tags }}"
