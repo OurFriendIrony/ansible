@@ -23,6 +23,12 @@
     state : "latest"
   tags:
     - "prereq"
+- name: "pkg > install"
+  ansible.builtin.package:
+    name  : "python-setuptools"
+    state : "latest"
+  tags:
+    - "prereq"
 
 #################################################################
 

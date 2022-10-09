@@ -5,6 +5,7 @@ libraries:
     all:
       - "python3"
       - "python-pip"
+      - "python-setuptools"
   apt:
     ubuntu:
       - "aptitude"

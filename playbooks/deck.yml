@@ -17,19 +17,15 @@
 #################################################################
 
   roles:
-    - { role: checks   }
-    - { role: prereq   }
+    - { role: checks      }
+    - { role: prereq      }
 
-    - { role: git      }
-    - { role: ssh      }
+    - { role: git         }
+    - { role: ssh         }
 #    - { role: shell,                    bash_welcome        : "retropie"                                        }
-    - { role: vim,      vim_airline: False     }
-#    - { role: powerline                                                                                         }
-#    - { role: general                                                                                           }
-#
-#    - { role: dev/framework/ansible                                                                             }
-#
-#    - { role: retropie                                                                                          }
+    - { role: vim,        vim_airline: False     }
+#    - { role: powerline   }
+    - { role: general     }
 
 #################################################################
 

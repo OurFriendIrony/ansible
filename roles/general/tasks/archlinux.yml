@@ -1,0 +1,13 @@
+---
+
+#################################################################
+
+- name: "pkg > no gui"
+  when:
+    - libraries_pacman | length > 0
+  ansible.builtin.package:
+    name  : "{{ libraries_pacman }}"
+    state : "latest"
+  tags:
+    - "general"
+

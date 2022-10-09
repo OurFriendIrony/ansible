@@ -14,6 +14,17 @@ libraries_apt:
   - p7zip-full        # 7z [1]
   - multitail         # tail multiple files
 
+libraries_pacman:
+  - python-pip       # Package Manager - Python
+  - git               # Source Control
+  - curl              # Api Tool
+  - wget              # Remote resource pull
+  - tree              # Dir Structure tree
+  - jq                # Json Parser
+  - xclip             # Store to Clipboard
+  - gawk              # Extended awk
+  - multitail         # tail multiple files
+
 libraries_pip:
   - yq                # Yaml Parser
 
