@@ -19,6 +19,7 @@
     - { k: "dist_os_version_m",   v: "{{ ansible_distribution_major_version                   | default() | lower }}" }
     - { k: "dist_os_version",     v: "{{ ansible_distribution_version                         | default() | lower }}" }
     - { k: "machine_arch",        v: "{{ ansible_architecture                                 | default() | lower }}" }
+    - { k: "pkg_mgr",             v: "{{ ansible_pkg_mgr                                      | default() | lower }}" }
     - { k: "desktop_environment", v: "{{ lookup('env', 'XDG_CURRENT_DESKTOP').split(':')[-1]  | default() | lower }}" }
     - { k: "vm_type",             v: "{{ ansible_virtualization_role       | replace('NA','') | default() | lower }}" }
   set_fact:
@@ -36,6 +37,11 @@
 
 #################################################################
 
+- name: Print all available facts
+  ansible.builtin.debug:
+    var: ansible_facts
+  tags: [ "always" ]
+
 - name: "Gathered Facts"
   with_items:
     - { k: "OS System           ", v: "{{ dist_system         }}" }
@@ -44,6 +50,7 @@
     - { k: "OS Release          ", v: "{{ dist_os_release     }}" }
     - { k: "OS Major Version    ", v: "{{ dist_os_version_m   }}" }
     - { k: "OS Full Version     ", v: "{{ dist_os_version     }}" }
+    - { k: "Package Manager     ", v: "{{ pkg_mgr             }}" }
     - { k: "Machine Architecture", v: "{{ machine_arch        }}" }
     - { k: "GUI?                ", v: "{{ is_gui              }}" }
     - { k: "VM?                 ", v: "{{ is_vm               }}" }

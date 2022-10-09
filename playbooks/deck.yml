@@ -1,0 +1,43 @@
+---
+
+#################################################################
+
+- hosts         : deck
+  gather_facts  : yes
+
+  become        : yes
+  become_method : sudo
+
+  vars:
+    - is_proxy     : False
+      all_users:
+        - "{{ root_user     }}"
+        - "{{ primary_user  }}"
+
+
+
+#################################################################
+
+  roles:
+    - { role: checks                                                                                            }
+#    - { role: users                                                                                             }
+#
+#    - { role: prereq                                                                                            }
+#
+#
+#
+#
+#
+#    - { role: git                                                                                               }
+#    - { role: ssh                                                                                               }
+#    - { role: shell,                    bash_welcome        : "retropie"                                        }
+#    - { role: vim                                                                                               }
+#    - { role: powerline                                                                                         }
+#    - { role: general                                                                                           }
+#
+#    - { role: dev/framework/ansible                                                                             }
+#
+#    - { role: retropie                                                                                          }
+
+#################################################################
+
