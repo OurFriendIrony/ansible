@@ -33,7 +33,7 @@ primary_user:
 
 mount_points:
   path        : "mount_to_location"
-  uuid        : "unique_harddrive_id"
+  src         : "UUID=unique_harddrive_id"
   fs          : "file_system"
 
 #######################################################################

@@ -13,7 +13,7 @@ primary_user:
 
 mount_points:
   path        : "/media/videos"
-  uuid        : "8AC0A45FC0A452ED"
+  src         : "UUID=8AC0A45FC0A452ED"
   fs          : "ntfs"
 
 #######################################################################

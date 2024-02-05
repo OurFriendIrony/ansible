@@ -1,4 +1,9 @@
 ---
 
 bash_welcome: ""
+terraform:
+  home: ""
+terragrunt:
+  home: ""
+  url: ""
 

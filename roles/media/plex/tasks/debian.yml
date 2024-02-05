@@ -2,9 +2,28 @@
 
 #################################################################
 
-- name: "apt > install"
+- name: "plex > apt key"
+  apt_key:
+    url     : "https://downloads.plex.tv/plex-keys/PlexSign.key"
+    state   : "present"
+  tags:
+    - "media"
+    - "plex"
+
+- name: "plex > apt source"
+  apt_repository:
+#    repo    : "deb [signed-by=/usr/share/keyrings/plex-archive-keyring.gpg] https://downloads.plex.tv/repo/deb public main"
+    repo    : "deb https://downloads.plex.tv/repo/deb public main"
+    state   : "present"
+  tags:
+    - "media"
+    - "plex"
+
+- name: "plex > apt install"
   apt:
-    deb           : "{{ plex.deb }}"
+    name    : "plexmediaserver"
+    state   : "present"
+    update_cache: "yes"
   tags:
     - "media"
     - "plex"

@@ -70,7 +70,7 @@
     - "{{ mount_points }}"
   mount:
     path  : "{{ item.path }}"
-    src   : "UUID={{ item.uuid }}"
+    src   : "{{ item.src }}"
     fstype: "{{ item.fs }}"
     opts  : "{{ item.opts | default( defaults.mount_opts ) }}"
     state : "mounted"

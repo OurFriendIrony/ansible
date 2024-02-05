@@ -15,7 +15,7 @@ Installs all configurations for a [**Retropie 4.4**](https://retropie.org.uk/201
     - Create a user profile in "**user_profiles/**" from template "**user_profiles/\_\_DEMO\_\_.yml**"
 
 #### Run
-`./go.sh -s -p retropie -u pi`  
+`./go.sh -s -p retropie -u pi`
 
 #### Bootstrap
 ```bash

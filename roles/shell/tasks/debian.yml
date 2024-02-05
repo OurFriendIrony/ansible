@@ -13,7 +13,6 @@
     mode  : "0644"
   tags:
     - "{{ shell.tags }}"
-    - "{{ ruby.tags }}"
 
 - name: "bash > config > .bash_aliases"
   with_items:

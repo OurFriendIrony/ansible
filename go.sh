@@ -7,7 +7,7 @@ source ./.ansible-sys/scripts/setup.sh
 
 usage () {
   PRG=$(basename $0)
-  echo "$PRG -p PLAYBOOK -u USER [-l LIMIT] [-t TAGS] [-z SKIP] [-v VERBOSITY] [-k KEY] [-e EXTRAVARS] [-s] [-c] [-h]"
+  echo "$PRG -p PLAYBOOK [-u USER] [-l LIMIT] [-t TAGS] [-z SKIP] [-v VERBOSITY] [-k KEY] [-e EXTRAVARS] [-s] [-c] [-h]"
   echo "     -p PLAYBOOK      path to playbook"
   echo "     -u USER          user profile to load"
   echo "     -l LIMIT         limit to host"
@@ -78,7 +78,8 @@ while getopts ":p:u:l:t:z:v:e:k:sch" arg; do
 done
 
 # Check mandatory fields
-mandatory_fields=( "playbook" "user" )
+mandatory_fields=( "playbook" )
+#mandatory_fields=( "playbook" "user" )
 mandatory_fields_set=true
 for arg in ${mandatory_fields[@]}; do
   if [ -z "${!arg}" ]; then

@@ -6,7 +6,6 @@
   include_tasks : "{{ dist_family }}.yml"
   when:
     - dist_family in [ 'debian', 'windows' ]
-    - is_gui
   tags:
     - "media"
     - "plex"
