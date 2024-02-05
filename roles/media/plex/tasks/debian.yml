@@ -28,5 +28,14 @@
     - "media"
     - "plex"
 
+- name: "plex > add to group pi"
+  user:
+    name: plex
+    groups: pi
+    append: yes
+  tags:
+    - "media"
+    - "plex"
+
 #################################################################
 

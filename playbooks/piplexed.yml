@@ -32,16 +32,10 @@
 
   roles:
     - { role: checks                                                                                            }
-
     - { role: prereq                                                                                            }
-
-
-
-
-
     - { role: git                                                                                               }
     - { role: ssh                                                                                               }
-    - { role: shell,                    bash_welcome        : "retropie"                                        }
+    - { role: shell, bash_welcome : "generic" }
     - { role: vim                                                                                               }
     - { role: powerline                                                                                         }
     - { role: general                                                                                           }

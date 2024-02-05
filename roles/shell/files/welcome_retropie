@@ -85,7 +85,7 @@ for i in "${!logo[@]}"; do
       out+="${fgred}Uptime.....:${fggrn} ${UPTIME}"
       ;;
     5)
-      out+="${fgred}IP.........:${fggrn} $(ip route get 8.8.8.8 | awk '{print $NF; exit}')"
+      out+="${fgred}IP.........:${fggrn} $(hostname -I)"
       ;;
     6)
       out+="${fgred}Processes..:${fggrn} $(ps ax | wc -l | tr -d " ")"
