@@ -30,18 +30,27 @@ get_disk_info() {
 }
 
 get_uptime() {
-  upt=$(cat /proc/uptime)
-  awk '{print int($1/86400*100)/100}' /proc/uptime
-}
-
-welcome() {
-  # calculate uptime
   local upSeconds="$(/usr/bin/cut -d. -f1 /proc/uptime)"
   local secs=$((upSeconds%60))
   local mins=$((upSeconds/60%60))
   local hours=$((upSeconds/3600%24))
   local days=$((upSeconds/86400))
-  local UPTIME=$(printf "%d days, %02dh%02dm%02ds" "$days" "$hours" "$mins" "$secs")
+  #minutes=$(awk '{printf "%.2f\n", $1/60}' /proc/uptime)
+  #hours=$(awk '{printf "%.2f\n", $1/60/60}' /proc/uptime)
+  #days=$(awk '{printf "%.2f\n", $1/60/60/24}' /proc/uptime)
+  #awk '{print int($1/86400*100)/100}' /proc/uptime
+  if [[ "${days:0:1}" != "0" ]]; then
+    echo "${days} days"
+  elif [[ "${hours:0:1}" != "0" ]]; then
+    echo "${hours} hours"
+  else
+    echo "${mins} mins"
+  fi
+}
+
+welcome() {
+  # calculate uptime
+#  local UPTIME=$(printf "%d days, %02dh%02dm%02ds" "$days" "$hours" "$mins" "$secs")
 
   # Set Colours
   local rst="$(tput sgr0)"
@@ -78,7 +87,7 @@ welcome() {
     "${fgylw}  /          :${fggrn} $(get_disk_info '/')"
     "${fgylw}  /opt/media :${fggrn} $(get_disk_info '/opt/media')"
     "${fgred}Memory.....:${fggrn} $(free | grep Mem | awk '{printf("%.0f", ($3/$2 * 100.0) )}')%"
-    "${fgred}Uptime.....:${fggrn} $(get_uptime) days"
+    "${fgred}Uptime.....:${fggrn} $(get_uptime)"
     "${fgred}Processes..:${fggrn} $(ps ax | wc -l | tr -d " ")"
     "${fgred}Temp.......:${fggrn} CPU: $(get_cpu_temp)   GPU: $(get_gpu_temp)"
   )
