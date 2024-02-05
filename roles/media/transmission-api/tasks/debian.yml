@@ -8,8 +8,67 @@
     - transmission
     - transmission-cli
     - transmission-daemon
+    - nodejs
+    - npm
     state   : "present"
     update_cache: "yes"
+  tags:
+    - "media"
+    - "transmission"
+    - "transmission-api"
+
+- name: Create ansible_directory
+  with_items:
+  - "{{ transmission.dir.core }}"
+  - "{{ transmission.dir.downloading }}"
+  - "{{ transmission.dir.complete }}"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  tags:
+    - "media"
+    - "transmission"
+    - "transmission-api"
+
+- name: "transmission > config"
+  template:
+    src   : "settings.json"
+    dest  : "/etc/transmission-daemon/settings.json"
+  become: true
+  become_method : sudo
+  tags:
+    - "media"
+    - "transmission"
+    - "transmission-api"
+
+#################################################################
+
+- name: transmission > clone api
+  git:
+    repo: https://github.com/OurFriendIrony/transmission.git
+    dest: "{{ transmission.dir.install }}"
+  tags:
+    - "media"
+    - "transmission"
+    - "transmission-api"
+
+#################################################################
+
+- name: "transmission > service config"
+  with_items: "{{ transmission.services }}"
+  template:
+    src   : "{{ item }}.service"
+    dest  : "/usr/lib/systemd/system/{{ item }}.service"
+  tags:
+    - "media"
+    - "transmission"
+    - "transmission-api"
+
+- name: "service > restart"
+  with_items: "{{ transmission.services }}"
+  service:
+    name  : "{{ item }}"
+    state : "restarted"
   tags:
     - "media"
     - "transmission"

@@ -1,8 +1,6 @@
 ---
 
 plex:
-  deb     : "https://downloads.plex.tv/plex-media-server/{{ plex_version }}/plexmediaserver_{{ plex_version }}_amd64.deb"
-
   libraries:
     choco:
       - plexmediaserver

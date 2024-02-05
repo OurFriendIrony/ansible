@@ -1,0 +1,14 @@
+[Unit]
+Description=API for Transmission
+After=transmission-daemon.service
+
+[Service]
+User=root
+Type=simple
+ExecStart=/bin/bash -c 'node {{ transmission.dir.install }}/transmission-api.js'
+ExecStop=/bin/kill -s STOP $MAINPID
+ExecReload=/bin/kill -s HUP $MAINPID
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,4 +1,13 @@
 ---
 
-plex_version: "1.13.8.5395-10d48da0d"
+transmission:
+  dir:
+    core        : /home/pi/transmission
+    downloading : /home/pi/transmission/downloading
+    complete    : /home/pi/transmission/complete
+    install     : /opt/transmission-api
+  services:
+  - transmission-api
+  - transmission-daemon
+  - transmission-migration
 

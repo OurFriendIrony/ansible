@@ -39,7 +39,7 @@
     - { role: vim                                                                                               }
     - { role: powerline                                                                                         }
     - { role: general                                                                                           }
-#    - { role: roles/media/plex }
+    - { role: roles/media/plex }
     - { role: roles/media/transmission-api }
 
 
