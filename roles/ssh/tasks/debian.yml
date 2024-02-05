@@ -19,7 +19,7 @@
     name    : "{{ item[0].home }}/{{ item[1] }}"
     owner   : "{{ item[0].id }}"
     group   : "{{ item[0].id }}"
-    mode    : "0755"
+    mode    : "0700"
     state   : "directory"
   tags:
     - "{{ ssh.tags }}"
@@ -35,7 +35,7 @@
     dest    : "{{ item[0].home }}/.ssh/{{ item[1] }}"
     owner   : "{{ item[0].id }}"
     group   : "{{ item[0].id }}"
-    mode    : "0664"
+    mode    : "0600"
   tags:
     - "{{ ssh.tags }}"
 
@@ -50,7 +50,7 @@
     dest    : "{{ item[0].home }}/.ssh/{{ item[1].name }}.pub"
     owner   : "{{ item[0].id }}"
     group   : "{{ item[0].id }}"
-    mode    : "0664"
+    mode    : "0600"
   tags:
     - "{{ ssh.tags }}"
 

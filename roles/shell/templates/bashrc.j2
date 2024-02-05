@@ -128,10 +128,12 @@ export PATH="${GRADLE_HOME}/bin:${PATH}"
 if [[ -f "${HOME}/{{ terraform.home }}/bin/terraform" ]]; then
   export TERRAFORM_HOME="${HOME}/{{ terraform.home }}/bin"
   export PATH="${TERRAFORM_HOME}:${PATH}"
+  set_tfenv
 fi
 if [[ -f "{{ terragrunt.home }}/terragrunt" ]]; then
   export TERRAGRUNT_HOME="{{ terragrunt.home }}"
   export PATH="${TERRAGRUNT_HOME}:${PATH}"
+  set_tgver
 fi
 
 if [[ -f ~/.rbenv/bin/rbenv ]]; then
@@ -154,12 +156,6 @@ if [[ -f ~/.bash_welcome ]]; then
   source ~/.bash_welcome
 fi
 {% endif %}
-
-#####################################################################
-#extras
-
-set_tfenv
-set_tgver
 
 #####################################################################
 

@@ -1,0 +1,19 @@
+---
+
+#################################################################
+
+- name: "transmission > apt install"
+  apt:
+    name:
+    - transmission
+    - transmission-cli
+    - transmission-daemon
+    state   : "present"
+    update_cache: "yes"
+  tags:
+    - "media"
+    - "transmission"
+    - "transmission-api"
+
+#################################################################
+
