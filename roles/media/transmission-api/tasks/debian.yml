@@ -12,10 +12,17 @@
     - npm
     state   : "present"
     update_cache: "yes"
-  tags:
-    - "media"
-    - "transmission"
-    - "transmission-api"
+  tags: "{{ transmission_tags }}"
+
+- name: "transmission > npm install"
+  with_items:
+    - express
+    - shelljs
+    - body-parser
+  npm:
+    name: "{{ item }}"
+    global: true
+  tags: "{{ transmission_tags }}"
 
 - name: Create ansible_directory
   with_items:
@@ -25,10 +32,7 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-  tags:
-    - "media"
-    - "transmission"
-    - "transmission-api"
+  tags: "{{ transmission_tags }}"
 
 - name: "transmission > config"
   template:
@@ -36,10 +40,7 @@
     dest  : "/etc/transmission-daemon/settings.json"
   become: true
   become_method : sudo
-  tags:
-    - "media"
-    - "transmission"
-    - "transmission-api"
+  tags: "{{ transmission_tags }}"
 
 #################################################################
 
@@ -47,10 +48,7 @@
   git:
     repo: https://github.com/OurFriendIrony/transmission.git
     dest: "{{ transmission.dir.install }}"
-  tags:
-    - "media"
-    - "transmission"
-    - "transmission-api"
+  tags: "{{ transmission_tags }}"
 
 #################################################################
 
@@ -59,20 +57,14 @@
   template:
     src   : "{{ item }}.service"
     dest  : "/usr/lib/systemd/system/{{ item }}.service"
-  tags:
-    - "media"
-    - "transmission"
-    - "transmission-api"
+  tags: "{{ transmission_tags }}"
 
 - name: "service > restart"
   with_items: "{{ transmission.services }}"
   service:
     name  : "{{ item }}"
     state : "restarted"
-  tags:
-    - "media"
-    - "transmission"
-    - "transmission-api"
+  tags: "{{ transmission_tags }}"
 
 #################################################################
 

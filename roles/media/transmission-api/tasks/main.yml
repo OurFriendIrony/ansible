@@ -6,9 +6,7 @@
   include_tasks : "{{ dist_family }}.yml"
   when:
     - dist_family in [ 'debian' ]
-  tags:
-    - "media"
-    - "plex"
+  tags: "{{ transmission_tags }}"
 
 #################################################################
 

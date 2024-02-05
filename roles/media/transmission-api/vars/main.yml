@@ -1,7 +1,7 @@
 ---
 
-plex:
-  libraries:
-    choco:
-      - plexmediaserver
+transmission_tags:
+    - "media"
+    - "transmission"
+    - "transmission-api"
 

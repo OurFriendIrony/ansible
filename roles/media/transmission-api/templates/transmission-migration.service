@@ -5,7 +5,7 @@ After=transmission-daemon.service
 [Service]
 User=root
 Type=simple
-ExecStart=/bin/bash -c 'node {{ transmission.dir.install }}/migrate-downloaded-torrents.js'
+ExecStart=/bin/bash -c 'NODE_PATH=/usr/local/lib/node_modules node {{ transmission.dir.install }}/migrate-downloaded-torrents.js'
 ExecStop=/bin/kill -s STOP $MAINPID
 ExecReload=/bin/kill -s HUP $MAINPID
 NoNewPrivileges=true
