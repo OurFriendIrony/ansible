@@ -6,9 +6,7 @@
   win_chocolatey:
     name    : "{{ plex.libraries.choco }}"
     state   : "present"
-  tags:
-    - "media"
-    - "plex"
+  tags: "{{ plex.tags }}"
 
 #################################################################
 

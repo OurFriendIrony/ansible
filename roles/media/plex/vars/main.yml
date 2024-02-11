@@ -6,4 +6,7 @@ plex:
   libraries:
     choco:
       - plexmediaserver
+  tags:
+    - "media"
+    - "plex"
 
