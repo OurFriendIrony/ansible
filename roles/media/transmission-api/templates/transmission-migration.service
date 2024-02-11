@@ -1,6 +1,6 @@
 [Unit]
 Description=Migrate completed torrents
-After=transmission-daemon.service
+After=transmission-daemon.service network-online.target
 
 [Service]
 User=root

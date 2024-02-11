@@ -24,7 +24,7 @@
         path        : "/opt/media"
         src         : "LABEL=media"
         fs          : "ext4"
-        opts        : "defaults,rw"
+        opts        : "defaults,rw,nofail"
 
 
 

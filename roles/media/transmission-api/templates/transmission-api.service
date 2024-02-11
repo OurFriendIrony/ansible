@@ -1,6 +1,6 @@
 [Unit]
 Description=API for Transmission
-After=transmission-daemon.service
+After=transmission-daemon.service network-online.target
 
 [Service]
 User=root

@@ -11,5 +11,6 @@ pi@192.168.1.xxx
 pi@192.168.1.184
 
 [piplexed]
-pi@192.168.1.47
+#pi@192.168.1.47
+pi@piplexed.local
 
