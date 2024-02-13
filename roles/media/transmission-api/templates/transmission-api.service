@@ -1,6 +1,7 @@
 [Unit]
 Description=API for Transmission
 After=transmission-daemon.service network-online.target
+Wants=network-online.target
 
 [Service]
 User=root
@@ -9,6 +10,8 @@ ExecStart=/bin/bash -c 'NODE_PATH=/usr/local/lib/node_modules node {{ transmissi
 ExecStop=/bin/kill -s STOP $MAINPID
 ExecReload=/bin/kill -s HUP $MAINPID
 NoNewPrivileges=true
+Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
