@@ -1,12 +1,11 @@
 [Unit]
 Description=API for Transmission
-After=transmission-daemon.service network-online.target
-Wants=network-online.target
+Requires=transmission-daemon.service network-online.target
 
 [Service]
 User=root
 Type=simple
-ExecStart=/bin/bash -c 'NODE_PATH=/usr/local/lib/node_modules node {{ transmission.dir.install }}/transmission-api.js'
+ExecStart=/bin/bash -c 'sleep 30; NODE_PATH=/usr/local/lib/node_modules node {{ transmission.dir.install }}/transmission-api.js'
 ExecStop=/bin/kill -s STOP $MAINPID
 ExecReload=/bin/kill -s HUP $MAINPID
 NoNewPrivileges=true
