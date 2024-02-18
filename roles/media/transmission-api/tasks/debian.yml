@@ -5,12 +5,12 @@
 - name: "transmission > apt install"
   apt:
     name:
-    - transmission
-    - transmission-cli
-    - transmission-daemon
-    - nodejs
-    - npm
-    state   : "present"
+      - transmission
+      - transmission-cli
+      - transmission-daemon
+      - nodejs
+      - npm
+    state: "present"
     update_cache: "yes"
   tags: "{{ transmission_tags }}"
 
@@ -26,9 +26,9 @@
 
 - name: Create ansible_directory
   with_items:
-  - "{{ transmission.dir.core }}"
-  - "{{ transmission.dir.downloading }}"
-  - "{{ transmission.dir.complete }}"
+    - "{{ transmission.dir.core }}"
+    - "{{ transmission.dir.downloading }}"
+    - "{{ transmission.dir.complete }}"
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
@@ -36,10 +36,10 @@
 
 - name: "transmission > config"
   template:
-    src   : "settings.json"
-    dest  : "/etc/transmission-daemon/settings.json"
+    src: "settings.json"
+    dest: "/etc/transmission-daemon/settings.json"
   become: true
-  become_method : sudo
+  become_method: sudo
   tags: "{{ transmission_tags }}"
 
 #################################################################
@@ -55,16 +55,16 @@
 - name: "transmission > service config"
   with_items: "{{ transmission.services }}"
   template:
-    src   : "{{ item }}.service"
-    dest  : "/usr/lib/systemd/system/{{ item }}.service"
+    src: "{{ item }}.service"
+    dest: "/usr/lib/systemd/system/{{ item }}.service"
   tags: "{{ transmission_tags }}"
 
 - name: "service > restart"
   with_items: "{{ transmission.services }}"
   service:
-    name  : "{{ item }}"
-    state : "restarted"
+    name: "{{ item }}"
+    state: "restarted"
+    enabled: yes
   tags: "{{ transmission_tags }}"
 
 #################################################################
-
