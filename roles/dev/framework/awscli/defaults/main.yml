@@ -1,8 +1,7 @@
 ---
 
 aws:
-  region      : "eu-west-1"
-  account     : "changeme"
-  access_key  : "changeme"
-  access_pass : "changeme"
-
+  region: "eu-west-1"
+  account: "changeme"
+  access_key: "changeme"
+  access_pass: "changeme"

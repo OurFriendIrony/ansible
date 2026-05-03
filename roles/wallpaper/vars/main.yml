@@ -7,25 +7,24 @@ packages:
     - "yq"
 
 wallpaper:
-  install :
-    dir     : "/lib/ofi-wallpaper/"
-    dir_win : "C:/windows/System32/WindowsPowerShell/v1.0"
+  install:
+    dir: "/lib/ofi-wallpaper/"
+    dir_win: "C:/windows/System32/WindowsPowerShell/v1.0"
 
-  config  :
-    name    : "config.yml"
-    dir     : "{{ primary_user.home }}/.config/ofi-wallpaper/"
+  config:
+    name: "config.yml"
+    dir: "{{ primary_user.home }}/.config/ofi-wallpaper/"
 
   resource:
-    dir         : "/lib/ofi-wallpaper/resources"
-    default     : "/lib/ofi-wallpaper/resources/space_abstract"
-    dir_win     : "{{ primary_user.home }}/Pictures"
-    default_win : "{{ primary_user.home }}/Pictures/space_abstract"
+    dir: "/lib/ofi-wallpaper/resources"
+    default: "/lib/ofi-wallpaper/resources/space_abstract"
+    dir_win: "{{ primary_user.home }}/Pictures"
+    default_win: "{{ primary_user.home }}/Pictures/space_abstract"
 
-  service :
-    name    : "ofi-wallpaper"
-    desc    : "OurFriendIrony Wallpaper"
-    dir     : "/lib/systemd/system/"
+  service:
+    name: "ofi-wallpaper"
+    desc: "OurFriendIrony Wallpaper"
+    dir: "/lib/systemd/system/"
 
   scripts:
     ps1: "Ofi-Wallpaper.ps1"
-

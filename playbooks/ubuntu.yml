@@ -1,52 +1,47 @@
 ---
+# ################################################################
 
-#################################################################
-
-- hosts         : localhost
-  gather_facts  : yes
-  connection    : local
-  become        : yes
-  become_method : sudo
+- hosts: localhost
+  gather_facts: true
+  connection: local
+  become: true
+  become_method: sudo
 
   vars:
-    - is_proxy     : False
-    - all_users:
-        - "{{ primary_user  }}"
-        - "{{ root_user     }}"
-
-
-
+    is_proxy: false
+    all_users:
+      - "{{ primary_user  }}"
+      - "{{ root_user     }}"
 
 #################################################################
 
   roles:
-    - { role: checks                                                                                            }
-    - { role: users                                                                                             }
-    - { role: desktop                                                                                           }
-    - { role: prereq                                                                                            }
+    - { role: checks }
+    - { role: users }
+    - { role: desktop }
+    - { role: prereq }
 
-    - { role: network                                                                                           }
+    - { role: network }
 
-    - { role: git                                                                                               }
-    - { role: ssh                                                                                               }
-    - { role: shell                                                                                             }
-    - { role: vim                                                                                               }
-    - { role: powerline                                                                                         }
-    - { role: general                                                                                           }
-    - { role: keychain                                                                                          }
-    - { role: wallpaper                                                                                         }
-    - { role: system-monitor                                                                                    }
-    - { role: terminator                                                                                        }
+    - { role: git }
+    - { role: ssh }
+    - { role: shell }
+    - { role: vim }
+    - { role: powerline }
+    - { role: general }
+    - { role: keychain }
+    - { role: wallpaper }
+    - { role: system-monitor }
+    - { role: terminator }
 
-    - { role: browser/chrome                                                                                    }
+    - { role: browser/chrome }
 
-    - { role: dev/lang                                                                                          }
-    - { role: dev/util                                                                                          }
-    - { role: dev/framework                                                                                     }
-    - { role: dev/ide                                                                                           }
-    - { role: dev/data                                                                                          }
+    - { role: dev/lang }
+    - { role: dev/util }
+    - { role: dev/framework }
+    - { role: dev/ide }
+    - { role: dev/data }
 
-    - { role: media                                                                                             }
+    - { role: media }
 
-#################################################################
-
+# ################################################################

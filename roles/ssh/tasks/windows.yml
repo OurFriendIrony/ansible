@@ -1,61 +1,59 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "choco > install"
+- name: "Choco > install"
   with_items:
     - "{{ ssh.libraries.choco }}"
-  win_chocolatey:
-    name    : "{{ item }}"
-    state   : "present"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ item }}"
+    state: "present"
     package_params: '"/SSHAgentFeature"'
   tags:
     - "{{ ssh.tags }}"
 
 #################################################################
 
-- name: "mkdirs"
+- name: "Mkdirs"
   with_nested:
     - "{{ all_users }}"
     - "{{ ssh.dirs }}"
-  win_file:
-    name    : "{{ item[0].home }}/{{ item[1] }}"
-    owner   : "{{ item[0].id }}"
-    group   : "{{ item[0].id }}"
-    mode    : "0755"
-    state   : "directory"
+  ansible.windows.win_file:
+    name: "{{ item[0].home }}/{{ item[1] }}"
+    owner: "{{ item[0].id }}"
+    group: "{{ item[0].id }}"
+    mode: "0755"
+    state: "directory"
   tags:
     - "{{ ssh.tags }}"
 
 #################################################################
 
-- name: "config > templates"
+- name: "Config > templates"
   with_nested:
     - "{{ all_users }}"
     - "{{ ssh.templates }}"
-  win_template:
-    src     : "{{ item[1] }}.j2"
-    dest    : "{{ item[0].home }}/.ssh/{{ item[1] }}"
-    owner   : "{{ item[0].id }}"
-    group   : "{{ item[0].id }}"
-    mode    : "0664"
+  ansible.windows.win_template:
+    src: "{{ item[1] }}.j2"
+    dest: "{{ item[0].home }}/.ssh/{{ item[1] }}"
+    owner: "{{ item[0].id }}"
+    group: "{{ item[0].id }}"
+    mode: "0664"
   tags:
     - "{{ ssh.tags }}"
 
 #################################################################
 
-- name: "config > pub keys"
+- name: "Config > pub keys"
   with_nested:
     - "{{ all_users }}"
     - "{{ ssh_keys }}"
-  win_template:
-    src     : "pub.j2"
-    dest    : "{{ item[0].home }}/.ssh/{{ item[1].name }}.pub"
-    owner   : "{{ item[0].id }}"
-    group   : "{{ item[0].id }}"
-    mode    : "0664"
+  ansible.windows.win_template:
+    src: "pub.j2"
+    dest: "{{ item[0].home }}/.ssh/{{ item[1].name }}.pub"
+    owner: "{{ item[0].id }}"
+    group: "{{ item[0].id }}"
+    mode: "0664"
   tags:
     - "{{ ssh.tags }}"
 
 #################################################################
-

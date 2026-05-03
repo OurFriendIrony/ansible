@@ -1,7 +1,6 @@
 ---
 
 dock_cmd:
-  set   : "gsettings set org.gnome.shell.extensions.dash-to-dock"
-  get   : "gsettings get org.gnome.shell.extensions.dash-to-dock"
-  reset : "gsettings reset org.gnome.shell.extensions.dash-to-dock"
-
+  set: "gsettings set org.gnome.shell.extensions.dash-to-dock"
+  get: "gsettings get org.gnome.shell.extensions.dash-to-dock"
+  reset: "gsettings reset org.gnome.shell.extensions.dash-to-dock"

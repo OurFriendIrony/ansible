@@ -1,41 +1,40 @@
 ---
 
-#######################################################################
+# ######################################################################
 
-ansible_user     : "steve.stevens@live.co.uk"
-ansible_password : "-CHANGEME-"
+ansible_user: "steve.stevens@live.co.uk"
+ansible_password: "-CHANGEME-"
 
 #######################################################################
 
 primary_user:
-  name        : "Steve Stevens"
-  home        : "C:/Users/steve"
-  id          : "steve"
-  email       : "steve.h.i.stevens@gmail.com"
+  name: "Steve Stevens"
+  home: "C:/Users/steve"
+  id: "steve"
+  email: "steve.h.i.stevens@gmail.com"
 
 #######################################################################
 
 ssh_keys:
-  - name      : "ourfriendirony"
-    value     : "AAAAB3NzaC1yc2EAAAADAQABAAABAQCVe/JrnVSiRlrzHJHW4N1Knhb37FHNzP/IL/ItoAQ319EvBrJjqYcKLcsvprbrDK5UIFjBnsmFJDTOHDUhKapDDgkx/FovCdbygRmIak8PoaIzvCIdVDmefvdBjn0si6kKj9HasP/xpTsWK1Sobobke0AguJHsI/9eCDictfUF3X+qlO2qbnnMyVn5/tqyAK7VbTEx3uA3mxtH5g9UIL/IoA2s8Am3fW8mmmyT+uOapI5x4ToK2rBG6oPZWuG6I4hK81ObTrIuxkfHGy+COXZfBzHDV2vYix6KSretRhlxWZy9e0NvLq8c3IMwO2RLhY07Lm7ct8+STH1R90ZHZqVZ"
+  - name: "ourfriendirony"
+    value: "AAAAB3NzaC1yc2EAAAADAQABAAABAQCVe/JrnVSiRlrzHJHW4N1Knhb37FHNzP/IL/ItoAQ319EvBrJjqYcKLcsvprbrDK5UIFjBnsmFJDTOHDUhKapDDgkx/FovCdbygRmIak8PoaIzvCIdVDmefvdBjn0si6kKj9HasP/xpTsWK1Sobobke0AguJHsI/9eCDictfUF3X+qlO2qbnnMyVn5/tqyAK7VbTEx3uA3mxtH5g9UIL/IoA2s8Am3fW8mmmyT+uOapI5x4ToK2rBG6oPZWuG6I4hK81ObTrIuxkfHGy+COXZfBzHDV2vYix6KSretRhlxWZy9e0NvLq8c3IMwO2RLhY07Lm7ct8+STH1R90ZHZqVZ"
 
 ssh_config_hosts:
-  - name        : "192.168.1.90"
-    psuedo_names: [ "pi", "retropie" ]
+  - name: "192.168.1.90"
+    psuedo_names: ["pi", "retropie"]
 
-#######################################################################
+# ######################################################################
 
 git_repos:
-  - { repo: "https://github.com/OurFriendIrony/ansible.git",        subdir: "ourfriendirony/ansible"        }
-  - { repo: "https://github.com/OurFriendIrony/MediaNotifier.git",  subdir: "ourfriendirony/medianotifier"  }
+  - { repo: "https://github.com/OurFriendIrony/ansible.git", subdir: "ourfriendirony/ansible" }
+  - { repo: "https://github.com/OurFriendIrony/MediaNotifier.git", subdir: "ourfriendirony/medianotifier" }
 
-#######################################################################
+# ######################################################################
 
 aws:
-  region      : "eu-west-1"
-  account     : "847108765099"
-  access_key  : "AKIAJVGSPHBWLLGQGGFQ"
-  access_pass : ""
+  region: "eu-west-1"
+  account: "847108765099"
+  access_key: "AKIAJVGSPHBWLLGQGGFQ"
+  access_pass: ""
 
 #######################################################################
-

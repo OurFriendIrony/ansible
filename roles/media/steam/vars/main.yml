@@ -12,9 +12,8 @@ steam:
     choco:
       - steam
 
-binme:  # without destroying these steam wont start up [after installation]
+binme: # without destroying these steam wont start up [after installation]
   - "{{ primary_user.home }}/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6"
   - "{{ primary_user.home }}/.local/share/Steam/ubuntu12_32/steam-runtime/i386/lib/i386-linux-gnu/libgcc_s.so.1"
 
-desktop : "steam"
-
+desktop: "steam"

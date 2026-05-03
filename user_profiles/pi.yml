@@ -1,27 +1,26 @@
 ---
 
-#######################################################################
+# ######################################################################
 
 primary_user:
-  name        : "pi"
-  home        : "/home/pi"
-  id          : "pi"
-  email       : "pi@pi.com"
+  name: "pi"
+  home: "/home/pi"
+  id: "pi"
+  email: "pi@pi.com"
 
 #######################################################################
 
 ssh_keys:
-  - name      : "ourfriendirony"
-    value     : "AAAAB3NzaC1yc2EAAAADAQABAAABAQCVe/JrnVSiRlrzHJHW4N1Knhb37FHNzP/IL/ItoAQ319EvBrJjqYcKLcsvprbrDK5UIFjBnsmFJDTOHDUhKapDDgkx/FovCdbygRmIak8PoaIzvCIdVDmefvdBjn0si6kKj9HasP/xpTsWK1Sobobke0AguJHsI/9eCDictfUF3X+qlO2qbnnMyVn5/tqyAK7VbTEx3uA3mxtH5g9UIL/IoA2s8Am3fW8mmmyT+uOapI5x4ToK2rBG6oPZWuG6I4hK81ObTrIuxkfHGy+COXZfBzHDV2vYix6KSretRhlxWZy9e0NvLq8c3IMwO2RLhY07Lm7ct8+STH1R90ZHZqVZ"
+  - name: "ourfriendirony"
+    value: "AAAAB3NzaC1yc2EAAAADAQABAAABAQCVe/JrnVSiRlrzHJHW4N1Knhb37FHNzP/IL/ItoAQ319EvBrJjqYcKLcsvprbrDK5UIFjBnsmFJDTOHDUhKapDDgkx/FovCdbygRmIak8PoaIzvCIdVDmefvdBjn0si6kKj9HasP/xpTsWK1Sobobke0AguJHsI/9eCDictfUF3X+qlO2qbnnMyVn5/tqyAK7VbTEx3uA3mxtH5g9UIL/IoA2s8Am3fW8mmmyT+uOapI5x4ToK2rBG6oPZWuG6I4hK81ObTrIuxkfHGy+COXZfBzHDV2vYix6KSretRhlxWZy9e0NvLq8c3IMwO2RLhY07Lm7ct8+STH1R90ZHZqVZ"
 
 #######################################################################
 
-retropie_steam_pc_ip        : "192.168.1.109"
+retropie_steam_pc_ip: "192.168.1.109"
 
 #######################################################################
 
-retropie_enabled_python     : true
-retropie_enabled_steam      : true
+retropie_enabled_python: true
+retropie_enabled_steam: true
 
 #######################################################################
-

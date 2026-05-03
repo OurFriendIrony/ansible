@@ -1,15 +1,15 @@
 ---
 
-#######################################################################
+# ######################################################################
 #
-## WINDOWS ONLY MANDATORY ##
+# # WINDOWS ONLY MANDATORY ##
 #
 # These properties must match the login details of your microsoft user account.
 # This is solely used for ansible to make a connection with the windows system
 #   and may or may not be the same as the 'primary_user'.
 
-ansible_user     : "my.microsoft.account.email@live.co.uk"
-ansible_password : "MyMicrosoftAccountPassword"
+ansible_user: "my.microsoft.account.email@live.co.uk"
+ansible_password: "MyMicrosoftAccountPassword"
 
 #######################################################################
 #
@@ -19,10 +19,10 @@ ansible_password : "MyMicrosoftAccountPassword"
 # Ensure the user id reflects that of the primary linux user.
 
 primary_user:
-  name        : "Freddy Kruger"
-  home        : "/home/fredi"
-  id          : "fredi"
-  email       : "tiptoe.through.the.tulips@gmail.com"
+  name: "Freddy Kruger"
+  home: "/home/fredi"
+  id: "fredi"
+  email: "tiptoe.through.the.tulips@gmail.com"
 
 #######################################################################
 #
@@ -32,9 +32,9 @@ primary_user:
 #   them here
 
 mount_points:
-  path        : "mount_to_location"
-  uuid        : "unique_harddrive_id"
-  fs          : "file_system"
+  path: "mount_to_location"
+  uuid: "unique_harddrive_id"
+  fs: "file_system"
 
 #######################################################################
 #
@@ -47,10 +47,10 @@ mount_points:
 # Ensure the keynames match exactly.
 
 ssh_keys:
-  - name      : "key_name_1"
-    value     : "AAAAB3NzaC1yc2EAAAADAQABAAABAQCVe/JrnVSiRlrzHJHW4N1Knhb3"
-  - name      : "key_name_2"
-    value     : "AAAAB3NzaC1yc2EAAAADAQABAAABAQDcXNVwZlQ9Udnh9v06POArB9J3"
+  - name: "key_name_1"
+    value: "AAAAB3NzaC1yc2EAAAADAQABAAABAQCVe/JrnVSiRlrzHJHW4N1Knhb3"
+  - name: "key_name_2"
+    value: "AAAAB3NzaC1yc2EAAAADAQABAAABAQDcXNVwZlQ9Udnh9v06POArB9J3"
 
 #######################################################################
 #
@@ -61,30 +61,28 @@ ssh_keys:
 git_repos:
   - { repo: "https://github.com/my_repos/my_repo.git", subdir: "my_repo" }
 
-#######################################################################
+# ######################################################################
 #
-## OPTIONAL ##
+# # OPTIONAL ##
 #
 # If working behind TP firewall, this is very important to get you out
 #   through the proxy.
 # If not, this section can be deleted
 
-is_proxy         : False
-ntlm_hash     : ""
-dns_search_additions: [ "tpplc.local" ]
-
-#######################################################################
+is_proxy: false
+ntlm_hash: ""
+dns_search_additions: ["tpplc.local"]
+# ######################################################################
 #
-## OPTIONAL ##
+# # OPTIONAL ##
 #
 # If you want quick easy access to AWS, you can configure it here. It
 #   adds the details as default in your bash session
 
 aws:
-  region      : "eu-west-1"
-  account     : "your_acct_here"
-  access_key  : "your_key_here"
-  access_pass : "your_secret_here"
+  region: "eu-west-1"
+  account: "your_acct_here"
+  access_key: "your_key_here"
+  access_pass: "your_secret_here"
 
 #######################################################################
-

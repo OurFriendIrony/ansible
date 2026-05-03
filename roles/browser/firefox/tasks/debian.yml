@@ -1,38 +1,36 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > install"
-  apt:
-    name  : "{{ libraries_apt }}"
-    state : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ libraries_apt }}"
+    state: "latest"
   tags:
     - "browser"
     - "firefox"
 
 #################################################################
 
-- name: "launcher > desktop icon"
-  template:
-    src   : "{{ desktop }}.desktop.j2"
-    dest  : "/usr/share/applications/{{ desktop }}.desktop"
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : "0644"
-  tags:
-    - "browser"
-    - "firefox"
-    - "launcher"
-
-- name    : "launcher > add"
-  become: yes
-  become_user  : "{{ primary_user.id }}"
-  script  : "../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
-  changed_when: False
+- name: "Launcher > desktop icon"
+  ansible.builtin.template:
+    src: "{{ desktop }}.desktop.j2"
+    dest: "/usr/share/applications/{{ desktop }}.desktop"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0644"
   tags:
     - "browser"
     - "firefox"
     - "launcher"
 
-#################################################################
+- name: "Launcher > add"
+  become: true
+  become_user: "{{ primary_user.id }}"
+  ansible.builtin.script: "../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
+  changed_when: false
+  tags:
+    - "browser"
+    - "firefox"
+    - "launcher"
 
+#################################################################

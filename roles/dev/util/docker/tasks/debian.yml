@@ -1,120 +1,119 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "mkdirs"
-  file:
+- name: "Mkdirs"
+  ansible.builtin.file:
     dest: "/etc/docker"
     state: "directory"
     owner: "{{ root_user.id }}"
     group: "{{ root_user.id }}"
-    mode: 0755
+    mode: "0755"
   tags:
     - "{{ docker.tags }}"
 
 #################################################################
 
-- name: "apt > install > prereq"
-  apt:
-    name    : "{{ docker.libraries.apt_prereq }}"
-    state   : "latest"
+- name: "Apt > install > prereq"
+  ansible.builtin.apt:
+    name: "{{ docker.libraries.apt_prereq }}"
+    state: "latest"
   tags:
     - "{{ docker.tags }}"
 
 #################################################################
 
-- name: "apt > key"
+- name: "Apt > key"
   when:
     - not is_proxy
-  apt_key:
-    url           : "{{ docker.key_server }}"
-    id            : "{{ docker.key_id     }}"
-    state         : "present"
+  ansible.builtin.apt_key:
+    url: "{{ docker.key_server }}"
+    id: "{{ docker.key_id }}"
+    state: "present"
   tags:
     - "{{ docker.tags }}"
     - "proxy"
 
-- name: "apt > repo"
+- name: "Apt > repo"
   when:
     - not is_proxy
-  apt_repository:
-    repo          : "{{ docker.repo }}"
-    state         : "present"
+  ansible.builtin.apt_repository:
+    repo: "{{ docker.repo }}"
+    state: "present"
   tags:
     - "{{ docker.tags }}"
     - "proxy"
 
-- name: "apt > key"
+- name: "Apt > key"
   when:
     - is_proxy
-  become: yes
+  become: true
   become_user: "{{ primary_user.id }}"
-  shell: "sudo -E curl -fsSL {{ docker.key_server }} | sudo -E apt-key add -"
+  ansible.builtin.shell: "sudo -E curl -fsSL {{ docker.key_server }} | sudo -E apt-key add -"
   tags:
     - "{{ docker.tags }}"
     - "proxy"
 
-- name: "apt > repo"
+- name: "Apt > repo"
   when:
     - is_proxy
-  become: yes
+  become: true
   become_user: "{{ primary_user.id }}"
-  shell: "sudo -E add-apt-repository \"{{ docker.repo }}\" -y"
+  ansible.builtin.command: "sudo -E add-apt-repository \"{{ docker.repo }}\" -y"
   tags:
     - "{{ docker.tags }}"
     - "proxy"
 
-- name: "apt > install"
-  apt:
-    name          : "{{ docker.libraries.apt }}"
-    state         : "latest"
-    update_cache  : "yes"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ docker.libraries.apt }}"
+    state: "latest"
+    update_cache: "yes"
   tags:
     - "{{ docker.tags }}"
 
 #################################################################
 
-- name: "config > mkdirs"
+- name: "Config > mkdirs"
   with_items:
     - "{{ all_users }}"
-  file:
-    name    : "{{ item.home }}/.docker"
-    owner   : "{{ item.id   }}"
-    group   : "{{ item.id   }}"
-    state   : "directory"
+  ansible.builtin.file:
+    name: "{{ item.home }}/.docker"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    state: "directory"
   tags:
     - "{{ docker.tags }}"
     - "proxy"
 
-- name: "config > properties"
+- name: "Config > properties"
   with_items:
     - "{{ all_users }}"
-  template:
-    src     : "config.json.j2"
-    dest    : "{{ item.home }}/.docker/config.json"
-    owner   : "{{ item.id   }}"
-    group   : "{{ item.id   }}"
+  ansible.builtin.template:
+    src: "config.json.j2"
+    dest: "{{ item.home }}/.docker/config.json"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
   register: docker_config
   tags:
     - "{{ docker.tags }}"
     - "proxy"
 
-- name: "config > service > mkdirs"
-  file:
-    name    : "/etc/systemd/system/docker.service.d/"
-    owner   : "{{ root_user.id }}"
-    group   : "{{ root_user.id }}"
-    state   : "directory"
+- name: "Config > service > mkdirs"
+  ansible.builtin.file:
+    name: "/etc/systemd/system/docker.service.d/"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
+    state: "directory"
   tags:
     - "{{ docker.tags }}"
     - "proxy"
 
-- name: "config > service > properties"
-  template:
-    src     : "http-proxy.conf.j2"
-    dest    : "/etc/systemd/system/docker.service.d/http-proxy.conf"
-    owner   : "{{ root_user.id }}"
-    group   : "{{ root_user.id }}"
+- name: "Config > service > properties"
+  ansible.builtin.template:
+    src: "http-proxy.conf.j2"
+    dest: "/etc/systemd/system/docker.service.d/http-proxy.conf"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
   register: docker_config
   tags:
     - "{{ docker.tags }}"
@@ -122,62 +121,61 @@
 
 #################################################################
 
-- name: "insecure registries"
-  template:
-    src     : "daemon.json.j2"
-    dest    : "/etc/docker/daemon.json"
-    owner   : "{{ root_user.id }}"
-    group   : "{{ root_user.id }}"
+- name: "Insecure registries"
+  ansible.builtin.template:
+    src: "daemon.json.j2"
+    dest: "/etc/docker/daemon.json"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
   register: docker_config
   tags:
     - "{{ docker.tags }}"
 
 #################################################################
 
-- name: "service > restart"
+- name: "Service > restart"
   when:
     - is_proxy
     - docker_config is defined
     - docker_config.changed
-  service:
-    name  : "docker"
-    state : "restarted"
+  ansible.builtin.service:
+    name: "docker"
+    state: "restarted"
   tags:
     - "{{ docker.tags }}"
 
 #################################################################
 
-- name: "group"
-  user:
-    name          : "{{ primary_user.id }}"
-    groups        : "docker"
-    append        : "yes"
+- name: "Group"
+  ansible.builtin.user:
+    name: "{{ primary_user.id }}"
+    groups: "docker"
+    append: "yes"
   tags:
     - "{{ docker.tags }}"
 
 #################################################################
 
-- name: "install > docker-compose"
-  get_url:
-    url     : "{{ docker.compose.url  }}"
-    dest    : "{{ docker.compose.dest }}"
-    mode    : "755"
+- name: "Install > docker-compose"
+  ansible.builtin.get_url:
+    url: "{{ docker.compose.url }}"
+    dest: "{{ docker.compose.dest }}"
+    mode: "755"
   tags:
     - "{{ docker.tags }}"
 
 #################################################################
 
-- name: "images > install"
-  become: yes
+- name: "Images > install"
+  become: true
   with_items:
     - "{{ docker_images }}"
-#  docker_image:
-#    name          : "{{ item.name }}"
-#    tag           : "{{ item.version }}"
-#    source        : "pull"
-  command: "docker pull {{ item.name}}:{{ item.version }}"
+  #  docker_image:
+  #    name          : "{{ item.name }}"
+  #    tag           : "{{ item.version }}"
+  #    source        : "pull"
+  ansible.builtin.command: "docker pull {{ item.name}}:{{ item.version }}"
   tags:
     - "{{ docker.tags }}"
 
 #################################################################
-

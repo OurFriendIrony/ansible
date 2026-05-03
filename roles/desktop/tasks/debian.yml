@@ -1,28 +1,27 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "desktop > apply dock config"
+- name: "Desktop > apply dock config"
   become: "yes"
   become_user: "{{ primary_user.id }}"
-  block:
-    - name    : "dock > extend-height"
-      command : "{{ dock_cmd.set }} extend-height {{ dock.extend }}"
-      changed_when: False
-
-    - name    : "dock > dock-position"
-      command : "{{ dock_cmd.set }} dock-position {{ dock.position }}"
-      changed_when: False
-
-    - name    : "dock > dash-max-icon-size"
-      command : "{{ dock_cmd.set }} dash-max-icon-size {{ dock.size }}"
-      changed_when: False
-
-    - name    : "dock > unity-backlit-items"
-      command : "{{ dock_cmd.set }} unity-backlit-items {{ dock.backlit }}"
-      changed_when: False
   tags:
     - "desktop"
 
 #################################################################
 
+  block:
+    - name: "Dock > extend-height"
+      ansible.builtin.command: "{{ dock_cmd.set }} extend-height {{ dock.extend }}"
+      changed_when: false
+
+    - name: "Dock > dock-position"
+      ansible.builtin.command: "{{ dock_cmd.set }} dock-position {{ dock.position }}"
+      changed_when: false
+
+    - name: "Dock > dash-max-icon-size"
+      ansible.builtin.command: "{{ dock_cmd.set }} dash-max-icon-size {{ dock.size }}"
+      changed_when: false
+
+    - name: "Dock > unity-backlit-items"
+      ansible.builtin.command: "{{ dock_cmd.set }} unity-backlit-items {{ dock.backlit }}"
+      changed_when: false

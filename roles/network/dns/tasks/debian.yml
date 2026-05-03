@@ -1,45 +1,43 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "mkdir > resolv.conf"
+- name: "Mkdir > resolv.conf"
   with_items:
     - "/run/systemd/resolve"
-  file:
-    path    : "{{ item         }}"
-    owner   : "{{ root_user.id }}"
-    group   : "{{ root_user.id }}"
-    state   : "directory"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
+    state: "directory"
   tags:
     - "network"
     - "dns"
 
-- name: "config > resolv.conf"
+- name: "Config > resolv.conf"
   with_items:
     - "/etc"
     - "/run/systemd/resolve"
-  template:
-    src     : "resolv.conf.j2"
-    dest    : "{{ item         }}/resolv.conf"
-    owner   : "{{ root_user.id }}"
-    group   : "{{ root_user.id }}"
+  ansible.builtin.template:
+    src: "resolv.conf.j2"
+    dest: "{{ item }}/resolv.conf"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
   tags:
     - "network"
     - "dns"
 
 #################################################################
 
-- name: "config > nsswitch.conf"
+- name: "Config > nsswitch.conf"
   with_items:
     - "/etc"
-  template:
-    src     : "nsswitch.conf.j2"
-    dest    : "{{ item         }}/nsswitch.conf"
-    owner   : "{{ root_user.id }}"
-    group   : "{{ root_user.id }}"
+  ansible.builtin.template:
+    src: "nsswitch.conf.j2"
+    dest: "{{ item }}/nsswitch.conf"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
   tags:
     - "network"
     - "dns"
 
 #################################################################
-

@@ -1,9 +1,8 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > install"
-  apt:
+- name: "Apt > install"
+  ansible.builtin.apt:
     deb: "{{ forticlient.url }}{{ forticlient.file }}"
     state: present
   tags:
@@ -12,16 +11,15 @@
 
 #################################################################
 
-- name: "copy > config"
-  template:
+- name: "Copy > config"
+  ansible.builtin.template:
     src: "fctsslvpnhistory.j2"
     dest: "{{ primary_user.home }}/.fctsslvpnhistory"
     owner: "{{ primary_user.id }}"
     group: "{{ primary_user.id }}"
-    mode: 0644
+    mode: "0644"
   tags:
     - "network"
     - "forticlient"
 
 #################################################################
-

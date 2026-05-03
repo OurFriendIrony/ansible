@@ -1,25 +1,23 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "choco > install"
+- name: "Choco > install"
   when:
     - libraries_choco | length > 0
-  win_chocolatey:
-    name    : "{{ libraries_choco }}"
-    state   : "present"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ libraries_choco }}"
+    state: "present"
   tags:
     - "general"
 
-- name: "choco > install > gui"
+- name: "Choco > install > gui"
   when:
     - is_gui
     - libraries_choco | length > 0
-  win_chocolatey:
-    name    : "{{ libraries_choco_gui }}"
-    state   : "present"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ libraries_choco_gui }}"
+    state: "present"
   tags:
     - "general"
 
 #################################################################
-

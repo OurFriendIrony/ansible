@@ -2,4 +2,3 @@
 
 libraries_pip:
   - "powerline-shell==0.7"
-

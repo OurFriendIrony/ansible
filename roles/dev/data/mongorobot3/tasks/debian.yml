@@ -1,105 +1,103 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "mkdirs"
+- name: "Mkdirs"
   with_items:
     - "{{ robo3t.home }}/{{ robo3t_version }}"
-  file:
-    name    : "{{ item }}"
-    state   : "directory"
-    recurse : "yes"
-    owner   : "{{ primary_user.id }}"
-    group   : "{{ primary_user.id }}"
-    mode    : "0775"
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: "directory"
+    recurse: "yes"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0775"
   tags:
     - "{{ robo3t.tags }}"
 
 #################################################################
 
-- name: "apt > install"
-  apt:
-    name    : "{{ robo3t.libraries.apt }}"
-    state   : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ robo3t.libraries.apt }}"
+    state: "latest"
   tags:
     - "{{ robo3t.tags }}"
 
 #################################################################
 
-- name: "get > application"
-  get_url:
-    url         : "{{ robo3t.url }}{{ robo3t.zip }}"
-    dest        : "/tmp/{{ robo3t.zip }}"
+- name: "Get > application"
+  ansible.builtin.get_url:
+    url: "{{ robo3t.url }}{{ robo3t.zip }}"
+    dest: "/tmp/{{ robo3t.zip }}"
   tags:
     - "{{ robo3t.tags }}"
 
-- name: "unpack > application"
-  become : yes
-  become_user : "{{ primary_user.id }}"
-  unarchive:
-    src         : "/tmp/{{ robo3t.zip }}"
-    dest        : "{{ robo3t.home }}/{{ robo3t_version }}"
-    creates     : "{{ robo3t.home }}/{{ robo3t_version }}/{{ robo3t_lib }}/bin/robo3t"
+- name: "Unpack > application"
+  become: true
+  become_user: "{{ primary_user.id }}"
+  ansible.builtin.unarchive:
+    src: "/tmp/{{ robo3t.zip }}"
+    dest: "{{ robo3t.home }}/{{ robo3t_version }}"
+    creates: "{{ robo3t.home }}/{{ robo3t_version }}/{{ robo3t_lib }}/bin/robo3t"
   tags:
     - "{{ robo3t.tags }}"
 
-- name: "get > icon"
-  become : yes
-  become_user : "{{ primary_user.id }}"
-  copy:
-    src         : "robo3t.png"
-    dest        : "{{ robo3t.home }}/{{ robo3t_version }}/{{ robo3t_lib }}/"
+- name: "Get > icon"
+  become: true
+  become_user: "{{ primary_user.id }}"
+  ansible.builtin.copy:
+    src: "robo3t.png"
+    dest: "{{ robo3t.home }}/{{ robo3t_version }}/{{ robo3t_lib }}/"
   tags:
     - "{{ robo3t.tags }}"
 
 #################################################################
 
-- name: "config > dirs"
+- name: "Config > dirs"
   with_items:
     - "{{ all_users }}"
-  file:
-    name    : "{{ item.home }}/.3T/robo-3t/{{ robo3t_version }}/"
-    state   : "directory"
-    recurse : "yes"
-    owner   : "{{ item.id }}"
-    group   : "{{ item.id }}"
-    mode    : "u=rwX,g=rwX,o=rX"
+  ansible.builtin.file:
+    name: "{{ item.home }}/.3T/robo-3t/{{ robo3t_version }}/"
+    state: "directory"
+    recurse: "yes"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "u=rwX,g=rwX,o=rX"
   tags:
     - "{{ robo3t.tags }}"
 
-- name: "config > connections"
+- name: "Config > connections"
   with_items:
     - "{{ all_users }}"
-  template:
-    src     : "robo3t.json.j2"
-    dest    : "{{ item.home }}/.3T/robo-3t/{{ robo3t_version }}/robo3t.json"
-    owner   : "{{ item.id }}"
-    group   : "{{ item.id }}"
-    mode    : "0664"
+  ansible.builtin.template:
+    src: "robo3t.json.j2"
+    dest: "{{ item.home }}/.3T/robo-3t/{{ robo3t_version }}/robo3t.json"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0664"
   tags:
     - "{{ robo3t.tags }}"
 
 #################################################################
 
-- name: "launcher > desktop icon"
-  template:
-    src   : "{{ desktop }}.desktop.j2"
-    dest  : "/usr/share/applications/{{ desktop }}.desktop"
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : "0644"
+- name: "Launcher > desktop icon"
+  ansible.builtin.template:
+    src: "{{ desktop }}.desktop.j2"
+    dest: "/usr/share/applications/{{ desktop }}.desktop"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0644"
   tags:
     - "{{ robo3t.tags }}"
     - "launcher"
 
-- name    : "launcher > add"
-  become : yes
-  become_user : "{{ primary_user.id }}"
-  script  : "../../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
-  changed_when: False
+- name: "Launcher > add"
+  become: true
+  become_user: "{{ primary_user.id }}"
+  ansible.builtin.script: "../../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
+  changed_when: false
   tags:
     - "{{ robo3t.tags }}"
     - "launcher"
 
 #################################################################
-

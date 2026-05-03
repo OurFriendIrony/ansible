@@ -1,47 +1,44 @@
 ---
 
 libraries_apt:
-  - python3-pip       # Package Manager - Python
-  - snapd             # Package Manager - Unified Linux
-  - git               # Source Control
-  - curl              # Api Tool
-  - rename            # Use sed to rename files
-  - wget              # Remote resource pull
-  - tree              # Dir Structure tree
-  - jq                # Json Parser
-  - xclip             # Store to Clipboard
-  - gawk              # Extended awk
-  - p7zip-full        # 7z [1]
-  - multitail         # tail multiple files
+  - python3-pip # Package Manager - Python
+  - snapd # Package Manager - Unified Linux
+  - git # Source Control
+  - curl # Api Tool
+  - rename # Use sed to rename files
+  - wget # Remote resource pull
+  - tree # Dir Structure tree
+  - jq # Json Parser
+  - xclip # Store to Clipboard
+  - gawk # Extended awk
+  - p7zip-full # 7z [1]
+  - multitail # tail multiple files
 
 libraries_pip:
-  - yq                # Yaml Parser
+  - yq # Yaml Parser
 
 libraries_choco:
-  - netcat            # Test Network Connectivity
-  - unxutils          # Collection of Unix Utils (grep, etc)
+  - netcat # Test Network Connectivity
+  - unxutils # Collection of Unix Utils (grep, etc)
 
 libraries_snap: []
-
 libraries_apt_gui:
-  - baobab            # Disk Usage
-  - vlc               # Media Player
-  - gedit             # Text Editor
-  - p7zip-rar         # 7z [2]
+  - baobab # Disk Usage
+  - vlc # Media Player
+  - gedit # Text Editor
+  - p7zip-rar # 7z [2]
 
 libraries_pip_gui: []
-
 libraries_choco_gui:
-  - 7zip              # Zip Utility
-  - speccy            # System Spec
-  - windirstat        # Disk Usage
-  - ccleaner          # Clean Windows Junk
-  - vlc               # Media Player
-  - qbittorrent       # Torrent Manager
-  - yumi-uefi         # USB Boot Writer
-  - notepadplusplus   # Text Editor
-  - gpu-z             # GPU/CPU Monitor
+  - 7zip # Zip Utility
+  - speccy # System Spec
+  - windirstat # Disk Usage
+  - ccleaner # Clean Windows Junk
+  - vlc # Media Player
+  - qbittorrent # Torrent Manager
+  - yumi-uefi # USB Boot Writer
+  - notepadplusplus # Text Editor
+  - gpu-z # GPU/CPU Monitor
 
 libraries_snap_gui:
-  - p7zip-desktop     # 7z [3]
-
+  - p7zip-desktop # 7z [3]

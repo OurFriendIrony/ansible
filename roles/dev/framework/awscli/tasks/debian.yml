@@ -1,65 +1,63 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "mkdirs"
+- name: "Mkdirs"
   with_items:
     - "{{ all_users }}"
-  file:
-    name    : "{{ item.home  }}/.aws"
-    state   : "directory"
-    recurse : "yes"
-    owner   : "{{ item.id }}"
-    group   : "{{ item.id }}"
-    mode    : "0755"
+  ansible.builtin.file:
+    name: "{{ item.home }}/.aws"
+    state: "directory"
+    recurse: "yes"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0755"
   tags:
     - "{{ awscli.tags }}"
 
 #################################################################
 
-- name: "pip > install"
-  pip :
-    name      : "{{ awscli.libraries.pip }}"
-    state     : "latest"
+- name: "Pip > install"
+  ansible.builtin.pip:
+    name: "{{ awscli.libraries.pip }}"
+    state: "latest"
     executable: "pip3"
   tags:
     - "{{ awscli.tags }}"
 
-- name: "copy > settings"
+- name: "Copy > settings"
   with_items:
     - "{{ all_users }}"
-  template:
-    src   : "aws_settings.j2"
-    dest  : "{{ item.home }}/.aws_settings"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : 0755
+  ansible.builtin.template:
+    src: "aws_settings.j2"
+    dest: "{{ item.home }}/.aws_settings"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0755"
   tags:
     - "{{ awscli.tags }}"
 
-- name: "copy > config"
+- name: "Copy > config"
   with_items:
     - "{{ all_users }}"
-  template:
-    src   : "aws_config.j2"
-    dest  : "{{ item.home }}/.aws/config"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : 0755
+  ansible.builtin.template:
+    src: "aws_config.j2"
+    dest: "{{ item.home }}/.aws/config"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0755"
   tags:
     - "{{ awscli.tags }}"
 
-- name: "copy > credentials"
+- name: "Copy > credentials"
   with_items:
     - "{{ all_users }}"
-  template:
-    src   : "aws_credentials.j2"
-    dest  : "{{ item.home }}/.aws/credentials"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : 0755
+  ansible.builtin.template:
+    src: "aws_credentials.j2"
+    dest: "{{ item.home }}/.aws/credentials"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0755"
   tags:
     - "{{ awscli.tags }}"
 
 #################################################################
-

@@ -1,376 +1,376 @@
 ---
-#################################################################
+# ################################################################
 
-- name: "symlinks"
+- name: "Symlinks"
   with_items:
     - "{{ retropie_shortcuts }}"
-  file:
-    src     : "{{ item.src  }}"
-    dest    : "{{ item.dest }}"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
-    state   : "link"
-    force   : "yes"
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
+    state: "link"
+    force: "yes"
   tags:
     - retropie
     - retropie-dirs
 
-- name: "mkdirs > general dirs"
+- name: "Mkdirs > general dirs"
   with_items:
     - "{{ retropie_dirs }}"
-  file:
-    path    : "{{ item }}"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
-    state   : "directory"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
+    state: "directory"
   tags:
     - retropie
     - retropie-dirs
 
-- name: "mkdirs > save and state dirs"
+- name: "Mkdirs > save and state dirs"
   when:
     - item[0].has_saves is defined
     - item[0].has_saves | bool
   with_nested:
     - "{{ retropie_emus }}"
-    - [ "states", "saves", "roms" ]
-  file:
-    path    : "{{ retropie_home }}/{{ item[1] }}/{{ item[0].name }}"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
-    state   : "directory"
+    - ["states", "saves", "roms"]
+  ansible.builtin.file:
+    path: "{{ retropie_home }}/{{ item[1] }}/{{ item[0].name }}"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
+    state: "directory"
   tags:
     - retropie
     - retropie-dirs
 
 #################################################################
 
-- name: "boot > capture partuuid"
-  shell:
+- name: "Boot > capture partuuid"
+  ansible.builtin.shell:
     cmd: "blkid | grep retropie | awk '{print $5}' | grep -oh '\\w\\w\\w\\w\\w\\w\\w\\w-\\w\\w'"
   register: disk_partuuid
   tags:
     - retropie
     - retropie-boot
 
-- name: "boot > cmdline.txt"
+- name: "Boot > cmdline.txt"
   when:
     - disk_partuuid.stdout is defined
     - disk_partuuid.stdout != ""
-  template:
-    src     : "boot_cmdline.txt.j2"
-    dest    : "/boot/cmdline.txt"
-    owner   : "root"
-    group   : "root"
-    mode    : "0664"
+  ansible.builtin.template:
+    src: "boot_cmdline.txt.j2"
+    dest: "/boot/cmdline.txt"
+    owner: "root"
+    group: "root"
+    mode: "0664"
   tags:
     - retropie
     - retropie-boot
 
-- name: "boot > config.txt"
-  template:
-    src     : "boot_config.txt.j2"
-    dest    : "/boot/config.txt"
-    owner   : "root"
-    group   : "root"
-    mode    : "0664"
+- name: "Boot > config.txt"
+  ansible.builtin.template:
+    src: "boot_config.txt.j2"
+    dest: "/boot/config.txt"
+    owner: "root"
+    group: "root"
+    mode: "0664"
   tags:
     - retropie
     - retropie-boot
 
 #################################################################
 
-- name: "wifi > set country"
-  lineinfile:
-    path    : "/etc/wpa_supplicant/wpa_supplicant.conf"
-    regexp  : "^country="
-    line    : "country=GB"
+- name: "Wifi > set country"
+  ansible.builtin.lineinfile:
+    path: "/etc/wpa_supplicant/wpa_supplicant.conf"
+    regexp: "^country="
+    line: "country=GB"
   tags:
     - retropie
     - retropie-wifi
 
 #################################################################
 
-- name: "pi user > bios > binary > apply"
-  unarchive:
-    src     : "bin/bios_general.zip"
-    dest    : "{{ retropie_home }}/BIOS"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
+- name: "Pi user > bios > binary > apply"
+  ansible.builtin.unarchive:
+    src: "bin/bios_general.zip"
+    dest: "{{ retropie_home }}/BIOS"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
   tags:
     - retropie
     - retropie-pi
 
 #################################################################
 
-- name: "personalisation > splashscreens > binary"
-  unarchive:
-    src     : "bin/splashscreens.zip"
-    dest    : "{{ retropie_home }}/splashscreens"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
-    creates : "{{ retropie_home }}/splashscreens/retropie.mov"
+- name: "Personalisation > splashscreens > binary"
+  ansible.builtin.unarchive:
+    src: "bin/splashscreens.zip"
+    dest: "{{ retropie_home }}/splashscreens"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
+    creates: "{{ retropie_home }}/splashscreens/retropie.mov"
   tags:
     - retropie
     - retropie-personalise
 
-- name: "personalisation > splashscreens > config"
-  template:
-    src     : "splashscreen.list.j2"
-    dest    : "/etc/splashscreen.list"
-    owner   : "root"
-    group   : "root"
-    mode    : "0664"
+- name: "Personalisation > splashscreens > config"
+  ansible.builtin.template:
+    src: "splashscreen.list.j2"
+    dest: "/etc/splashscreen.list"
+    owner: "root"
+    group: "root"
+    mode: "0664"
   tags:
     - retropie
     - retropie-personalise
 
-- name: "personalisation > themes > binary"
-  unarchive:
-    src     : "bin/themes.zip"
-    dest    : "/etc/emulationstation/themes"
-    owner   : "root"
-    group   : "root"
-    mode    : "0775"
+- name: "Personalisation > themes > binary"
+  ansible.builtin.unarchive:
+    src: "bin/themes.zip"
+    dest: "/etc/emulationstation/themes"
+    owner: "root"
+    group: "root"
+    mode: "0775"
   tags:
     - retropie
     - retropie-personalise
 
-- name: "personalisation > game images > binary"
-  unarchive:
-    src     : "bin/game_images.zip"
-    dest    : "/opt/retropie/configs/all/emulationstation"
-    owner   : "pi"
-    group   : "pi"
+- name: "Personalisation > game images > binary"
+  ansible.builtin.unarchive:
+    src: "bin/game_images.zip"
+    dest: "/opt/retropie/configs/all/emulationstation"
+    owner: "pi"
+    group: "pi"
   tags:
     - retropie
     - retropie-personalise
 
-- name: "personalisation > gamelists > makedirs"
+- name: "Personalisation > gamelists > makedirs"
   with_items:
     - "{{ retropie_emus }}"
-  file:
-    path    : "/opt/retropie/configs/all/emulationstation/gamelists/{{ item.name }}"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
-    state   : "directory"
+  ansible.builtin.file:
+    path: "/opt/retropie/configs/all/emulationstation/gamelists/{{ item.name }}"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
+    state: "directory"
   tags:
     - retropie
     - retropie-personalise
 
-- name: "personalisation > gamelists > config"
+- name: "Personalisation > gamelists > config"
   with_items:
     - "{{ retropie_emus }}"
-  copy:
-    src     : "gamelists/{{ item.name }}_gamelist.xml"
-    dest    : "/opt/retropie/configs/all/emulationstation/gamelists/{{ item.name }}/gamelist.xml"
-    owner   : "pi"
-    group   : "pi"
+  ansible.builtin.copy:
+    src: "gamelists/{{ item.name }}_gamelist.xml"
+    dest: "/opt/retropie/configs/all/emulationstation/gamelists/{{ item.name }}/gamelist.xml"
+    owner: "pi"
+    group: "pi"
   tags:
     - retropie
     - retropie-personalise
 
 #################################################################
 
-- name: "emulationstation > es emulated system > config > apply"
-  template:
-    src     : "es_systems.cfg.j2"
-    dest    : "/etc/emulationstation/es_systems.cfg"
-    owner   : "root"
-    group   : "root"
-    mode    : "0664"
+- name: "Emulationstation > es emulated system > config > apply"
+  ansible.builtin.template:
+    src: "es_systems.cfg.j2"
+    dest: "/etc/emulationstation/es_systems.cfg"
+    owner: "root"
+    group: "root"
+    mode: "0664"
   tags:
     - retropie
     - retropie-es
 
 #################################################################
 
-- name: "retropie > config > mkdirs"
+- name: "Retropie > config > mkdirs"
   when:
     - item.has_saves is defined
     - item.has_saves | bool
   with_items:
     - "{{ retropie_emus }}"
-  file:
-    path    : "{{ retropie_cfg }}/{{ item.name }}"
-    state   : "directory"
+  ansible.builtin.file:
+    path: "{{ retropie_cfg }}/{{ item.name }}"
+    state: "directory"
   tags:
     - retropie
     - retropie-cfg
 
-- name: "retropie > config > emu > retroarch.cfg"
+- name: "Retropie > config > emu > retroarch.cfg"
   when:
     - item.has_saves is defined
     - item.has_saves | bool
   with_items:
     - "{{ retropie_emus }}"
-  template:
-    src     : "retroarch_emu.j2"
-    dest    : "{{ retropie_cfg }}/{{ item.name }}/retroarch.cfg"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+  ansible.builtin.template:
+    src: "retroarch_emu.j2"
+    dest: "{{ retropie_cfg }}/{{ item.name }}/retroarch.cfg"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
     - retropie-cfg
 
-- name: "retropie > config > all > retroarch.cfg"
-  template:
-    src     : "retroarch_all.j2"
-    dest    : "{{ retropie_cfg }}/all/retroarch.cfg"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+- name: "Retropie > config > all > retroarch.cfg"
+  ansible.builtin.template:
+    src: "retroarch_all.j2"
+    dest: "{{ retropie_cfg }}/all/retroarch.cfg"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
     - retropie-cfg
 
-- name: "retropie > config > all > retroarch-core-options.cfg"
-  template:
-    src     : "retroarch_core.j2"
-    dest    : "{{ retropie_cfg }}/all/retroarch-core-options.cfg"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+- name: "Retropie > config > all > retroarch-core-options.cfg"
+  ansible.builtin.template:
+    src: "retroarch_core.j2"
+    dest: "{{ retropie_cfg }}/all/retroarch-core-options.cfg"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
     - retropie-cfg
 
-- name: "retropie > config > autoconf > apply"
-  template:
-    src     : "autoconf.cfg.j2"
-    dest    : "{{ retropie_cfg }}/all/autoconf.cfg"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+- name: "Retropie > config > autoconf > apply"
+  ansible.builtin.template:
+    src: "autoconf.cfg.j2"
+    dest: "{{ retropie_cfg }}/all/autoconf.cfg"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
     - retropie-cfg
 
-- name: "retropie > config > runcommand > apply"
-  template:
-    src     : "runcommand.cfg.j2"
-    dest    : "{{ retropie_cfg }}/all/runcommand.cfg"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+- name: "Retropie > config > runcommand > apply"
+  ansible.builtin.template:
+    src: "runcommand.cfg.j2"
+    dest: "{{ retropie_cfg }}/all/runcommand.cfg"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
     - retropie-cfg
 
-- name: "retropie > config > autostart > apply"
-  template:
-    src     : "autostart.sh.j2"
-    dest    : "{{ retropie_cfg }}/all/autostart.sh"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+- name: "Retropie > config > autostart > apply"
+  ansible.builtin.template:
+    src: "autostart.sh.j2"
+    dest: "{{ retropie_cfg }}/all/autostart.sh"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
     - retropie-cfg
 
-- name: "retropie > config > scraper > apply"
-  template:
-    src     : "scraper.cfg.j2"
-    dest    : "{{ retropie_cfg }}/all/scraper.cfg"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+- name: "Retropie > config > scraper > apply"
+  ansible.builtin.template:
+    src: "scraper.cfg.j2"
+    dest: "{{ retropie_cfg }}/all/scraper.cfg"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
     - retropie-cfg
 
-- name: "retropie > config > es settings > apply"
-  template:
-    src     : "es_settings.cfg.j2"
-    dest    : "{{ retropie_cfg }}/all/emulationstation/es_settings.cfg"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+- name: "Retropie > config > es settings > apply"
+  ansible.builtin.template:
+    src: "es_settings.cfg.j2"
+    dest: "{{ retropie_cfg }}/all/emulationstation/es_settings.cfg"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
     - retropie-cfg
 
 #################################################################
 
-- name: "controller > emulators"
+- name: "Controller > emulators"
   with_items:
     - "{{ retropie_controllers }}"
-  template:
-    src     : "controller.j2"
-    dest    : "{{ retropie_cfg }}/all/retroarch/autoconfig/{{ item.name }}.cfg"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+  ansible.builtin.template:
+    src: "controller.j2"
+    dest: "{{ retropie_cfg }}/all/retroarch/autoconfig/{{ item.name }}.cfg"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
     - retropie-controllers
 
-- name: "controller > emulationstation"
-  template:
-    src     : "controller_emulationstation.j2"
-    dest    : "{{ retropie_cfg }}/all/emulationstation/es_input.cfg"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+- name: "Controller > emulationstation"
+  ansible.builtin.template:
+    src: "controller_emulationstation.j2"
+    dest: "{{ retropie_cfg }}/all/emulationstation/es_input.cfg"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
-    - retropie-controllers
-
-#################################################################
-
-- name: "n64 > change default emulator"
-  lineinfile:
-    path    : "{{ retropie_n64.cfg }}/emulators.cfg"
-    regexp  : "^default"
-    line    : 'default = "lr-mupen64plus"'
-  tags:
-    - retropie
-    - retropie-n64
-
-- name: "n64 > mkdirs"
-  file:
-    path    : "{{ retropie_cfg }}/n64/{{ retropie_n64.emu }}"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
-    state   : "directory"
-  tags:
-    - retropie
-    - retropie-n64
-
-- name: "n64 > controller remap"
-  template:
-    src     : "controller_n64.j2"
-    dest    : "{{ retropie_cfg }}/n64/{{ retropie_n64.emu }}/{{ retropie_n64.emu }}.rmp"
-  tags:
-    - retropie
-    - retropie-n64
     - retropie-controllers
 
 #################################################################
 
-- name: "psx > mkdirs"
-  file:
-    path    : "{{ retropie_cfg }}/psx/{{ retropie_psx.emu }}"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
-    state   : "directory"
+- name: "N64 > change default emulator"
+  ansible.builtin.lineinfile:
+    path: "{{ retropie_n64.cfg }}/emulators.cfg"
+    regexp: "^default"
+    line: 'default = "lr-mupen64plus"'
+  tags:
+    - retropie
+    - retropie-n64
+
+- name: "N64 > mkdirs"
+  ansible.builtin.file:
+    path: "{{ retropie_cfg }}/n64/{{ retropie_n64.emu }}"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
+    state: "directory"
+  tags:
+    - retropie
+    - retropie-n64
+
+- name: "N64 > controller remap"
+  ansible.builtin.template:
+    src: "controller_n64.j2"
+    dest: "{{ retropie_cfg }}/n64/{{ retropie_n64.emu }}/{{ retropie_n64.emu }}.rmp"
+  tags:
+    - retropie
+    - retropie-n64
+    - retropie-controllers
+
+#################################################################
+
+- name: "Psx > mkdirs"
+  ansible.builtin.file:
+    path: "{{ retropie_cfg }}/psx/{{ retropie_psx.emu }}"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
+    state: "directory"
   tags:
     - retropie
     - retropie-psx
 
-- name: "psx > controller remap"
-  template:
-    src     : "controller_psx.j2"
-    dest    : "{{ retropie_cfg }}/psx/{{ retropie_psx.emu }}/{{ retropie_psx.emu }}.rmp"
+- name: "Psx > controller remap"
+  ansible.builtin.template:
+    src: "controller_psx.j2"
+    dest: "{{ retropie_cfg }}/psx/{{ retropie_psx.emu }}/{{ retropie_psx.emu }}.rmp"
   tags:
     - retropie
     - retropie-psx
@@ -378,48 +378,48 @@
 
 #################################################################
 
-- name: "mkdirs > dreamcast"
-  file:
-    path    : "{{ retropie_dreamcast.cfg }}/mappings"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
-    state   : "directory"
+- name: "Mkdirs > dreamcast"
+  ansible.builtin.file:
+    path: "{{ retropie_dreamcast.cfg }}/mappings"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
+    state: "directory"
   tags:
     - retropie
     - retropie-dreamcast
 
-- name: "dreamcast > config"
-  template:
-    src     : "dreamcast_emu.cfg.j2"
-    dest    : "{{ retropie_dreamcast.cfg }}/emu.cfg"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+- name: "Dreamcast > config"
+  ansible.builtin.template:
+    src: "dreamcast_emu.cfg.j2"
+    dest: "{{ retropie_dreamcast.cfg }}/emu.cfg"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
     - retropie-dreamcast
 
-- name: "dreamcast > controller memory cards"
-  unarchive:
-    src     : "bin/dreamcast_vmu.zip"
-    dest    : "{{ retropie_dreamcast.cfg }}"
-    creates : "{{ retropie_dreamcast.cfg }}/vmu_save_A1.bin"
+- name: "Dreamcast > controller memory cards"
+  ansible.builtin.unarchive:
+    src: "bin/dreamcast_vmu.zip"
+    dest: "{{ retropie_dreamcast.cfg }}"
+    creates: "{{ retropie_dreamcast.cfg }}/vmu_save_A1.bin"
   tags:
     - retropie
     - retropie-dreamcast
 
-- name: "dreamcast > controller"
+- name: "Dreamcast > controller"
   with_items:
-    - { src: "xbox360",   dest: "controller_xpad"     }
-    - { src: "xboxone",   dest: "controller_generic"  }
-    - { src: "keyboard",  dest: "keyboard"            }
-  template:
-    src     : "controller_dreamcast_{{ item.src }}.j2"
-    dest    : "{{ retropie_dreamcast.cfg }}/mappings/{{ item.dest }}.cfg"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+    - { src: "xbox360", dest: "controller_xpad" }
+    - { src: "xboxone", dest: "controller_generic" }
+    - { src: "keyboard", dest: "keyboard" }
+  ansible.builtin.template:
+    src: "controller_dreamcast_{{ item.src }}.j2"
+    dest: "{{ retropie_dreamcast.cfg }}/mappings/{{ item.dest }}.cfg"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
     - retropie-dreamcast
@@ -427,166 +427,165 @@
 
 #################################################################
 
-- name: "nds > mkdirs"
-  file:
-    path    : "{{ retropie_cfg }}/nds/{{ retropie_nds.emu }}/config"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
-    state   : "directory"
+- name: "Nds > mkdirs"
+  ansible.builtin.file:
+    path: "{{ retropie_cfg }}/nds/{{ retropie_nds.emu }}/config"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
+    state: "directory"
   tags:
     - retropie
     - retropie-nds
 
-- name: "nds > config"
-  template:
-    src     : "nds_cfg.j2"
-    dest    : "{{ retropie_nds.cfg }}/drastic.cfg"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0664"
+- name: "Nds > config"
+  ansible.builtin.template:
+    src: "nds_cfg.j2"
+    dest: "{{ retropie_nds.cfg }}/drastic.cfg"
+    owner: "pi"
+    group: "pi"
+    mode: "0664"
   tags:
     - retropie
     - retropie-nds
 
 #################################################################
 
-- name: "python scripts > git clone"
-  become  : "{{ primary_user.id }}"
-  git:
-    repo    : "{{ retropie_git.url  }}"
-    dest    : "{{ retropie_git.dest }}"
-    version : "master"
+- name: "Python scripts > git clone"
+  become: "{{ primary_user.id }}"
+  ansible.builtin.git:
+    repo: "{{ retropie_git.url }}"
+    dest: "{{ retropie_git.dest }}"
+    version: "master"
   tags:
     - retropie
     - retropie-python
 
-- name: "python scripts > symlinks"
-  file:
-    src     : "{{ retropie_git.src      }}"
-    dest    : "{{ retropie_python.home  }}"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
-    state   : "link"
-    force   : "yes"
+- name: "Python scripts > symlinks"
+  ansible.builtin.file:
+    src: "{{ retropie_git.src }}"
+    dest: "{{ retropie_python.home }}"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
+    state: "link"
+    force: "yes"
   tags:
     - retropie
     - retropie-python
 
-- name: "python scripts > mkdir"
+- name: "Python scripts > mkdir"
   with_items:
     - "{{ retropie_python.bgm_home }}"
-  file:
-    dest    : "{{ item }}"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
-    state   : "directory"
+  ansible.builtin.file:
+    dest: "{{ item }}"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
+    state: "directory"
   tags:
     - retropie
     - retropie-python
 
-- name: "python scripts > apt"
-  apt:
-    name    : "{{ retropie_python.apt }}"
-    state   : "latest"
+- name: "Python scripts > apt"
+  ansible.builtin.apt:
+    name: "{{ retropie_python.apt }}"
+    state: "latest"
   tags:
     - retropie
     - retropie-python
 
-- name: "python scripts > resolve dependancies"
-  pip:
-    requirements : "{{ retropie_git.dest }}/requirements.txt"
+- name: "Python scripts > resolve dependancies"
+  ansible.builtin.pip:
+    requirements: "{{ retropie_git.dest }}/requirements.txt"
     executable: "pip3"
   tags:
     - retropie
     - retropie-python
 
-- name: "python scripts > install background music"
-  unarchive:
-    src     : "bin/bgm.zip"
-    dest    : "{{ retropie_python.bgm_home }}"
+- name: "Python scripts > install background music"
+  ansible.builtin.unarchive:
+    src: "bin/bgm.zip"
+    dest: "{{ retropie_python.bgm_home }}"
   tags:
     - retropie
     - retropie-python
 
-- name: "python scripts > set bgm, restart and lightshow scripts on start"
-  template:
-    src     : "rc.local.j2"
-    dest    : "/etc/rc.local"
+- name: "Python scripts > set bgm, restart and lightshow scripts on start"
+  ansible.builtin.template:
+    src: "rc.local.j2"
+    dest: "/etc/rc.local"
   tags:
     - retropie
     - retropie-python
 
 #################################################################
 
-- name: "fba > install bios"
-  unarchive:
-    src     : "bin/bios_fba.zip"
-    dest    : "{{ retropie_fba.home }}"
+- name: "Fba > install bios"
+  ansible.builtin.unarchive:
+    src: "bin/bios_fba.zip"
+    dest: "{{ retropie_fba.home }}"
   tags:
     - retropie
     - retropie-fba
 
 #################################################################
 
-- name: "steam > mkdir"
+- name: "Steam > mkdir"
   when: retropie_enabled_steam | bool
   with_items:
     - "{{ retropie_steam.home }}"
-    - "{{ retropie_steam.cfg  }}"
-  file:
-    dest    : "{{ item }}"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
-    state   : "directory"
+    - "{{ retropie_steam.cfg }}"
+  ansible.builtin.file:
+    dest: "{{ item }}"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
+    state: "directory"
   tags:
     - retropie
     - retropie-steam
 
-- name: "steam > apt key"
+- name: "Steam > apt key"
   when: retropie_enabled_steam | bool
-  apt_key:
-    url     : "http://archive.itimmer.nl/itimmer.gpg"
-    state   : "present"
+  ansible.builtin.apt_key:
+    url: "http://archive.itimmer.nl/itimmer.gpg"
+    state: "present"
   tags:
     - retropie
     - retropie-steam
 
-- name: "steam > apt source"
+- name: "Steam > apt source"
   when: retropie_enabled_steam | bool
-  apt_repository:
-    repo    : "deb http://archive.itimmer.nl/raspbian/moonlight stretch main"
-    state   : "present"
+  ansible.builtin.apt_repository:
+    repo: "deb http://archive.itimmer.nl/raspbian/moonlight stretch main"
+    state: "present"
   tags:
     - retropie
     - retropie-steam
 
-- name: "steam > apt install"
+- name: "Steam > apt install"
   when: retropie_enabled_steam | bool
-  apt:
-    name    : "moonlight-embedded"
-    state   : "present"
+  ansible.builtin.apt:
+    name: "moonlight-embedded"
+    state: "present"
     update_cache: "yes"
   tags:
     - retropie
     - retropie-steam
 
-- name: "steam > 'roms'"
+- name: "Steam > 'roms'"
   when: retropie_enabled_steam | bool
   with_items:
     - "{{ retropie_steam.modes }}"
-  template:
-    src     : "steam.j2"
-    dest    : "{{ retropie_steam.home }}/{{ item.res }}_{{ item.fps }}fps.sh"
-    owner   : "pi"
-    group   : "pi"
-    mode    : "0775"
+  ansible.builtin.template:
+    src: "steam.j2"
+    dest: "{{ retropie_steam.home }}/{{ item.res }}_{{ item.fps }}fps.sh"
+    owner: "pi"
+    group: "pi"
+    mode: "0775"
   tags:
     - retropie
     - retropie-steam
 
 #################################################################
-

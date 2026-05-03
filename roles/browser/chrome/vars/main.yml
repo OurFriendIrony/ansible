@@ -1,11 +1,10 @@
 ---
 
 chrome:
-  url     : "https://dl.google.com/linux/direct/"
-  file    : "google-chrome-stable_current_amd64.deb"
+  url: "https://dl.google.com/linux/direct/"
+  file: "google-chrome-stable_current_amd64.deb"
 
-desktop   : "google-chrome"
+desktop: "google-chrome"
 
 libraries_choco:
-  - googlechrome 
-
+  - googlechrome

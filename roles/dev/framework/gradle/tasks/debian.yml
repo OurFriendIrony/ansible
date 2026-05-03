@@ -1,65 +1,63 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "mkdirs"
+- name: "Mkdirs"
   with_items:
     - "{{ gradle.home }}"
-  file:
-    name    : "{{ item            }}"
-    owner   : "{{ primary_user.id }}"
-    group   : "{{ primary_user.id }}"
-    state   : "directory"
+  ansible.builtin.file:
+    name: "{{ item }}"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    state: "directory"
   tags:
     - "{{ gradle.tags }}"
 
 #################################################################
 
-- name: "apt > install"
-  apt:
-    name    : "{{ gradle.libraries.apt }}"
-    state   : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ gradle.libraries.apt }}"
+    state: "latest"
   tags:
     - "{{ gradle.tags }}"
 
 #################################################################
 
-- name: "unpack"
-  unarchive:
-    src         : "{{ gradle.url      }}{{ gradle.zip }}"
-    dest        : "{{ gradle.home     }}"
-    owner       : "{{ primary_user.id }}"
-    group       : "{{ primary_user.id }}"
-    creates     : "{{ gradle.home     }}/gradle-{{ gradle_version }}/"
-    remote_src  : "yes"
+- name: "Unpack"
+  ansible.builtin.unarchive:
+    src: "{{ gradle.url }}{{ gradle.zip }}"
+    dest: "{{ gradle.home }}"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    creates: "{{ gradle.home }}/gradle-{{ gradle_version }}/"
+    remote_src: "yes"
   tags:
     - "{{ gradle.tags }}"
 
 #################################################################
 
-- name: "config > mkdirs"
+- name: "Config > mkdirs"
   with_items:
     - "{{ all_users }}"
-  file:
-    name    : "{{ item.home }}/.gradle"
-    owner   : "{{ item.id   }}"
-    group   : "{{ item.id   }}"
-    state   : "directory"
+  ansible.builtin.file:
+    name: "{{ item.home }}/.gradle"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    state: "directory"
   tags:
     - "{{ gradle.tags }}"
     - "proxy"
 
-- name: "config > properties"
+- name: "Config > properties"
   with_items:
     - "{{ all_users }}"
-  template:
-    src     : "gradle.properties.j2"
-    dest    : "{{ item.home }}/.gradle/gradle.properties"
-    owner   : "{{ item.id   }}"
-    group   : "{{ item.id   }}"
+  ansible.builtin.template:
+    src: "gradle.properties.j2"
+    dest: "{{ item.home }}/.gradle/gradle.properties"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
   tags:
     - "{{ gradle.tags }}"
     - "proxy"
 
 #################################################################
-

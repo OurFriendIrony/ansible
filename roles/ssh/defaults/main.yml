@@ -1,6 +1,5 @@
 ---
 
-ssh_log_level   : "INFO"
-ssh_keys        : []
+ssh_log_level: "INFO"
+ssh_keys: []
 ssh_config_hosts: []
-

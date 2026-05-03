@@ -1,29 +1,27 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "groups > add"
+- name: "Groups > add"
   with_items:
     - "{{ all_users }}"
-  group:
-    name  : "{{ item.id   }}"
-    state : "present"
+  ansible.builtin.group:
+    name: "{{ item.id }}"
+    state: "present"
   tags:
     - "users"
 
 #################################################################
 
-- name: "users > add"
+- name: "Users > add"
   with_items:
     - "{{ all_users }}"
   ignore_errors: "yes"
-  user:
-    name  : "{{ item.id   }}"
-    group : "{{ item.id   }}"
-    home  : "{{ item.home }}"
-    state : "present"
+  ansible.builtin.user:
+    name: "{{ item.id }}"
+    group: "{{ item.id }}"
+    home: "{{ item.home }}"
+    state: "present"
   tags:
     - "users"
 
 #################################################################
-

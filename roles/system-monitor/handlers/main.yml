@@ -1,13 +1,11 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name  : "application > start"
+- name: "Application > start"
   become: "yes"
   become_user: "{{ primary_user.id }}"
-  shell : "nohup indicator-sysmonitor &"
-  tags  :
+  ansible.builtin.shell: "nohup indicator-sysmonitor &"
+  tags:
     - system-monitor
 
 #################################################################
-

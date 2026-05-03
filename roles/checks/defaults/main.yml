@@ -1,16 +1,15 @@
 ---
 
-dist_system         : ""
-dist_family         : ""
-dist_os             : ""
-dist_os_release     : ""
-dist_os_version     : ""
-dist_os_version_m   : ""
-machine_arch        : ""
-desktop_environment : ""
-vm_type             : ""
+dist_system: ""
+dist_family: ""
+dist_os: ""
+dist_os_release: ""
+dist_os_version: ""
+dist_os_version_m: ""
+machine_arch: ""
+desktop_environment: ""
+vm_type: ""
 
-is_gui              : False
-is_vm               : False
-is_proxy            : False
-
+is_gui: false
+is_vm: false
+is_proxy: false

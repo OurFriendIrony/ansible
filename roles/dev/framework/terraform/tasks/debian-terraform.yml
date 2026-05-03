@@ -1,20 +1,19 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > install"
-  apt:
-    name    : "{{ terraform.libraries.apt }}"
-    state   : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ terraform.libraries.apt }}"
+    state: "latest"
   tags:
     - "{{ terraform.tags }}"
 
 #################################################################
 
-- name: "tfenv > install"
-  become: yes
+- name: "Tfenv > install"
+  become: true
   become_user: "{{ primary_user.id }}"
-  git:
+  ansible.builtin.git:
     repo: "{{ terraform.url }}"
     dest: "{{ primary_user.home }}/{{ terraform.home }}"
   tags:
@@ -22,34 +21,33 @@
 
 #################################################################
 
-- name: "mkdirs"
-  file:
-    name    : "{{ primary_user.home }}/{{ terraform.home }}/versions"
-    state   : "directory"
-    owner   : "{{ primary_user.id }}"
-    group   : "{{ primary_user.id }}"
-    mode    : "0755"
+- name: "Mkdirs"
+  ansible.builtin.file:
+    name: "{{ primary_user.home }}/{{ terraform.home }}/versions"
+    state: "directory"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0755"
   tags:
     - "{{ terraform.tags }}"
 
-- name: "terraform > install"
+- name: "Terraform > install"
   with_items: "{{ terraform.versions }}"
-  become: yes
+  become: true
   become_user: "{{ primary_user.id }}"
-  shell:
+  ansible.builtin.shell:
     chdir: "{{ primary_user.home }}/{{ terraform.home }}/versions"
     cmd: "PATH=\"{{ primary_user.home }}/{{ terraform.home }}:${PATH}\" {{ primary_user.home }}/{{ terraform.home }}/bin/tfenv install {{ item }}"
     creates: "{{ item }}"
   tags:
     - "{{ terraform.tags }}"
 
-- name: "terraform > set version"
-  become: yes
+- name: "Terraform > set version"
+  become: true
   become_user: "{{ primary_user.id }}"
-  shell:
+  ansible.builtin.command:
     cmd: "{{ primary_user.home }}/{{ terraform.home }}/bin/tfenv use {{ terraform_version }}"
   tags:
     - "{{ terraform.tags }}"
 
 #################################################################
-

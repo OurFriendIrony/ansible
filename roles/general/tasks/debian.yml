@@ -1,82 +1,80 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > no gui"
+- name: "Apt > no gui"
   when:
     - libraries_apt | length > 0
-  apt:
-    name  : "{{ libraries_apt }}"
-    state : "latest"
+  ansible.builtin.apt:
+    name: "{{ libraries_apt }}"
+    state: "latest"
   tags:
     - "general"
 
-- name: "apt > gui"
+- name: "Apt > gui"
   when:
     - is_gui
     - libraries_apt_gui | length > 0
-  apt:
-    name  : "{{ libraries_apt_gui }}"
-    state : "latest"
+  ansible.builtin.apt:
+    name: "{{ libraries_apt_gui }}"
+    state: "latest"
   tags:
     - "general"
 
-- name: "pip > no gui"
+- name: "Pip > no gui"
   when:
     - libraries_pip | length > 0
-  pip:
-    name  : "{{ libraries_pip }}"
-    state : "latest"
+  ansible.builtin.pip:
+    name: "{{ libraries_pip }}"
+    state: "latest"
     executable: "pip3"
   tags:
     - "general"
 
-- name: "pip > gui"
+- name: "Pip > gui"
   when:
     - is_gui
     - libraries_pip_gui | length > 0
-  pip:
-    name  : "{{ libraries_pip_gui }}"
-    state : "latest"
+  ansible.builtin.pip:
+    name: "{{ libraries_pip_gui }}"
+    state: "latest"
     executable: "pip3"
   tags:
     - "general"
 
-- name: "snap > no gui"
+- name: "Snap > no gui"
   when:
     - libraries_snap | length > 0
-  snap:
-    name  : "{{ libraries_snap }}"
-    state : "present"
+  community.general.snap:
+    name: "{{ libraries_snap }}"
+    state: "present"
   tags:
     - "general"
 
-- name: "snap > gui"
+- name: "Snap > gui"
   when:
     - is_gui
     - libraries_snap_gui | length > 0
-  snap:
-    name  : "{{ libraries_snap_gui }}"
-    state : "present"
+  community.general.snap:
+    name: "{{ libraries_snap_gui }}"
+    state: "present"
   tags:
     - "general"
 
 #################################################################
 
-- name: "additional mounts"
+- name: "Additional mounts"
   when:
     - mount_points is iterable
   with_items:
     - "{{ mount_points }}"
-  mount:
-    path  : "{{ item.path }}"
-    src   : "UUID={{ item.uuid }}"
+  ansible.posix.mount:
+    path: "{{ item.path }}"
+    src: "UUID={{ item.uuid }}"
     fstype: "{{ item.fs }}"
-    opts  : "{{ item.opts | default( defaults.mount_opts ) }}"
-    state : "mounted"
+    opts: "{{ item.opts | default(defaults.mount_opts) }}"
+    state: "mounted"
   tags:
     - "general"
     - "mount"
 
 #################################################################
-

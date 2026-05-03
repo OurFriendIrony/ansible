@@ -1,27 +1,25 @@
 ---
+# ################################################################
+
+- name: " "
+  ansible.builtin.include_tasks: "{{ dist_family }}-terraform.yml"
+  when:
+    - dist_family in [ 'debian' ]
+  tags:
+    - "{{ terraform.tags }}"
+
+- name: " "
+  ansible.builtin.include_tasks: "{{ dist_family }}-terragrunt.yml"
+  when:
+    - dist_family in [ 'debian' ]
+  tags:
+    - "{{ terraform.tags }}"
+
+- name: " "
+  ansible.builtin.include_tasks: "{{ dist_family }}-tfvar.yml"
+  when:
+    - dist_family in [ 'debian' ]
+  tags:
+    - "{{ terraform.tags }}"
 
 #################################################################
-
-- name: " "
-  include_tasks : "{{ dist_family }}-terraform.yml"
-  when:
-    - dist_family in [ 'debian' ]
-  tags:
-    - "{{ terraform.tags }}"
-
-- name: " "
-  include_tasks : "{{ dist_family }}-terragrunt.yml"
-  when:
-    - dist_family in [ 'debian' ]
-  tags:
-    - "{{ terraform.tags }}"
-
-- name: " "
-  include_tasks : "{{ dist_family }}-tfvar.yml"
-  when:
-    - dist_family in [ 'debian' ]
-  tags:
-    - "{{ terraform.tags }}"
-
-#################################################################
-

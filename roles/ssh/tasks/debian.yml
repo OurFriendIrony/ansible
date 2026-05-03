@@ -1,73 +1,71 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > install"
-  apt:
-    name    : "{{ ssh.libraries.apt }}"
-    state   : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ ssh.libraries.apt }}"
+    state: "latest"
   tags:
     - "{{ ssh.tags }}"
 
 #################################################################
 
-- name: "mkdirs"
+- name: "Mkdirs"
   with_nested:
     - "{{ all_users }}"
     - "{{ ssh.dirs }}"
-  file:
-    name    : "{{ item[0].home }}/{{ item[1] }}"
-    owner   : "{{ item[0].id }}"
-    group   : "{{ item[0].id }}"
-    mode    : "0755"
-    state   : "directory"
+  ansible.builtin.file:
+    name: "{{ item[0].home }}/{{ item[1] }}"
+    owner: "{{ item[0].id }}"
+    group: "{{ item[0].id }}"
+    mode: "0755"
+    state: "directory"
   tags:
     - "{{ ssh.tags }}"
 
 #################################################################
 
-- name: "config > templates"
+- name: "Config > templates"
   with_nested:
     - "{{ all_users }}"
     - "{{ ssh.templates }}"
-  template:
-    src     : "{{ item[1] }}.j2"
-    dest    : "{{ item[0].home }}/.ssh/{{ item[1] }}"
-    owner   : "{{ item[0].id }}"
-    group   : "{{ item[0].id }}"
-    mode    : "0664"
+  ansible.builtin.template:
+    src: "{{ item[1] }}.j2"
+    dest: "{{ item[0].home }}/.ssh/{{ item[1] }}"
+    owner: "{{ item[0].id }}"
+    group: "{{ item[0].id }}"
+    mode: "0664"
   tags:
     - "{{ ssh.tags }}"
 
 #################################################################
 
-- name: "config > pub keys"
+- name: "Config > pub keys"
   with_nested:
     - "{{ all_users }}"
     - "{{ ssh_keys }}"
-  template:
-    src     : "pub.j2"
-    dest    : "{{ item[0].home }}/.ssh/{{ item[1].name }}.pub"
-    owner   : "{{ item[0].id }}"
-    group   : "{{ item[0].id }}"
-    mode    : "0664"
+  ansible.builtin.template:
+    src: "pub.j2"
+    dest: "{{ item[0].home }}/.ssh/{{ item[1].name }}.pub"
+    owner: "{{ item[0].id }}"
+    group: "{{ item[0].id }}"
+    mode: "0664"
   tags:
     - "{{ ssh.tags }}"
 
 #################################################################
 
-- name: "config > .hushlogin"
+- name: "Config > .hushlogin"
   with_items:
     - "{{ all_users }}"
-  copy:
-    content : ""
-    dest    : "{{ item.home }}/.hushlogin"
-    owner   : "{{ item.id }}"
-    group   : "{{ item.id }}"
-    mode    : "0664"
-    force   : "no"
+  ansible.builtin.copy:
+    content: ""
+    dest: "{{ item.home }}/.hushlogin"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0664"
+    force: "no"
   tags:
     - "{{ ssh.tags }}"
 
 #################################################################
-

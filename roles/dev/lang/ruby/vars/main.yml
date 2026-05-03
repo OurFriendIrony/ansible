@@ -8,17 +8,17 @@ ruby:
       - "ruby"
 
   versions:
-  - "{{ ruby_version }}"
-  - "3.0.1"
-  - "2.7.0"
+    - "{{ ruby_version }}"
+    - "3.0.1"
+    - "2.7.0"
 
   rbenv:
-    url   : "https://github.com/rbenv/rbenv.git"
-    home  : ".rbenv"
+    url: "https://github.com/rbenv/rbenv.git"
+    home: ".rbenv"
 
   rbbuild:
-    url   : "https://github.com/rbenv/ruby-build.git"
-    home  : ".rbenv/plugins"
+    url: "https://github.com/rbenv/ruby-build.git"
+    home: ".rbenv/plugins"
 
   gems:
     - "bundler"
@@ -30,4 +30,3 @@ ruby:
     - dev-lang
     - dev-lang-ruby
     - ruby
-

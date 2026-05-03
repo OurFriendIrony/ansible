@@ -12,4 +12,3 @@ awscli:
     - dev-framework-aws
     - awscli
     - aws
-

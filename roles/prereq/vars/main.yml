@@ -10,4 +10,3 @@ libraries_apt:
     - "gnome-panel"
   all:
     - "python3-pip"
-

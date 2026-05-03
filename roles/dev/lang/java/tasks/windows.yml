@@ -1,47 +1,45 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "mkdir"
-  win_file:
-    path  : "{{ java.home_win   }}"
-    state : directory
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : 0755
+- name: "Mkdir"
+  ansible.windows.win_file:
+    path: "{{ java.home_win }}"
+    state: directory
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0755"
   tags:
     - "{{ java.tags }}"
 
 #################################################################
 
-- name: "choco > install"
+- name: "Choco > install"
   with_items:
     - "{{ java.libraries.choco }}"
-  win_chocolatey:
-    name  : "{{ item }}"
-    state : "present"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ item }}"
+    state: "present"
     install_args: " INSTALLDIR={{ java.home_win }}\\{{ item }}"
   tags:
     - "{{ java.tags }}"
 
 #################################################################
 
-- name: "set version"
-  win_environment:
-    name      : "JAVA_HOME"
-    value     : "{{ java.home_win }}\\{{ java.default_win }}"
-    level     : "machine"
-    state     : "present"
+- name: "Set version"
+  ansible.windows.win_environment:
+    name: "JAVA_HOME"
+    value: "{{ java.home_win }}\\{{ java.default_win }}"
+    level: "machine"
+    state: "present"
   tags:
     - "{{ java.tags }}"
 
-- name: "add to path"
-  win_path:
-    elements  :
+- name: "Add to path"
+  ansible.windows.win_path:
+    elements:
       - "%JAVA_HOME%\\bin"
-    state     : "present"
+    state: "present"
   tags:
     - "{{ java.tags }}"
 
 #################################################################
-

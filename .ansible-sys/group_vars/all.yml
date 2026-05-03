@@ -1,21 +1,21 @@
 ---
-#################################################################
+# ################################################################
 # Placed in templates to identify them as Managed by Ansible
 
 note:
-  vim:  |
+  vim: |
     """"""""""""""""""""""""""
     """ MANAGED BY ANSIBLE """
     """"""""""""""""""""""""""
-  cfg:  |
+  cfg: |
     ##########################
     ### MANAGED BY ANSIBLE ###
     ##########################
-  yml:  |
+  yml: |
     ##########################
     ### MANAGED BY ANSIBLE ###
     ##########################
-  xml:  |
+  xml: |
     <!--
     MANAGED BY ANSIBLE
     -->
@@ -33,20 +33,19 @@ defaults:
 
 #################################################################
 
-has_gui: True
+has_gui: true
 
 #################################################################
 # User definitions
 
 root_user:
-  id    : "root"
-  home  : "/root"
-  name  : "root"
-  email : "root@root.com"
+  id: "root"
+  home: "/root"
+  name: "root"
+  email: "root@root.com"
 
 all_users:
   - "{{ root_user     }}"
   - "{{ primary_user  }}"
 
 #################################################################
-

@@ -1,9 +1,9 @@
 ---
 
 gradle:
-  url     : "https://services.gradle.org/distributions/"
-  zip     : "gradle-{{ gradle_version }}-bin.zip"
-  home    : "/usr/lib/gradle"
+  url: "https://services.gradle.org/distributions/"
+  zip: "gradle-{{ gradle_version }}-bin.zip"
+  home: "/usr/lib/gradle"
 
   libraries:
     apt:
@@ -14,4 +14,3 @@ gradle:
     - "dev-framework"
     - "dev-framework-gradle"
     - "gradle"
-

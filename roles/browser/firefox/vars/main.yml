@@ -6,5 +6,4 @@ libraries_apt:
 libraries_choco:
   - "firefox"
 
-desktop : "firefox"
-
+desktop: "firefox"

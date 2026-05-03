@@ -1,14 +1,12 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "pip > install"
-  pip:
-    name      : "{{ ansible.libraries.pip }}"
-    version   : u "{{ ansible_version }}"
+- name: "Pip > install"
+  ansible.builtin.pip:
+    name: "{{ ansible.libraries.pip }}"
+    version: u "{{ ansible_version }}"
     executable: "pip3"
   tags:
     - "{{ ansible.tags }}"
 
 #################################################################
-

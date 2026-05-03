@@ -1,51 +1,47 @@
 ---
+# ################################################################
 
-#################################################################
-
-- hosts         : windows
-  gather_facts  : yes
-  connection    : local
-
-
+- hosts: windows
+  gather_facts: true
+  connection: local
 
   vars:
-    - is_proxy     : False
-    - all_users:
-        - "{{ primary_user  }}"
+    is_proxy: false
+    all_users:
+      - "{{ primary_user  }}"
 
-    - ansible_connection                    : "winrm"
-    - ansible_winrm_transport               : "ntlm"
-    - ansible_winrm_server_cert_validation  : "ignore"
+    ansible_connection: "winrm"
+    ansible_winrm_transport: "ntlm"
+    ansible_winrm_server_cert_validation: "ignore"
 
 #################################################################
 
   roles:
-    - { role: checks                                                                                            }
-    - { role: users                                                                                             }
-    - { role: desktop                                                                                           }
-    - { role: prereq                                                                                            }
+    - { role: checks }
+    - { role: users }
+    - { role: desktop }
+    - { role: prereq }
 
-    - { role: network                                                                                           }
+    - { role: network }
 
-    - { role: git                                                                                               }
-    - { role: ssh                                                                                               }
-    - { role: shell                                                                                             }
-    - { role: vim                                                                                               }
-    - { role: powerline                                                                                         }
-    - { role: general                                                                                           }
-    - { role: keychain                                                                                          }
-    - { role: wallpaper                                                                                         }
-    - { role: system-monitor                                                                                    }
-    - { role: terminator                                                                                        }
+    - { role: git }
+    - { role: ssh }
+    - { role: shell }
+    - { role: vim }
+    - { role: powerline }
+    - { role: general }
+    - { role: keychain }
+    - { role: wallpaper }
+    - { role: system-monitor }
+    - { role: terminator }
 
-    - { role: browser/chrome                                                                                    }
+    - { role: browser/chrome }
 
-    - { role: dev/lang                                                                                          }
-    - { role: dev/util                                                                                          }
-    - { role: dev/framework                                                                                     }
-    - { role: dev/ide                                                                                           }
+    - { role: dev/lang }
+    - { role: dev/util }
+    - { role: dev/framework }
+    - { role: dev/ide }
 
-    - { role: media                                                                                             }
+    - { role: media }
 
-#################################################################
-
+# ################################################################

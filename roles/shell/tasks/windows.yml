@@ -1,24 +1,22 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "powershell > config > profile"
-  win_template:
-    src   : "profile.ps1.j2"
-    dest  : "%WINDIR%/System32/WindowsPowerShell/v1.0/profile.ps1"
+- name: "Powershell > config > profile"
+  ansible.windows.win_template:
+    src: "profile.ps1.j2"
+    dest: "%WINDIR%/System32/WindowsPowerShell/v1.0/profile.ps1"
   tags:
     - "{{ shell.tags }}"
 
 #################################################################
 
-- name: "powershell > scripts"
+- name: "Powershell > scripts"
   with_items:
     - "{{ shell.scripts.ps1 }}"
-  win_template:
-    src   : "{{ item }}.j2"
-    dest  : "%WINDIR%/System32/WindowsPowerShell/v1.0/{{ item }}"
+  ansible.windows.win_template:
+    src: "{{ item }}.j2"
+    dest: "%WINDIR%/System32/WindowsPowerShell/v1.0/{{ item }}"
   tags:
     - "{{ shell.tags }}"
 
 #################################################################
-

@@ -1,11 +1,10 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "choco > install"
-  win_chocolatey:
-    name    : "{{ ruby.libraries.choco }}"
-    state   : "latest"
+- name: "Choco > install"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ ruby.libraries.choco }}"
+    state: "latest"
   tags:
     - "{{ ruby.tags }}"
 
@@ -17,4 +16,3 @@
 #    - "{{ ruby.tags }}"
 
 #################################################################
-

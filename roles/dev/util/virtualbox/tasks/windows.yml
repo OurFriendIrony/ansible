@@ -1,15 +1,13 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "choco > install"
+- name: "Choco > install"
   with_items:
     - "{{ virtualbox.libraries.choco }}"
-  win_chocolatey:
-    name    : "{{ item }}"
-    state   : "latest"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ item }}"
+    state: "latest"
   tags:
     - "{{ virtualbox.tags }}"
 
 #################################################################
-

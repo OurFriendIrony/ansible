@@ -1,58 +1,56 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "mkdirs"
+- name: "Mkdirs"
   with_items:
     - "{{ git.home }}"
-  file:
-    name    : "{{ item }}"
-    state   : "directory"
-    owner   : "{{ primary_user.id }}"
-    group   : "{{ primary_user.id }}"
-    mode    : "0755"
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: "directory"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0755"
   tags:
     - "git"
 
 #################################################################
 
-- name: "apt > install"
-  apt:
-    name    : "{{ git.libraries }}"
-    state   : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ git.libraries }}"
+    state: "latest"
   tags:
     - "git"
 
 #################################################################
 
-- name: "config > .gitconfig"
+- name: "Config > .gitconfig"
   with_items:
     - "{{ all_users }}"
-  template:
-    src     : "gitconfig.j2"
-    dest    : "{{ item.home }}/.gitconfig"
-    owner   : "{{ item.id }}"
-    group   : "{{ item.id }}"
-    mode    : "0644"
+  ansible.builtin.template:
+    src: "gitconfig.j2"
+    dest: "{{ item.home }}/.gitconfig"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0644"
   tags:
     - "git"
     - "proxy"
 
 #################################################################
 
-- name: "add repos"
+- name: "Add repos"
   when:
     - git_repos is iterable
-  become: yes
+  become: true
   become_user: "{{ primary_user.id }}"
   with_items:
     - "{{ git_repos }}"
-  git:
-    repo    : "{{ item.repo }}"
-    dest    : "{{ git.home }}/{{ item.subdir }}"
-    update  : "no"
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: "{{ git.home }}/{{ item.subdir }}"
+    update: "no"
   tags:
     - "git"
 
 #################################################################
-

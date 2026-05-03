@@ -1,34 +1,32 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "choco > install"
-  win_chocolatey:
-    name    : "{{ libraries }}"
-    state   : "latest"
+- name: "Choco > install"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ libraries }}"
+    state: "latest"
   tags:
     - "vim"
 
 #################################################################
 
-- name: "config > .vimrc"
+- name: "Config > .vimrc"
   with_items:
     - "{{ primary_user }}"
-  win_template:
-    src   : "vimrc.j2"
-    dest  : "{{ item.home }}/.vimrc"
+  ansible.windows.win_template:
+    src: "vimrc.j2"
+    dest: "{{ item.home }}/.vimrc"
     newline_sequence: "\n"
   tags:
     - "vim"
 
-- name: "vundle > install"
+- name: "Vundle > install"
   with_items:
     - "{{ primary_user }}"
-  win_command: "git clone https://github.com/VundleVim/Vundle.vim.git {{ item.home }}/.vim/bundle/vundle"
+  ansible.windows.win_command: "git clone https://github.com/VundleVim/Vundle.vim.git {{ item.home }}/.vim/bundle/vundle"
   args:
     creates: "{{ item.home }}/.vim/bundle/vundle"
   tags:
     - "vim"
 
 ##################################################################
-

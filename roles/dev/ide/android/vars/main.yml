@@ -1,11 +1,11 @@
 ---
 
-desktop   : "jetbrains-android-studio"
+desktop: "jetbrains-android-studio"
 
 android:
-  url     : "https://dl.google.com/dl/android/studio/ide-zips/"
-  zip     : "{{ android_version }}/android-studio-ide-{{ android_build }}-linux.zip"
-  home    : "/usr/lib/android-studio"
+  url: "https://dl.google.com/dl/android/studio/ide-zips/"
+  zip: "{{ android_version }}/android-studio-ide-{{ android_build }}-linux.zip"
+  home: "/usr/lib/android-studio"
 
   libraries:
     apt:
@@ -18,4 +18,3 @@ android:
     - dev-ide
     - dev-ide-android
     - android
-

@@ -1,9 +1,9 @@
 ---
 
-desktop : "mysql-workbench"
+desktop: "mysql-workbench"
 
 mysqlworkbench:
-  url     : "https://repo.mysql.com//mysql-apt-config_0.8.19-1_all.deb"
+  url: "https://repo.mysql.com//mysql-apt-config_0.8.19-1_all.deb"
 
   libraries:
     apt:
@@ -14,4 +14,3 @@ mysqlworkbench:
     - dev-data
     - dev-data-mysqlworkbench
     - mysqlworkbench
-

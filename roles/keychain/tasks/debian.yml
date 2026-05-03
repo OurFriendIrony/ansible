@@ -1,23 +1,22 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "mkdirs"
+- name: "Mkdirs"
   with_items:
     - "{{ all_users }}"
-  file:
+  ansible.builtin.file:
     dest: "{{ item.home }}/.config/keychain"
     state: "directory"
     owner: "{{ item.id }}"
     group: "{{ item.id }}"
-    mode: 0755
+    mode: "0755"
   tags:
     - "keychain"
 
 #################################################################
 
-- name: "apt > install"
-  apt:
+- name: "Apt > install"
+  ansible.builtin.apt:
     name: "{{ libraries_apt }}"
     state: "latest"
   tags:
@@ -25,17 +24,16 @@
 
 #################################################################
 
-- name: "copy > config"
+- name: "Copy > config"
   with_items:
     - "{{ all_users }}"
-  template:
-    src   : "config.j2"
-    dest  : "{{ item.home }}/.config/keychain/config"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : 0644
+  ansible.builtin.template:
+    src: "config.j2"
+    dest: "{{ item.home }}/.config/keychain/config"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0644"
   tags:
     - "keychain"
 
 #################################################################
-

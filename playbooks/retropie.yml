@@ -1,44 +1,35 @@
 ---
+# ################################################################
 
-#################################################################
+- hosts: retropie
+  gather_facts: true
 
-- hosts         : retropie
-  gather_facts  : yes
-
-  become        : yes
-  become_method : sudo
+  become: true
+  become_method: sudo
 
   vars:
-    - is_proxy     : False
-      all_users:
-        - "{{ root_user     }}"
-        - "{{ primary_user  }}"
-      pi_user     : "{{ primary_user }}"
-
-
+    is_proxy: false
+    all_users:
+      - "{{ root_user     }}"
+      - "{{ primary_user  }}"
+    pi_user: "{{ primary_user }}"
 
 #################################################################
 
   roles:
-    - { role: checks                                                                                            }
-    - { role: users                                                                                             }
+    - { role: checks }
+    - { role: users }
 
-    - { role: prereq                                                                                            }
+    - { role: prereq }
+    - { role: git }
+    - { role: ssh }
+    - { role: shell, bash_welcome: "retropie" }
+    - { role: vim }
+    - { role: powerline }
+    - { role: general }
 
+    - { role: dev/framework/ansible }
 
+    - { role: retropie }
 
-
-
-    - { role: git                                                                                               }
-    - { role: ssh                                                                                               }
-    - { role: shell,                    bash_welcome        : "retropie"                                        }
-    - { role: vim                                                                                               }
-    - { role: powerline                                                                                         }
-    - { role: general                                                                                           }
-
-    - { role: dev/framework/ansible                                                                             }
-
-    - { role: retropie                                                                                          }
-
-#################################################################
-
+# ################################################################

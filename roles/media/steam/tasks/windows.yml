@@ -1,14 +1,12 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "choco > install"
-  win_chocolatey:
-    name    : "{{ steam.libraries.choco }}"
-    state   : "present"
+- name: "Choco > install"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ steam.libraries.choco }}"
+    state: "present"
   tags:
     - "media"
     - "steam"
 
 #################################################################
-

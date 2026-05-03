@@ -1,32 +1,30 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > install"
-  apt:
-    name    : "{{ python.libraries.apt }}"
-    state   : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ python.libraries.apt }}"
+    state: "latest"
   tags:
     - "{{ python.tags }}"
 
-- name: "apt > uninstall"
-  apt:
-    name    : "{{ python.libraries_remove.apt }}"
-    state   : "absent"
+- name: "Apt > uninstall"
+  ansible.builtin.apt:
+    name: "{{ python.libraries_remove.apt }}"
+    state: "absent"
   tags:
     - "{{ python.tags }}"
 
 #################################################################
 
-- name: "pip > config"
-  template:
-    src     : "pip.conf.j2"
-    dest    : "/etc/pip.conf"
-    owner   : "{{ root_user.id }}"
-    group   : "{{ root_user.id }}"
+- name: "Pip > config"
+  ansible.builtin.template:
+    src: "pip.conf.j2"
+    dest: "/etc/pip.conf"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
   tags:
     - "{{ python.tags }}"
     - "proxy"
 
 #################################################################
-

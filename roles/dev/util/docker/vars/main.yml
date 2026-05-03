@@ -1,13 +1,13 @@
 ---
 
 docker:
-  key_server  : "https://download.docker.com/linux/{{ dist_os }}/gpg"
-  key_id      : "9DC858229FC7DD38854AE2D88D81803C0EBFCD88"
-  repo        : "deb [arch=amd64] https://download.docker.com/linux/{{ dist_os }} {{ dist_os_release }} stable"
+  key_server: "https://download.docker.com/linux/{{ dist_os }}/gpg"
+  key_id: "9DC858229FC7DD38854AE2D88D81803C0EBFCD88"
+  repo: "deb [arch=amd64] https://download.docker.com/linux/{{ dist_os }} {{ dist_os_release }} stable"
 
   compose:
-    url         : "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ dist_system }}-{{ machine_arch }}"
-    dest        : "/usr/local/bin/docker-compose"
+    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ dist_system }}-{{ machine_arch }}"
+    dest: "/usr/local/bin/docker-compose"
 
   libraries:
     apt_prereq:
@@ -27,4 +27,3 @@ docker:
     - dev-util
     - dev-util-docker
     - docker
-

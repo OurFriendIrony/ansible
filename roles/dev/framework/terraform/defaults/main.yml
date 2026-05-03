@@ -1,7 +1,7 @@
 ---
 
-terraform_version   : "1.0.6"
-terragrunt_version  : "0.31.10"
+terraform_version: "1.0.6"
+terragrunt_version: "0.31.10"
 
 #################################
 # Terraform     Terragrunt
@@ -13,4 +13,3 @@ terragrunt_version  : "0.31.10"
 # 0.12.x        0.19.0 - 0.24.4
 # 0.11.x        0.14.0 - 0.18.7
 #################################
-

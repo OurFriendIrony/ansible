@@ -1,45 +1,43 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > install"
-  apt:
-    name    : "{{ dbeaver.libraries.apt }}"
-    state   : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ dbeaver.libraries.apt }}"
+    state: "latest"
   tags:
     - "{{ dbeaver.tags }}"
     - "dbeaver"
 
 #################################################################
 
-- name: "apt > download and install deb"
-  apt:
-    deb     : "{{ dbeaver.url }}"
+- name: "Apt > download and install deb"
+  ansible.builtin.apt:
+    deb: "{{ dbeaver.url }}"
   tags:
     - "{{ dbeaver.tags }}"
     - "dbeaver"
 
 #################################################################
 
-- name: "launcher > desktop icon"
-  template:
-    src   : "{{ desktop }}.desktop.j2"
-    dest  : "/usr/share/applications/{{ desktop }}.desktop"
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : "0644"
+- name: "Launcher > desktop icon"
+  ansible.builtin.template:
+    src: "{{ desktop }}.desktop.j2"
+    dest: "/usr/share/applications/{{ desktop }}.desktop"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0644"
   tags:
     - "{{ dbeaver.tags }}"
     - "launcher"
 
-- name    : "launcher > add"
-  become : yes
-  become_user : "{{ primary_user.id }}"
-  script  : "../../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
-  changed_when: False
+- name: "Launcher > add"
+  become: true
+  become_user: "{{ primary_user.id }}"
+  ansible.builtin.script: "../../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
+  changed_when: false
   tags:
     - "{{ dbeaver.tags }}"
     - "launcher"
 
 #################################################################
-

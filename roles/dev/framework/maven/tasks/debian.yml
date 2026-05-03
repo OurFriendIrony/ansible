@@ -1,39 +1,37 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > install"
-  apt:
-    name    : "{{ maven.libraries.apt }}"
-    state   : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ maven.libraries.apt }}"
+    state: "latest"
   tags:
     - "{{ maven.tags }}"
 
 #################################################################
 
-- name: "config > mkdirs"
+- name: "Config > mkdirs"
   with_items:
     - "{{ all_users }}"
-  file:
-    name    : "{{ item.home }}/.m2"
-    owner   : "{{ item.id   }}"
-    group   : "{{ item.id   }}"
-    state   : "directory"
+  ansible.builtin.file:
+    name: "{{ item.home }}/.m2"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    state: "directory"
   tags:
     - "{{ maven.tags }}"
     - "proxy"
 
-- name: "config > properties"
+- name: "Config > properties"
   with_items:
     - "{{ all_users }}"
-  template:
-    src     : "settings.xml.j2"
-    dest    : "{{ item.home }}/.m2/settings.xml"
-    owner   : "{{ item.id   }}"
-    group   : "{{ item.id   }}"
+  ansible.builtin.template:
+    src: "settings.xml.j2"
+    dest: "{{ item.home }}/.m2/settings.xml"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
   tags:
     - "{{ maven.tags }}"
     - "proxy"
 
 #################################################################
-

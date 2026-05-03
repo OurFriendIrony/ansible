@@ -3,5 +3,4 @@
 git:
   libraries:
     - git
-  home  : "{{ primary_user.home }}/git"
-
+  home: "{{ primary_user.home }}/git"

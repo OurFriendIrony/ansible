@@ -1,68 +1,66 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "mkdir"
-  file:
-    path  : "{{ java.home }}"
-    state : directory
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : 0755
+- name: "Mkdir"
+  ansible.builtin.file:
+    path: "{{ java.home }}"
+    state: directory
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0755"
   tags:
     - "{{ java.tags }}"
 
 #################################################################
 
-- name: "apt > repositories"
+- name: "Apt > repositories"
   when:
     - not is_proxy
-  apt_repository:
-    repo  : "{{ java.ppa }}"
-    state : "present"
+  ansible.builtin.apt_repository:
+    repo: "{{ java.ppa }}"
+    state: "present"
   tags:
     - "{{ java.tags }}"
 
-- name: "apt > repositories"
+- name: "Apt > repositories"
   when:
     - is_proxy
-  become: yes
+  become: true
   become_user: "{{ primary_user.id }}"
-  shell: "sudo -E add-apt-repository {{ java.ppa }} -y"
+  ansible.builtin.command: "sudo -E add-apt-repository {{ java.ppa }} -y"
   tags:
     - "{{ java.tags }}"
     - "proxy"
 
 #################################################################
 
-- name: "apt > install"
-  apt:
-    name  : "{{ java.libraries.apt }}"
-    state : latest
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ java.libraries.apt }}"
+    state: latest
   tags:
     - "{{ java.tags }}"
 
 #################################################################
 
-- name: "symlink > set version"
+- name: "Symlink > set version"
   with_items:
-    - { src : "{{ java.home }}/{{ java.default }}",   dest: "java"               }
-    - { src : "{{ java.home }}/java",                 dest: "default-java"       }
-  file:
-    src   : "{{ item.src                  }}"
-    dest  : "{{ java.home }}/{{ item.dest }}"
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    state : link
+    - { src: "{{ java.home }}/{{ java.default }}", dest: "java" }
+    - { src: "{{ java.home }}/java", dest: "default-java" }
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ java.home }}/{{ item.dest }}"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    state: link
   tags:
     - "{{ java.tags }}"
 
-- name: "alternative > set version"
-  alternatives:
-    name  : "java"
-    path  : "{{ java.home }}/{{ java.default }}/bin/java"
+- name: "Alternative > set version"
+  community.general.alternatives:
+    name: "java"
+    path: "{{ java.home }}/{{ java.default }}/bin/java"
   tags:
     - "{{ java.tags }}"
 
 #################################################################
-

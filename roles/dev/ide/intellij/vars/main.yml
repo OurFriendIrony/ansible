@@ -1,13 +1,13 @@
 ---
 
-intellij_version    : "{{ intellij_year }}.{{ intellij_subversion }}"
+intellij_version: "{{ intellij_year }}.{{ intellij_subversion }}"
 
-desktop   : "jetbrains-idea-ce"
+desktop: "jetbrains-idea-ce"
 
 intellij:
-  url     : "https://download-cf.jetbrains.com/idea/"
-  zip     : "ideaIC-{{ intellij_version }}.tar.gz"
-  home    : "/usr/lib/intellij"
+  url: "https://download-cf.jetbrains.com/idea/"
+  zip: "ideaIC-{{ intellij_version }}.tar.gz"
+  home: "/usr/lib/intellij"
 
   libraries:
     apt:
@@ -20,4 +20,3 @@ intellij:
     - "dev-ide-idea"
     - "intellij"
     - "idea"
-

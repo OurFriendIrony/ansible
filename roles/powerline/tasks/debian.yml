@@ -1,56 +1,54 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "pip > install"
-  pip:
-    name  : "{{ libraries_pip }}"
-    state : "latest"
+- name: "Pip > install"
+  ansible.builtin.pip:
+    name: "{{ libraries_pip }}"
+    state: "latest"
     executable: "pip3"
   tags:
     - "powerline"
 
 #################################################################
 
-- name: "copy > .powerline-shell.json"
+- name: "Copy > .powerline-shell.json"
   with_items:
     - "{{ all_users }}"
-  template:
-    src   : "powerline-shell.json.j2"
-    dest  : "{{ item.home }}/.powerline-shell.json"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : 0644
+  ansible.builtin.template:
+    src: "powerline-shell.json.j2"
+    dest: "{{ item.home }}/.powerline-shell.json"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0644"
   tags:
     - "powerline"
 
 #################################################################
 
-- name: "copy > fonts"
+- name: "Copy > fonts"
   when:
     - is_gui
-  copy:
-    src   : "PowerlineSymbols.otf"
-    dest  : "/usr/local/share/fonts/"
-    owner : root
-    group : root
-    mode  : 0644
+  ansible.builtin.copy:
+    src: "PowerlineSymbols.otf"
+    dest: "/usr/local/share/fonts/"
+    owner: root
+    group: root
+    mode: "0644"
   tags:
     - "powerline"
 
-- name: "copy > font config"
+- name: "Copy > font config"
   when:
     - is_gui
   with_items:
     - "{{ all_users }}"
-  copy:
-    src   : "10-powerline-symbols.conf"
-    dest  : "{{ item.home }}/.config/fontconfig/fonts.conf/"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : 0644
+  ansible.builtin.copy:
+    src: "10-powerline-symbols.conf"
+    dest: "{{ item.home }}/.config/fontconfig/fonts.conf/"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0644"
   tags:
     - "powerline"
 
 #################################################################
-

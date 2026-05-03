@@ -1,39 +1,38 @@
 ---
-#######################################################################
+# ######################################################################
 
 retropie_dirs:
- - "{{ retropie_home }}/splashscreens"
+  - "{{ retropie_home }}/splashscreens"
 
 #######################################################################
 
-retropie_theme              : "eudora"
-retropie_splash             : "retropie.mov"
+retropie_theme: "eudora"
+retropie_splash: "retropie.mov"
 
 #######################################################################
 
-retropie_steam_pc_ip        : "127.0.0.1"
+retropie_steam_pc_ip: "127.0.0.1"
 
 #######################################################################
 
 retropie_achievements:
-  user        : "OurFriendIrony"
+  user: "OurFriendIrony"
 
 #######################################################################
 
-retropie_enabled_atari2600  : true
-retropie_enabled_atari7800  : true
-retropie_enabled_nes        : true
-retropie_enabled_snes       : true
-retropie_enabled_megadrive  : true
-retropie_enabled_gba        : true
-retropie_enabled_n64        : true
-retropie_enabled_dreamcast  : true
-retropie_enabled_psx        : true
-retropie_enabled_nds        : true
-retropie_enabled_fba        : true
-retropie_enabled_ports      : true
-retropie_enabled_python     : false
-retropie_enabled_steam      : false
+retropie_enabled_atari2600: true
+retropie_enabled_atari7800: true
+retropie_enabled_nes: true
+retropie_enabled_snes: true
+retropie_enabled_megadrive: true
+retropie_enabled_gba: true
+retropie_enabled_n64: true
+retropie_enabled_dreamcast: true
+retropie_enabled_psx: true
+retropie_enabled_nds: true
+retropie_enabled_fba: true
+retropie_enabled_ports: true
+retropie_enabled_python: false
+retropie_enabled_steam: false
 
 #######################################################################
-

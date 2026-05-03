@@ -1,79 +1,77 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "bash > config > .bashrc"
+- name: "Bash > config > .bashrc"
   with_items:
     - "{{ all_users }}"
-  template:
-    src   : "bashrc.j2"
-    dest  : "{{ item.home }}/.bashrc"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : "0644"
+  ansible.builtin.template:
+    src: "bashrc.j2"
+    dest: "{{ item.home }}/.bashrc"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0644"
   tags:
     - "{{ shell.tags }}"
     - "{{ ruby.tags }}"
 
-- name: "bash > config > .bash_aliases"
+- name: "Bash > config > .bash_aliases"
   with_items:
     - "{{ all_users }}"
-  template:
-    src   : "bash_aliases.j2"
-    dest  : "{{ item.home }}/.bash_aliases"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : "0644"
+  ansible.builtin.template:
+    src: "bash_aliases.j2"
+    dest: "{{ item.home }}/.bash_aliases"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0644"
   tags:
     - "{{ shell.tags }}"
 
-- name: "bash > config > .bash_functions"
+- name: "Bash > config > .bash_functions"
   with_items:
     - "{{ all_users }}"
-  template:
-    src   : "bash_functions.j2"
-    dest  : "{{ item.home }}/.bash_functions"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : "0644"
+  ansible.builtin.template:
+    src: "bash_functions.j2"
+    dest: "{{ item.home }}/.bash_functions"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0644"
   tags:
     - "{{ shell.tags }}"
 
-- name: "bash > config > .bash_welcome"
+- name: "Bash > config > .bash_welcome"
   with_items:
     - "{{ all_users }}"
-  when    : bash_welcome != ""
-  copy:
-    src   : "welcome_{{ bash_welcome }}"
-    dest  : "{{ item.home }}/.bash_welcome"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : "0644"
+  when: bash_welcome != ""
+  ansible.builtin.copy:
+    src: "welcome_{{ bash_welcome }}"
+    dest: "{{ item.home }}/.bash_welcome"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0644"
   tags:
     - "{{ shell.tags }}"
 
-- name: "bash > config > .bash_proxy"
+- name: "Bash > config > .bash_proxy"
   with_items:
     - "{{ all_users }}"
-  template:
-    src   : "bash_proxy.j2"
-    dest  : "{{ item.home }}/.bash_proxy"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : "0644"
+  ansible.builtin.template:
+    src: "bash_proxy.j2"
+    dest: "{{ item.home }}/.bash_proxy"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0644"
   tags:
     - "{{ shell.tags }}"
     - "proxy"
 
 #################################################################
 
-- name: "inputrc > disable bell"
-  lineinfile:
-    path    : "/etc/inputrc"
-    regexp  : "set bell-style visible"
-    line    : "set bell-style none"
+- name: "Inputrc > disable bell"
+  ansible.builtin.lineinfile:
+    path: "/etc/inputrc"
+    regexp: "set bell-style visible"
+    line: "set bell-style none"
   tags:
     - "{{ shell.tags }}"
 
 #################################################################
-

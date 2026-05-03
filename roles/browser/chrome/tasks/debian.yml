@@ -1,46 +1,44 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "wget > deb"
-  get_url:
-    url   : "{{ chrome.url }}{{ chrome.file }}"
-    dest  : "/tmp/{{ chrome.file }}"
+- name: "Wget > deb"
+  ansible.builtin.get_url:
+    url: "{{ chrome.url }}{{ chrome.file }}"
+    dest: "/tmp/{{ chrome.file }}"
   tags:
     - "browser"
     - "chrome"
 
-- name: "apt > install"
-  apt:
-    deb   : "/tmp/{{ chrome.file }}"
-    state : "present"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    deb: "/tmp/{{ chrome.file }}"
+    state: "present"
   tags:
     - "browser"
     - "chrome"
 
 #################################################################
 
-- name: "launcher > desktop icon"
-  template:
-    src   : "{{ desktop }}.desktop.j2"
-    dest  : "/usr/share/applications/{{ desktop }}.desktop"
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : "0644"
+- name: "Launcher > desktop icon"
+  ansible.builtin.template:
+    src: "{{ desktop }}.desktop.j2"
+    dest: "/usr/share/applications/{{ desktop }}.desktop"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0644"
   tags:
     - "browser"
     - "chrome"
     - "launcher"
 
-- name    : "launcher > add"
-  become  : yes
-  become_user  : "{{ primary_user.id }}"
-  script  : "../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
-  changed_when: False
+- name: "Launcher > add"
+  become: true
+  become_user: "{{ primary_user.id }}"
+  ansible.builtin.script: "../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
+  changed_when: false
   tags:
     - "browser"
     - "chrome"
     - "launcher"
 
 #################################################################
-

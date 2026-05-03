@@ -1,9 +1,9 @@
 ---
 
 terraform:
-  url             : "https://github.com/tfutils/tfenv.git"
-  home            : ".tfenv"
-  versions        :
+  url: "https://github.com/tfutils/tfenv.git"
+  home: ".tfenv"
+  versions:
     - "{{ terraform_version }}"
     - "1.0.6"
     - "0.15.5"
@@ -24,9 +24,9 @@ terraform:
     - terraform
 
 terragrunt:
-  url             : "https://github.com/gruntwork-io/terragrunt/releases/download/"
-  home            : "/usr/lib/terragrunt"
-  versions        :
+  url: "https://github.com/gruntwork-io/terragrunt/releases/download/"
+  home: "/usr/lib/terragrunt"
+  versions:
     - "{{ terragrunt_version }}"
     - "0.31.10"
     - "0.29.0"
@@ -34,4 +34,3 @@ terragrunt:
     - "0.25.0"
     - "0.24.4"
     - "0.18.7"
-

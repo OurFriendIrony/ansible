@@ -7,7 +7,7 @@ ssh:
   templates:
     - "authorized_keys"
     - "config"
-    
+
   libraries:
     apt:
       - "ssh"
@@ -16,4 +16,3 @@ ssh:
 
   tags:
     - ssh
-

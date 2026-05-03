@@ -7,7 +7,7 @@ python:
       - "python3-pip"
       - "python3-setuptools"
     choco:
-      - "python3"   # Includes pip
+      - "python3" # Includes pip
 
   libraries_remove:
     apt:
@@ -23,4 +23,3 @@ python:
     - dev-lang
     - dev-lang-python
     - python
-

@@ -1,27 +1,25 @@
 ---
 
-#######################################################################
+# ######################################################################
 
 primary_user:
-  name        : "Laura Stevens"
-  home        : "/home/laura"
-  id          : "laura"
-  email       : "laurajlstevens@gmail.com"
-  wallpaper   : "/lib/ofi-wallpaper/resources/*"
+  name: "Laura Stevens"
+  home: "/home/laura"
+  id: "laura"
+  email: "laurajlstevens@gmail.com"
+  wallpaper: "/lib/ofi-wallpaper/resources/*"
 
 #######################################################################
-
 
 #######################################################################
 
 ssh_keys:
-  - name      : "id_rsa"
-    value     : "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDDr15BU5H1C597pv5r3c8WxaLvAqG8XERLEIMBBjH4VR6HIEsC+Aw39+6GfeW/nMhStqeP77UegU4SSmAt/rXck9c4UzgMl/d1YnhHSP8u4tzVrlKnoHk1OgvAjZvODelUl3juilMhwbm73LxVAK9PRuf2o2NINhs2Hzvg9z2nP+UzS5D0FuUt5hGSE2EGyZltk47uuxWjcDb3ml7BD3qK0v6HbXLmitEBF6xWhzFDxmmXOJV2+Z1DCJbXHjm5BwGp5pWMP9UWOs7oPohCPnfBjqxi/aOFpHRz1iPf7pYMOk9J7wHKZXSBdTmOsGq6tdEzH0YOINp/nQEpIU1GR0XXjpXDkOrbwgGm2lW4epBvLzvMP8eDjNZJxbte9zuVBtrHLL+6sk0kjPTWl88rsPpgPFPmqwBBG47H2Ea4K1mvrN2JmM5qy2IsF3LTw9NbtYzffsJW+fnAQvuOC1ngbHqJEDSb882aPjcMqB4PJ3CbkgWG1petPUFz1MzimJ80RBs= laura@ux-dev"
+  - name: "id_rsa"
+    value: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDDr15BU5H1C597pv5r3c8WxaLvAqG8XERLEIMBBjH4VR6HIEsC+Aw39+6GfeW/nMhStqeP77UegU4SSmAt/rXck9c4UzgMl/d1YnhHSP8u4tzVrlKnoHk1OgvAjZvODelUl3juilMhwbm73LxVAK9PRuf2o2NINhs2Hzvg9z2nP+UzS5D0FuUt5hGSE2EGyZltk47uuxWjcDb3ml7BD3qK0v6HbXLmitEBF6xWhzFDxmmXOJV2+Z1DCJbXHjm5BwGp5pWMP9UWOs7oPohCPnfBjqxi/aOFpHRz1iPf7pYMOk9J7wHKZXSBdTmOsGq6tdEzH0YOINp/nQEpIU1GR0XXjpXDkOrbwgGm2lW4epBvLzvMP8eDjNZJxbte9zuVBtrHLL+6sk0kjPTWl88rsPpgPFPmqwBBG47H2Ea4K1mvrN2JmM5qy2IsF3LTw9NbtYzffsJW+fnAQvuOC1ngbHqJEDSb882aPjcMqB4PJ3CbkgWG1petPUFz1MzimJ80RBs=
+      laura@ux-dev"
 
 #######################################################################
 
-
 #######################################################################
 
 #######################################################################
-

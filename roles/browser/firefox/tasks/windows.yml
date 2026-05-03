@@ -1,14 +1,12 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "choco > install"
-  win_chocolatey:
-    name    : "{{ libraries_choco }}"
-    state   : "present" 
+- name: "Choco > install"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ libraries_choco }}"
+    state: "present"
   tags:
     - "browser"
     - "firefox"
 
 #################################################################
-

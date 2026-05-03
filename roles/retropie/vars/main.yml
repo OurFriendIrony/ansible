@@ -1,48 +1,48 @@
 ---
-#######################################################################
+# ######################################################################
 
-retropie_home       : "/home/pi/RetroPie"
-retropie_cfg        : "/opt/retropie/configs"
-retropie_cores      : "/opt/retropie/libretrocores"
+retropie_home: "/home/pi/RetroPie"
+retropie_cfg: "/opt/retropie/configs"
+retropie_cores: "/opt/retropie/libretrocores"
 
 #######################################################################
 
 retropie_shortcuts:
-  - src   : "{{ retropie_cfg }}"
-    dest  : "/home/pi/.cfg_emus"
-  - src   : "{{ retropie_cfg }}/all"
-    dest  : "/home/pi/.cfg_core"
-  - src   : "{{ retropie_cfg }}/all/retroarch"
-    dest  : "/home/pi/.cfg_retroarch"
-  - src   : "{{ retropie_cfg }}/all/emulationstation"
-    dest  : "/home/pi/.cfg_es"
-  - src   : "/etc/emulationstation"
-    dest  : "/home/pi/.cfg_es_2"
+  - src: "{{ retropie_cfg }}"
+    dest: "/home/pi/.cfg_emus"
+  - src: "{{ retropie_cfg }}/all"
+    dest: "/home/pi/.cfg_core"
+  - src: "{{ retropie_cfg }}/all/retroarch"
+    dest: "/home/pi/.cfg_retroarch"
+  - src: "{{ retropie_cfg }}/all/emulationstation"
+    dest: "/home/pi/.cfg_es"
+  - src: "/etc/emulationstation"
+    dest: "/home/pi/.cfg_es_2"
 
 #######################################################################
 
 retropie_boot:
-  hush_bootlog  : true
-  hush_rainbow  : true
-  hush_warnings : true
-  borderless    : true
+  hush_bootlog: true
+  hush_rainbow: true
+  hush_warnings: true
+  borderless: true
 
 retropie_overclock:
-  force_turbo   : true
-  avoid_pwm     : true
-  over_volt     : true
-  cpu_freq      : 1350
-  gpu_freq      : 525
-  core_freq     : 525
-  v3d_freq      : 525
-  ram_freq      : 500
+  force_turbo: true
+  avoid_pwm: true
+  over_volt: true
+  cpu_freq: 1350
+  gpu_freq: 525
+  core_freq: 525
+  v3d_freq: 525
+  ram_freq: 500
 
 #######################################################################
 
 retropie_runcommand:
-  use_art       : "1"
-  disable_menu  : "1"
-  delay_secs    : "2"   # If == 0, crashes rom launch
+  use_art: "1"
+  disable_menu: "1"
+  delay_secs: "2" # If == 0, crashes rom launch
 
 #######################################################################
 
@@ -66,327 +66,509 @@ retropie_emus:
 #######################################################################
 
 retropie_keyboard:
-    { up      : "w",       down    : "s",         left    : "a",         right   : "d",
-      a       : "n",       b       : "m",         x       : "j",         y       : "h",
-      l_1     : "q",       r_1     : "e",         l_2     : "y",         r_2     : "u",
-      l_button: "t",                              r_button: "i",
-      start   : "enter",                          select  : "backspace",
-      special : "ctrl"                                                                  }
-
+  up: "w"
+  down: "s"
+  left: "a"
+  right: "d"
+  a: "n"
+  b: "m"
+  x: "j"
+  true: "h"
+  l_1: "q"
+  r_1: "e"
+  l_2: "y"
+  r_2: "u"
+  l_button: "t"
+  r_button: "i"
+  start: "enter"
+  select: "backspace"
+  special: "ctrl"
 retropie_controllers:
-  - { name    : "Xbox Wireless Controller",
-      note    : "Xbox One",
-      up      : "h0up",    down    : "h0down",    left    : "h0left",    right   : "h0right",
-      up_j    : "-1",      down_j  : "+1",        left_j  : "-0",        right_j : "+0",
-      a       : "0",       b       : "1",         x       : "3",         y       : "4",
-      l_1     : "6",       r_1     : "7",         l_2     : "+5",        r_2     : "+4",
-      l_up    : "+0",      l_down  : "+1",        l_left  : "-0",        l_right : "-1",
-      r_up    : "+2",      r_down  : "+3",        r_left  : "-2",        r_right : "-3",
-      l_button: "13",                             r_button: "14",
-      start   : "11",                             select  : "15",
-      special : "16"                                                                    }
+  - name: "Xbox Wireless Controller"
+    note: "Xbox One"
+    up: "h0up"
+    down: "h0down"
+    left: "h0left"
+    right: "h0right"
+    up_j: "-1"
+    down_j: "+1"
+    left_j: "-0"
+    right_j: "+0"
+    a: "0"
+    b: "1"
+    x: "3"
+    true: "4"
+    l_1: "6"
+    r_1: "7"
+    l_2: "+5"
+    r_2: "+4"
+    l_up: "+0"
+    l_down: "+1"
+    l_left: "-0"
+    l_right: "-1"
+    r_up: "+2"
+    r_down: "+3"
+    r_left: "-2"
+    r_right: "-3"
+    l_button: "13"
+    r_button: "14"
+    start: "11"
+    select: "15"
+    special: "16"
 
-  - { name    : "Microsoft X-Box 360 pad",
-      note    : "Xbox 360",
-      up      : "h0up",    down    : "h0down",    left    : "h0left",    right   : "h0right",
-      up_j    : "-1",      down_j  : "+1",        left_j  : "-0",        right_j : "+0",
-      a       : "0",       b       : "1",         x       : "2",         y       : "3",
-      l_1     : "4",       r_1     : "5",         l_2     : "6",         r_2     : "7",
-      l_up    : "+0",      l_down  : "+1",        l_left  : "-0",        l_right : "-1",
-      r_up    : "+2",      r_down  : "+3",        r_left  : "-2",        r_right : "-3",
-      l_button: "11",                             r_button: "12",
-      start   : "9",                              select  : "8",
-      special : "10"                                                                    }
+  - name: "Microsoft X-Box 360 pad"
+    note: "Xbox 360"
+    up: "h0up"
+    down: "h0down"
+    left: "h0left"
+    right: "h0right"
+    up_j: "-1"
+    down_j: "+1"
+    left_j: "-0"
+    right_j: "+0"
+    a: "0"
+    b: "1"
+    x: "2"
+    true: "3"
+    l_1: "4"
+    r_1: "5"
+    l_2: "6"
+    r_2: "7"
+    l_up: "+0"
+    l_down: "+1"
+    l_left: "-0"
+    l_right: "-1"
+    r_up: "+2"
+    r_down: "+3"
+    r_left: "-2"
+    r_right: "-3"
+    l_button: "11"
+    r_button: "12"
+    start: "9"
+    select: "8"
+    special: "10"
 
-  - { name    : "Microsoft 360 Wireless Receiver (XBOX)",
-      note    : "Xbox 360",
-      up      : "h0up",    down    : "h0down",    left    : "h0left",    right   : "h0right",
-      up_j    : "-1",      down_j  : "+1",        left_j  : "-0",        right_j : "+0",
-      a       : "0",       b       : "1",         x       : "2",         y       : "3",
-      l_1     : "4",       r_1     : "5",         l_2     : "6",         r_2     : "7",
-      l_up    : "+0",      l_down  : "+1",        l_left  : "-0",        l_right : "-1",
-      r_up    : "+2",      r_down  : "+3",        r_left  : "-2",        r_right : "-3",
-      l_button: "11",                             r_button: "12",
-      start   : "9",                              select  : "8",
-      special : "10"                                                                    }
+  - name: "Microsoft 360 Wireless Receiver (XBOX)"
+    note: "Xbox 360"
+    up: "h0up"
+    down: "h0down"
+    left: "h0left"
+    right: "h0right"
+    up_j: "-1"
+    down_j: "+1"
+    left_j: "-0"
+    right_j: "+0"
+    a: "0"
+    b: "1"
+    x: "2"
+    true: "3"
+    l_1: "4"
+    r_1: "5"
+    l_2: "6"
+    r_2: "7"
+    l_up: "+0"
+    l_down: "+1"
+    l_left: "-0"
+    l_right: "-1"
+    r_up: "+2"
+    r_down: "+3"
+    r_left: "-2"
+    r_right: "-3"
+    l_button: "11"
+    r_button: "12"
+    start: "9"
+    select: "8"
+    special: "10"
 
-  - { name    : "Sony PLAYSTATION(R)3 Controller",
-      note    : "PS3",
-      up      : "13",      down    : "14",        left    : "15",        right   : "16",
-      up_j    : "-1",      down_j  : "+1",        left_j  : "-0",        right_j : "+0",
-      a       : "0",       b       : "1",         x       : "3",         y       : "2",
-      l_1     : "4",       r_1     : "5",         l_2     : "6",         r_2     : "7",
-      l_up    : "+0",      l_down  : "+1",        l_left  : "-0",        l_right : "-1",
-      r_up    : "+3",      r_down  : "+4",        r_left  : "-3",        r_right : "-4",
-      l_button: "11",                             r_button: "12",
-      start   : "9",                              select  : "8",
-      special : "10"                                                                    }
+  - name: "Sony PLAYSTATION(R)3 Controller"
+    note: "PS3"
+    up: "13"
+    down: "14"
+    left: "15"
+    right: "16"
+    up_j: "-1"
+    down_j: "+1"
+    left_j: "-0"
+    right_j: "+0"
+    a: "0"
+    b: "1"
+    x: "3"
+    true: "2"
+    l_1: "4"
+    r_1: "5"
+    l_2: "6"
+    r_2: "7"
+    l_up: "+0"
+    l_down: "+1"
+    l_left: "-0"
+    l_right: "-1"
+    r_up: "+3"
+    r_down: "+4"
+    r_left: "-3"
+    r_right: "-4"
+    l_button: "11"
+    r_button: "12"
+    start: "9"
+    select: "8"
+    special: "10"
 
-  - { name    : "Sony Interactive Entertainment Wireless Controller",
-      note    : "PS4",
-      up      : "h0up",    down    : "h0down",    left    : "h0left",    right   : "h0right",
-      up_j    : "-1",      down_j  : "+1",        left_j  : "-0",        right_j : "+0",
-      a       : "0",       b       : "1",         x       : "3",         y       : "2",
-      l_1     : "4",       r_1     : "5",         l_2     : "6",         r_2     : "7",
-      l_up    : "+0",      l_down  : "+1",        l_left  : "-0",        l_right : "-1",
-      r_up    : "+3",      r_down  : "+4",        r_left  : "-3",        r_right : "-4",
-      l_button: "11",                             r_button: "12",
-      start   : "9",                              select  : "8",
-      special : "10"                                                                    }
+  - name: "Sony Interactive Entertainment Wireless Controller"
+    note: "PS4"
+    up: "h0up"
+    down: "h0down"
+    left: "h0left"
+    right: "h0right"
+    up_j: "-1"
+    down_j: "+1"
+    left_j: "-0"
+    right_j: "+0"
+    a: "0"
+    b: "1"
+    x: "3"
+    true: "2"
+    l_1: "4"
+    r_1: "5"
+    l_2: "6"
+    r_2: "7"
+    l_up: "+0"
+    l_down: "+1"
+    l_left: "-0"
+    l_right: "-1"
+    r_up: "+3"
+    r_down: "+4"
+    r_left: "-3"
+    r_right: "-4"
+    l_button: "11"
+    r_button: "12"
+    start: "9"
+    select: "8"
+    special: "10"
 
-  - { name    : "Sony Computer Entertainment Wireless Controller",
-      note    : "PS4",
-      up      : "h0up",    down    : "h0down",    left    : "h0left",    right   : "h0right",
-      up_j    : "-1",      down_j  : "+1",        left_j  : "-0",        right_j : "+0",
-      a       : "0",       b       : "1",         x       : "3",         y       : "2",
-      l_1     : "4",       r_1     : "5",         l_2     : "6",         r_2     : "7",
-      l_up    : "+0",      l_down  : "+1",        l_left  : "-0",        l_right : "-1",
-      r_up    : "+3",      r_down  : "+4",        r_left  : "-3",        r_right : "-4",
-      l_button: "11",                             r_button: "12",
-      start   : "9",                              select  : "8",
-      special : "10"                                                                    }
+  - name: "Sony Computer Entertainment Wireless Controller"
+    note: "PS4"
+    up: "h0up"
+    down: "h0down"
+    left: "h0left"
+    right: "h0right"
+    up_j: "-1"
+    down_j: "+1"
+    left_j: "-0"
+    right_j: "+0"
+    a: "0"
+    b: "1"
+    x: "3"
+    true: "2"
+    l_1: "4"
+    r_1: "5"
+    l_2: "6"
+    r_2: "7"
+    l_up: "+0"
+    l_down: "+1"
+    l_left: "-0"
+    l_right: "-1"
+    r_up: "+3"
+    r_down: "+4"
+    r_left: "-3"
+    r_right: "-4"
+    l_button: "11"
+    r_button: "12"
+    start: "9"
+    select: "8"
+    special: "10"
 
-  - { name    : "Wireless Controller",
-      note    : "PS4",
-      up      : "h0up",    down    : "h0down",    left    : "h0left",    right   : "h0right",
-      up_j    : "-1",      down_j  : "+1",        left_j  : "-0",        right_j : "+0",
-      a       : "0",       b       : "1",         x       : "3",         y       : "2",
-      l_1     : "4",       r_1     : "5",         l_2     : "6",         r_2     : "7",
-      l_up    : "+0",      l_down  : "+1",        l_left  : "-0",        l_right : "-1",
-      r_up    : "+3",      r_down  : "+4",        r_left  : "-3",        r_right : "-4",
-      l_button: "11",                             r_button: "12",
-      start   : "9",                              select  : "8",
-      special : "10"                                                                    }
+  - name: "Wireless Controller"
+    note: "PS4"
+    up: "h0up"
+    down: "h0down"
+    left: "h0left"
+    right: "h0right"
+    up_j: "-1"
+    down_j: "+1"
+    left_j: "-0"
+    right_j: "+0"
+    a: "0"
+    b: "1"
+    x: "3"
+    true: "2"
+    l_1: "4"
+    r_1: "5"
+    l_2: "6"
+    r_2: "7"
+    l_up: "+0"
+    l_down: "+1"
+    l_left: "-0"
+    l_right: "-1"
+    r_up: "+3"
+    r_down: "+4"
+    r_left: "-3"
+    r_right: "-4"
+    l_button: "11"
+    r_button: "12"
+    start: "9"
+    select: "8"
+    special: "10"
 
-#######################################################################
+# ######################################################################
 
 retropie_keyboards_emu:
-  - { name    : "Keyboard",
-      up      : "119",     down    : "115",       left    : "97",        right   : "100",
-      a       : "110",     b       : "109",       x       : "104",       y       : "106",
-      start   : "13",                             select  : "8",
-      pageup  : "113",                            pagedown: "101"                       }
+  - name: "Keyboard"
+    up: "119"
+    down: "115"
+    left: "97"
+    right: "100"
+    a: "110"
+    b: "109"
+    x: "104"
+    true: "106"
+    start: "13"
+    select: "8"
+    pageup: "113"
+    pagedown: "101"
 
 retropie_controllers_emu:
-  - { name    : "Xbox Wireless Controller",
-      note    : "Xbox One",
-      a       : "0",       b       : "1",         x       : "3",         y       : "4",
-      start   : "11",                             select  : "15",
-      pageup  : "6",                              pagedown: "7"                         }
-  - { name    : "Microsoft X-Box 360 pad",
-      note    : "Xbox 360",
-      a       : "0",       b       : "1",         x       : "2",         y       : "3",
-      start   : "9",                              select  : "8",
-      pageup  : "4",                              pagedown: "5"                         }
-  - { name    : "Microsoft 360 Wireless Receiver (XBOX)",
-      note    : "Xbox 360",
-      a       : "0",       b       : "1",         x       : "2",         y       : "3",
-      start   : "9",                              select  : "8",
-      pageup  : "4",                              pagedown: "5"                         }
-  - { name    : "Sony PLAYSTATION(R)3 Controller",
-      note    : "PS3",
-      a       : "0",       b       : "1",         x       : "3",         y       : "2",
-      start   : "9",                              select  : "8",
-      pageup  : "4",                              pagedown: "5"                         }
-  - { name    : "Sony Interactive Entertainment Wireless Controller",
-      note    : "PS4",
-      a       : "0",       b       : "1",         x       : "3",         y       : "2",
-      start   : "9",                              select  : "8",
-      pageup  : "4",                              pagedown: "5"                         }
-  - { name    : "Sony Computer Entertainment Wireless Controller",
-      note    : "PS4",
-      a       : "0",       b       : "1",         x       : "3",         y       : "2",
-      start   : "9",                              select  : "8",
-      pageup  : "4",                              pagedown: "5"                         }
-  - { name    : "Wireless Controller",
-      note    : "PS4",
-      a       : "0",       b       : "1",         x       : "3",         y       : "2",
-      start   : "9",                              select  : "8",
-      pageup  : "4",                              pagedown: "5"                         }
+  - name: "Xbox Wireless Controller"
+    note: "Xbox One"
+    a: "0"
+    b: "1"
+    x: "3"
+    true: "4"
+    start: "11"
+    select: "15"
+    pageup: "6"
+    pagedown: "7"
+  - name: "Microsoft X-Box 360 pad"
+    note: "Xbox 360"
+    a: "0"
+    b: "1"
+    x: "2"
+    true: "3"
+    start: "9"
+    select: "8"
+    pageup: "4"
+    pagedown: "5"
+  - name: "Microsoft 360 Wireless Receiver (XBOX)"
+    note: "Xbox 360"
+    a: "0"
+    b: "1"
+    x: "2"
+    true: "3"
+    start: "9"
+    select: "8"
+    pageup: "4"
+    pagedown: "5"
+  - name: "Sony PLAYSTATION(R)3 Controller"
+    note: "PS3"
+    a: "0"
+    b: "1"
+    x: "3"
+    true: "2"
+    start: "9"
+    select: "8"
+    pageup: "4"
+    pagedown: "5"
+  - name: "Sony Interactive Entertainment Wireless Controller"
+    note: "PS4"
+    a: "0"
+    b: "1"
+    x: "3"
+    true: "2"
+    start: "9"
+    select: "8"
+    pageup: "4"
+    pagedown: "5"
+  - name: "Sony Computer Entertainment Wireless Controller"
+    note: "PS4"
+    a: "0"
+    b: "1"
+    x: "3"
+    true: "2"
+    start: "9"
+    select: "8"
+    pageup: "4"
+    pagedown: "5"
+  - { name: "Wireless Controller", note: "PS4", a: "0", b: "1", x: "3", true: "2", start: "9", select: "8", pageup: "4", pagedown: "5" }
 
-#######################################################################
+# ######################################################################
 
 retropie_controller_analog_remap: false
 
 #######################################################################
 
 retropie_git:
-  url     : "https://github.com/OurFriendIrony/python-retropie.git"
-  dest    : "/home/pi/git/python-retropie/"
-  src     : "/home/pi/git/python-retropie/src/"
+  url: "https://github.com/OurFriendIrony/python-retropie.git"
+  dest: "/home/pi/git/python-retropie/"
+  src: "/home/pi/git/python-retropie/src/"
 
 #######################################################################
 
 retropie_rp:
-  name        : "retropie"
-  desc        : "RetroPie"
-  extension   : [ ".rp", ".sh" ]
-  path        : "{{ retropie_home }}/retropiemenu"
-  cmd         : "sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt;/dev/tty"
-  platform    : ""
-  enabled     : True
+  name: "retropie"
+  desc: "RetroPie"
+  extension: [".rp", ".sh"]
+  path: "{{ retropie_home }}/retropiemenu"
+  cmd: "sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt;/dev/tty"
+  platform: ""
+  enabled: true
 
 #######################################################################
 
 retropie_atari2600:
-  name        : "atari2600"
-  desc        : "Atari 2600"
-  extension   : [ ".bin" ]
-  has_saves   : True
-  enabled     : "{{ retropie_enabled_atari2600 }}"
+  name: "atari2600"
+  desc: "Atari 2600"
+  extension: [".bin"]
+  has_saves: true
+  enabled: "{{ retropie_enabled_atari2600 }}"
 
 #######################################################################
 
 retropie_atari7800:
-  name        : "atari7800"
-  desc        : "Atari 7800"
-  extension   : [ ".a78" ]
-  has_saves   : True
-  enabled     : "{{ retropie_enabled_atari7800 }}"
+  name: "atari7800"
+  desc: "Atari 7800"
+  extension: [".a78"]
+  has_saves: true
+  enabled: "{{ retropie_enabled_atari7800 }}"
 
 #######################################################################
 
 retropie_nes:
-  name        : "nes"
-  desc        : "Nintendo"
-  extension   : [ ".nes" ]
-  has_saves   : True
-  enabled     : "{{ retropie_enabled_nes }}"
+  name: "nes"
+  desc: "Nintendo"
+  extension: [".nes"]
+  has_saves: true
+  enabled: "{{ retropie_enabled_nes }}"
 
 #######################################################################
 
 retropie_snes:
-  name        : "snes"
-  desc        : "Super Nintendo"
-  extension   : [ ".smc" ]
-  has_saves   : True
-  enabled     : "{{ retropie_enabled_snes }}"
+  name: "snes"
+  desc: "Super Nintendo"
+  extension: [".smc"]
+  has_saves: true
+  enabled: "{{ retropie_enabled_snes }}"
 
 #######################################################################
 
 retropie_megadrive:
-  name        : "megadrive"
-  desc        : "Sega Mega Drive"
-  extension   : [ ".gen" ]
-  has_saves   : True
-  enabled     : "{{ retropie_enabled_megadrive }}"
+  name: "megadrive"
+  desc: "Sega Mega Drive"
+  extension: [".gen"]
+  has_saves: true
+  enabled: "{{ retropie_enabled_megadrive }}"
 
 #######################################################################
 
 retropie_gba:
-  name        : "gba"
-  desc        : "Game Boy Advance"
-  extension   : [ ".gba" ]
-  has_saves   : True
-  enabled     : "{{ retropie_enabled_gba }}"
+  name: "gba"
+  desc: "Game Boy Advance"
+  extension: [".gba"]
+  has_saves: true
+  enabled: "{{ retropie_enabled_gba }}"
 
 #######################################################################
 
 retropie_n64:
-  name        : "n64"
-  desc        : "Nintendo 64"
-  extension   : [ ".z64" ]
-  has_saves   : True
-  enabled     : "{{ retropie_enabled_n64 }}"
+  name: "n64"
+  desc: "Nintendo 64"
+  extension: [".z64"]
+  has_saves: true
+  enabled: "{{ retropie_enabled_n64 }}"
 
-  home        : "{{ retropie_home }}/roms/n64"
-  cfg         : "{{ retropie_cfg  }}/n64"
-  emu         : "Mupen64Plus GLES2"
-  core        : "lr-mupen64plus"
+  home: "{{ retropie_home }}/roms/n64"
+  cfg: "{{ retropie_cfg  }}/n64"
+  emu: "Mupen64Plus GLES2"
+  core: "lr-mupen64plus"
 
 #######################################################################
 
 retropie_dreamcast:
-  name        : "dreamcast"
-  desc        : "Sega Dreamcast"
-  extension   : [ ".cdi" ]
-  has_saves   : True
-  enabled     : "{{ retropie_enabled_dreamcast }}"
+  name: "dreamcast"
+  desc: "Sega Dreamcast"
+  extension: [".cdi"]
+  has_saves: true
+  enabled: "{{ retropie_enabled_dreamcast }}"
 
-  home        : "{{ retropie_home }}/roms/dreamcast"
-  cfg         : "{{ retropie_cfg }}/dreamcast"
+  home: "{{ retropie_home }}/roms/dreamcast"
+  cfg: "{{ retropie_cfg }}/dreamcast"
 
 #######################################################################
 
 retropie_psx:
-  name        : "psx"
-  desc        : "PlayStation"
-  extension   : [ ".cue" ]
-  has_saves   : True
-  enabled     : "{{ retropie_enabled_psx }}"
+  name: "psx"
+  desc: "PlayStation"
+  extension: [".cue"]
+  has_saves: true
+  enabled: "{{ retropie_enabled_psx }}"
 
-  video_smoothing : true
-  emu         : "PCSX-ReARMed"
-  core        : "lr-pcsx-rearmed"
+  video_smoothing: true
+  emu: "PCSX-ReARMed"
+  core: "lr-pcsx-rearmed"
 
 #######################################################################
 
 retropie_nds:
-  name        : "nds"
-  desc        : "Nintendo DS"
-  extension   : [ ".nds" ]
-  has_saves   : True
-  enabled     : "{{ retropie_enabled_nds }}"
+  name: "nds"
+  desc: "Nintendo DS"
+  extension: [".nds"]
+  has_saves: true
+  enabled: "{{ retropie_enabled_nds }}"
 
-  home        : "{{ retropie_home }}/roms/nds"
-  cfg         : "{{ retropie_cfg }}/nds/drastic/config"
-  emu         : "drastic"
+  home: "{{ retropie_home }}/roms/nds"
+  cfg: "{{ retropie_cfg }}/nds/drastic/config"
+  emu: "drastic"
 
 #######################################################################
 
 retropie_fba:
-  name        : "fba"
-  desc        : "Final Burn Alpha"
-  extension   : [ ".zip" ]
-  platform    : "arcade"
-  has_saves   : True
-  enabled     : "{{ retropie_enabled_fba }}"
+  name: "fba"
+  desc: "Final Burn Alpha"
+  extension: [".zip"]
+  platform: "arcade"
+  has_saves: true
+  enabled: "{{ retropie_enabled_fba }}"
 
-  home        : "{{ retropie_home }}/roms/fba"
-  core        : "lr-fbalpha"
+  home: "{{ retropie_home }}/roms/fba"
+  core: "lr-fbalpha"
 
 #######################################################################
 
 retropie_ports:
-  name        : "ports"
-  desc        : "Ports"
-  extension   : [ ".sh", ".SH" ]
-  cmd         : "bash %ROM%"
-  platform    : "pc"
-  enabled     : "{{ retropie_enabled_ports }}"
+  name: "ports"
+  desc: "Ports"
+  extension: [".sh", ".SH"]
+  cmd: "bash %ROM%"
+  platform: "pc"
+  enabled: "{{ retropie_enabled_ports }}"
 
 #######################################################################
 
 retropie_python:
-  name        : "python"
-  desc        : "Python Scripts"
-  extension   : [ ".py", ".PY" ]
-  cmd         : "sudo python %ROM%"
-  platform    : ""
-  enabled     : "{{ retropie_enabled_python }}"
+  name: "python"
+  desc: "Python Scripts"
+  extension: [".py", ".PY"]
+  cmd: "sudo python %ROM%"
+  platform: ""
+  enabled: "{{ retropie_enabled_python }}"
 
-  home      : "{{ retropie_home }}/roms/python"
-  bgm_home  : "{{ retropie_home }}/bgm"
-  apt       : [ "python-pygame" ]
-
-#######################################################################
+  home: "{{ retropie_home }}/roms/python"
+  bgm_home: "{{ retropie_home }}/bgm"
+  apt: ["python-pygame"]
+# ######################################################################
 
 retropie_steam:
-  name        : "steam"
-  desc        : "Steam"
-  extension   : [ ".sh", ".SH" ]
-  cmd         : "%ROM%"
-  platform    : ""
-  enabled     : "{{ retropie_enabled_steam }}"
+  name: "steam"
+  desc: "Steam"
+  extension: [".sh", ".SH"]
+  cmd: "%ROM%"
+  platform: ""
+  enabled: "{{ retropie_enabled_steam }}"
 
-  home      : "{{ retropie_home }}/roms/steam"
-  cfg       : "{{ retropie_cfg  }}/steam"
-  pc_ip     : "{{ retropie_steam_pc_ip }}"
+  home: "{{ retropie_home }}/roms/steam"
+  cfg: "{{ retropie_cfg  }}/steam"
+  pc_ip: "{{ retropie_steam_pc_ip }}"
   modes:
-    - { res : "720",  fps : "30" }
-    - { res : "720",  fps : "60" }
-    - { res : "1080", fps : "30" }
-    - { res : "1080", fps : "60" }
+    - { res: "720", fps: "30" }
+    - { res: "720", fps: "60" }
+    - { res: "1080", fps: "30" }
+    - { res: "1080", fps: "60" }
 
-#######################################################################
-
+# ######################################################################

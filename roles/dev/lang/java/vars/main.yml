@@ -1,11 +1,11 @@
 ---
 
 java:
-  home    : "/usr/lib/jvm"
+  home: "/usr/lib/jvm"
   home_win: "C:\\PROGRA~1\\Java"
-  default : "java-{{ java_version }}-openjdk-amd64"
+  default: "java-{{ java_version }}-openjdk-amd64"
   default_win: "adoptopenjdk{{ java_version }}"
-  ppa     : "ppa:openjdk-r/ppa"
+  ppa: "ppa:openjdk-r/ppa"
 
   libraries:
     apt:
@@ -21,4 +21,3 @@ java:
     - "dev-lang"
     - "dev-lang-java"
     - "java"
-

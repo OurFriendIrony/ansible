@@ -1,88 +1,86 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt"
-  apt:
-    name  : "{{ packages.apt }}"
-    state : "latest"
+- name: "Apt"
+  ansible.builtin.apt:
+    name: "{{ packages.apt }}"
+    state: "latest"
   tags:
     - "wallpaper"
 
-- name: "pip"
-  pip:
-    name  : "{{ packages.pip }}"
-    state : "latest"
+- name: "Pip"
+  ansible.builtin.pip:
+    name: "{{ packages.pip }}"
+    state: "latest"
     executable: "pip3"
   tags:
     - "wallpaper"
 
-- name: "mkdir"
+- name: "Mkdir"
   with_items:
-    - { d: "{{ wallpaper.install.dir   }}"                              }
-    - { d: "{{ wallpaper.resource.dir  }}"                              }
-    - { d: "{{ wallpaper.config.dir    }}", u: "{{ primary_user.id }}"  }
-    - { d: "{{ wallpaper.service.dir   }}"                              }
-  file:
-    path  : "{{ item.d }}"
-    state : "directory"
-    owner : "{{ item.u | default(root_user.id)  }}"
-    group : "{{ item.u | default(root_user.id)  }}"
-    mode  : "0755"
+    - { d: "{{ wallpaper.install.dir }}" }
+    - { d: "{{ wallpaper.resource.dir }}" }
+    - { d: "{{ wallpaper.config.dir }}", u: "{{ primary_user.id }}" }
+    - { d: "{{ wallpaper.service.dir }}" }
+  ansible.builtin.file:
+    path: "{{ item.d }}"
+    state: "directory"
+    owner: "{{ item.u | default(root_user.id) }}"
+    group: "{{ item.u | default(root_user.id) }}"
+    mode: "0755"
   tags:
     - "wallpaper"
 
 #################################################################
 
-- name: "resources > {{ wallpaper.resource.dir }}"
-  copy:
-    src   : "."
-    dest  : "{{ wallpaper.resource.dir }}"
+- name: "Resources > {{ wallpaper.resource.dir }}"
+  ansible.builtin.copy:
+    src: "."
+    dest: "{{ wallpaper.resource.dir }}"
   tags:
     - "wallpaper"
 
 #################################################################
 
-- name: "service > script"
-  template:
-    src   : "{{ wallpaper.service.name }}.sh.j2"
-    dest  : "{{ wallpaper.install.dir }}{{ wallpaper.service.name }}.sh"
-    owner : "{{ root_user.id }}"
-    group : "{{ root_user.id }}"
-    mode  : "0755"
-  notify: "service > restart"
-  tags:
-    - "wallpaper"
-
-- name: "service > config"
-  template:
-    src   : "{{ wallpaper.config.name }}.j2"
-    dest  : "{{ wallpaper.config.dir  }}{{ wallpaper.config.name }}"
-    owner : "{{ primary_user.id       }}"
-    group : "{{ primary_user.id       }}"
-    mode  : "0644"
-  notify: "service > restart"
-  tags:
-    - "wallpaper"
-
-- name: "service > systemd"
-  template:
-    src   : "{{ wallpaper.service.name }}.service.j2"
-    dest  : "{{ wallpaper.service.dir }}{{ wallpaper.service.name }}.service"
-    owner : "{{ root_user.id }}"
-    group : "{{ root_user.id }}"
+- name: "Service > script"
+  ansible.builtin.template:
+    src: "{{ wallpaper.service.name }}.sh.j2"
+    dest: "{{ wallpaper.install.dir }}{{ wallpaper.service.name }}.sh"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
     mode: "0755"
   notify: "service > restart"
   tags:
     - "wallpaper"
 
-- name: "service > start"
-  service:
-    name    : "{{ wallpaper.service.name }}"
-    enabled : yes
-    state   : started
+- name: "Service > config"
+  ansible.builtin.template:
+    src: "{{ wallpaper.config.name }}.j2"
+    dest: "{{ wallpaper.config.dir }}{{ wallpaper.config.name }}"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0644"
+  notify: "service > restart"
+  tags:
+    - "wallpaper"
+
+- name: "Service > systemd"
+  ansible.builtin.template:
+    src: "{{ wallpaper.service.name }}.service.j2"
+    dest: "{{ wallpaper.service.dir }}{{ wallpaper.service.name }}.service"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
+    mode: "0755"
+  notify: "service > restart"
+  tags:
+    - "wallpaper"
+
+- name: "Service > start"
+  ansible.builtin.service:
+    name: "{{ wallpaper.service.name }}"
+    enabled: true
+    state: started
   tags:
     - "wallpaper"
 
 #################################################################
-

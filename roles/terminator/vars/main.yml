@@ -3,5 +3,4 @@
 libraries_apt:
   - terminator
 
-desktop : "terminator"
-
+desktop: "terminator"

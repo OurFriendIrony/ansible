@@ -1,75 +1,73 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "mkdirs"
+- name: "Mkdirs"
   with_items:
     - "{{ android.home }}/{{ android_version }}"
-  file:
-    name    : "{{ item }}"
-    state   : "directory"
-    recurse : "yes"
-    owner   : "{{ primary_user.id }}"
-    group   : "{{ primary_user.id }}"
-    mode    : "0755"
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: "directory"
+    recurse: "yes"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0755"
   tags:
     - "{{ android.tags }}"
 
 #################################################################
 
-- name: "apt > install"
-  apt:
-    name    : "{{ android.libraries.apt }}"
-    state   : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ android.libraries.apt }}"
+    state: "latest"
   tags:
     - "{{ android.tags }}"
 
 #################################################################
 
-- name: "unpack"
-  become : yes
-  become_user : "{{ primary_user.id }}"
-  unarchive:
-    src         : "{{ android.url }}{{ android.zip }}"
-    dest        : "{{ android.home }}/{{ android_version }}"
-    remote_src  : "yes"
-    creates     : "{{ android.home }}/{{ android_version }}/android-studio/bin/"
+- name: "Unpack"
+  become: true
+  become_user: "{{ primary_user.id }}"
+  ansible.builtin.unarchive:
+    src: "{{ android.url }}{{ android.zip }}"
+    dest: "{{ android.home }}/{{ android_version }}"
+    remote_src: "yes"
+    creates: "{{ android.home }}/{{ android_version }}/android-studio/bin/"
   tags:
     - "{{ android.tags }}"
 
 #################################################################
 
-- name: "user > kvm"
+- name: "User > kvm"
   with_items:
     - "{{ all_users }}"
-  user:
-    name    : "{{ item.id }}"
-    groups  : "kvm"
-    append  : "yes"
+  ansible.builtin.user:
+    name: "{{ item.id }}"
+    groups: "kvm"
+    append: "yes"
   tags:
     - "{{ android.tags }}"
 
 #################################################################
 
-- name: "launcher > desktop icon"
-  template:
-    src   : "{{ desktop }}.desktop.j2"
-    dest  : "/usr/share/applications/{{ desktop }}.desktop"
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : "0644"
+- name: "Launcher > desktop icon"
+  ansible.builtin.template:
+    src: "{{ desktop }}.desktop.j2"
+    dest: "/usr/share/applications/{{ desktop }}.desktop"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0644"
   tags:
     - "{{ android.tags }}"
     - "launcher"
 
-- name    : "launcher > add"
-  become : yes
-  become_user : "{{ primary_user.id }}"
-  script  : "../../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
-  changed_when: False
+- name: "Launcher > add"
+  become: true
+  become_user: "{{ primary_user.id }}"
+  ansible.builtin.script: "../../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
+  changed_when: false
   tags:
     - "{{ android.tags }}"
     - "launcher"
 
 #################################################################
-

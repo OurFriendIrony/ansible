@@ -1,13 +1,13 @@
 ---
 
-desktop   : "jetbrains-pycharm-ce"
+desktop: "jetbrains-pycharm-ce"
 
-pycharm_version    : "{{ pycharm_year }}.{{ pycharm_subversion }}"
+pycharm_version: "{{ pycharm_year }}.{{ pycharm_subversion }}"
 
 pycharm:
-  url     : "https://download-cf.jetbrains.com/python/"
-  zip     : "pycharm-community-{{ pycharm_version }}.tar.gz"
-  home    : "/usr/lib/pycharm"
+  url: "https://download-cf.jetbrains.com/python/"
+  zip: "pycharm-community-{{ pycharm_version }}.tar.gz"
+  home: "/usr/lib/pycharm"
 
   libraries:
     apt:
@@ -18,4 +18,3 @@ pycharm:
     - dev-ide
     - dev-ide-pycharm
     - pycharm
-

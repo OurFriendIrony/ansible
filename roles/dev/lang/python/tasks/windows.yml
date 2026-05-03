@@ -1,20 +1,18 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "choco > install"
-  win_chocolatey:
-    name    : "{{ python.libraries.choco }}"
-    state   : "latest"
+- name: "Choco > install"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ python.libraries.choco }}"
+    state: "latest"
   tags:
     - "{{ python.tags }}"
 
-- name: "choco > uninstall"
-  win_chocolatey:
-    name    : "{{ python.libraries_remove.choco }}"
-    state   : "absent"
+- name: "Choco > uninstall"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ python.libraries_remove.choco }}"
+    state: "absent"
   tags:
     - "{{ python.tags }}"
 
 #################################################################
-

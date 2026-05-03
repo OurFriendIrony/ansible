@@ -1,7 +1,6 @@
 ---
 
-robo3t_version    : "1.4.4"
-robo3t_subversion : "e6ac9ec"
+robo3t_version: "1.4.4"
+robo3t_subversion: "e6ac9ec"
 
 robo3t_connections: []
-

@@ -1,8 +1,7 @@
 ---
 
 dock:
-  extend   : "true"
-  backlit  : "false"
-  position : "LEFT"
-  size     : 32
-
+  extend: "true"
+  backlit: "false"
+  position: "LEFT"
+  size: 32

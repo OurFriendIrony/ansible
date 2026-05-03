@@ -1,29 +1,27 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > key"
-  apt_key:
-    url           : "{{ hashicorp.key_server }}"
-    state         : "present"
+- name: "Apt > key"
+  ansible.builtin.apt_key:
+    url: "{{ hashicorp.key_server }}"
+    state: "present"
   tags:
     - "{{ hashicorp.tags }}"
 
-- name: "apt > repo"
-  apt_repository:
-    repo          : "{{ hashicorp.repo }}"
-    state         : "present"
+- name: "Apt > repo"
+  ansible.builtin.apt_repository:
+    repo: "{{ hashicorp.repo }}"
+    state: "present"
   tags:
     - "{{ hashicorp.tags }}"
 
-- name: "apt > install"
+- name: "Apt > install"
   with_items: "{{ hashicorp.libraries.apt }}"
-  apt:
-    name          : "{{ item }}"
-    state         : "present"
-    update_cache  : "yes"
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: "present"
+    update_cache: "yes"
   tags:
     - "{{ hashicorp.tags }}"
 
 #################################################################
-

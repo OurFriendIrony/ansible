@@ -1,78 +1,76 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > install"
-  apt:
-    name  : "{{ libraries }}"
-    state : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ libraries }}"
+    state: "latest"
   tags:
     - "vim"
 
 #################################################################
 
-- name: "config > .vimrc"
+- name: "Config > .vimrc"
   with_items:
     - "{{ all_users }}"
-  template:
-    src   : "vimrc.j2"
-    dest  : "{{ item.home }}/.vimrc"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : 0644
+  ansible.builtin.template:
+    src: "vimrc.j2"
+    dest: "{{ item.home }}/.vimrc"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0644"
   tags:
     - "vim"
 
-- name: "vundle > install"
+- name: "Vundle > install"
   with_items:
     - "{{ all_users }}"
-  git:
-    repo  : "https://github.com/VundleVim/Vundle.vim.git"
-    dest  : "{{ item.home }}/.vim/bundle/vundle"
-    update: no
+  ansible.builtin.git:
+    repo: "https://github.com/VundleVim/Vundle.vim.git"
+    dest: "{{ item.home }}/.vim/bundle/vundle"
+    update: false
   tags:
     - "vim"
 
-- name: "chmod > .vim"
+- name: "Chmod > .vim"
   with_items:
     - "{{ all_users }}"
-  file:
-    dest    : "{{ item.home }}/.vim/"
-    state   : directory
-    recurse : yes
-    owner   : "{{ item.id }}"
-    group   : "{{ item.id }}"
-    mode    : 0755
+  ansible.builtin.file:
+    dest: "{{ item.home }}/.vim/"
+    state: directory
+    recurse: true
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0755"
   tags:
     - "vim"
 
 #################################################################
 
-- name: "copy > fonts"
+- name: "Copy > fonts"
   when:
     - is_gui
-  copy:
-    src   : "PowerlineSymbols.otf"
-    dest  : "/usr/local/share/fonts/"
-    owner : "{{ root_user.id }}"
-    group : "{{ root_user.id }}"
-    mode  : 0644
+  ansible.builtin.copy:
+    src: "PowerlineSymbols.otf"
+    dest: "/usr/local/share/fonts/"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
+    mode: "0644"
   tags:
     - "vim"
 
-- name: "copy > font config"
+- name: "Copy > font config"
   when:
     - is_gui
   with_items:
     - "{{ all_users }}"
-  copy:
-    src   : "10-powerline-symbols.conf"
-    dest  : "{{ item.home }}/.config/fontconfig/fonts.conf/"
-    owner : "{{ item.id }}"
-    group : "{{ item.id }}"
-    mode  : 0644
+  ansible.builtin.copy:
+    src: "10-powerline-symbols.conf"
+    dest: "{{ item.home }}/.config/fontconfig/fonts.conf/"
+    owner: "{{ item.id }}"
+    group: "{{ item.id }}"
+    mode: "0644"
   tags:
     - vim
 
 #################################################################
-

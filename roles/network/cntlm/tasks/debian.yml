@@ -1,80 +1,78 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > install"
+- name: "Apt > install"
   when:
     - is_proxy
-  apt:
-    name    : "{{ cntlm.libraries.apt }}"
-    state   : "latest"
+  ansible.builtin.apt:
+    name: "{{ cntlm.libraries.apt }}"
+    state: "latest"
   tags:
     - "{{ cntlm.tags }}"
     - "proxy"
 
-- name: "apt > install"
+- name: "Apt > install"
   when:
     - not is_proxy
-  apt:
-    name    : "{{ cntlm.libraries.apt }}"
-    state   : "absent"
+  ansible.builtin.apt:
+    name: "{{ cntlm.libraries.apt }}"
+    state: "absent"
   tags:
     - "{{ cntlm.tags }}"
     - "proxy"
 
 #################################################################
 
-- name: "cntlm > config"
+- name: "Cntlm > config"
   when:
     - is_proxy
-  template:
-    src     : "cntlm.j2"
-    dest    : "/etc/cntlm.conf"
-    owner   : "{{ root_user.id }}"
-    group   : "{{ root_user.id }}"
+  ansible.builtin.template:
+    src: "cntlm.j2"
+    dest: "/etc/cntlm.conf"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
   register: cntlm_config
   tags:
     - "{{ cntlm.tags }}"
     - "proxy"
 
-- name: "cntlm > restart"
+- name: "Cntlm > restart"
   when:
     - is_proxy
     - cntlm_config is defined
     - cntlm_config.changed
-  service:
-    name    : "cntlm"
-    state   : "restarted"
+  ansible.builtin.service:
+    name: "cntlm"
+    state: "restarted"
   tags:
     - "{{ cntlm.tags }}"
     - "proxy"
 
 #################################################################
 
-- name: "environment > config"
-  template:
-    src     : "environment.j2"
-    dest    : "/etc/environment"
-    owner   : "{{ root_user.id }}"
-    group   : "{{ root_user.id }}"
+- name: "Environment > config"
+  ansible.builtin.template:
+    src: "environment.j2"
+    dest: "/etc/environment"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
   tags:
     - "{{ cntlm.tags }}"
     - "proxy"
 
 #################################################################
 
-- name: "apt > config"
+- name: "Apt > config"
   with_items:
-    - { src: "apt",     dest: "01proxy"       }
+    - { src: "apt", dest: "01proxy" }
     - { src: "apt_fix", dest: "99fixbadproxy" }
-  template:
-    src     : "{{ item.src }}.j2"
-    dest    : "/etc/apt/apt.conf.d/{{ item.dest }}"
-    owner   : "{{ root_user.id }}"
-    group   : "{{ root_user.id }}"
+  ansible.builtin.template:
+    src: "{{ item.src }}.j2"
+    dest: "/etc/apt/apt.conf.d/{{ item.dest }}"
+    owner: "{{ root_user.id }}"
+    group: "{{ root_user.id }}"
   tags:
     - "{{ cntlm.tags }}"
     - "proxy"
 
 #################################################################
-

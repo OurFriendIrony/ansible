@@ -1,10 +1,8 @@
 ---
 
 docker_registries: []
-
 docker_images:
-  - { name: "mysql",                version: "5.6"    }
-  - { name: "jenkins/jenkins",      version: "2.96"   }
+  - { name: "mysql", version: "5.6" }
+  - { name: "jenkins/jenkins", version: "2.96" }
 
 docker_compose_version: "1.24.0"
-

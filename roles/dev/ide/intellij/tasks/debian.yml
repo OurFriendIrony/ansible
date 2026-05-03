@@ -1,74 +1,72 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "mkdirs"
+- name: "Mkdirs"
   with_items:
     - "{{ intellij.home }}/{{ intellij_version }}"
     - "{{ primary_user.home }}/.IdeaIC{{ intellij_year }}"
-  file:
-    name    : "{{ item }}"
-    state   : "directory"
-    recurse : "yes"
-    owner   : "{{ primary_user.id }}"
-    group   : "{{ primary_user.id }}"
-    mode    : "0755"
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: "directory"
+    recurse: "yes"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0755"
   tags:
     - "{{ intellij.tags }}"
 
 #################################################################
 
-- name: "apt > install"
-  apt:
-    name    : "{{ intellij.libraries.apt }}"
-    state   : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ intellij.libraries.apt }}"
+    state: "latest"
   tags:
     - "{{ intellij.tags }}"
 
 #################################################################
 
-- name: "unpack > application"
-  become : yes
-  become_user : "{{ primary_user.id }}"
-  unarchive:
-    src         : "{{ intellij.url }}{{ intellij.zip }}"
-    dest        : "{{ intellij.home }}/{{ intellij_version }}"
-    remote_src  : "yes"
-    extra_opts  : [--strip-components=1]
-    creates     : "{{ intellij.home }}/{{ intellij_version }}/bin/"
+- name: "Unpack > application"
+  become: true
+  become_user: "{{ primary_user.id }}"
+  ansible.builtin.unarchive:
+    src: "{{ intellij.url }}{{ intellij.zip }}"
+    dest: "{{ intellij.home }}/{{ intellij_version }}"
+    remote_src: "yes"
+    extra_opts: [--strip-components=1]
+    creates: "{{ intellij.home }}/{{ intellij_version }}/bin/"
   tags:
     - "{{ intellij.tags }}"
 
-- name: "unpack > application config"
-  unarchive:
-    src         : "files/config.tar.gz"
-    dest        : "{{ primary_user.home }}/.IdeaIC{{ intellij_year }}"
-    owner       : "{{ primary_user.id }}"
-    group       : "{{ primary_user.id }}"
+- name: "Unpack > application config"
+  ansible.builtin.unarchive:
+    src: "files/config.tar.gz"
+    dest: "{{ primary_user.home }}/.IdeaIC{{ intellij_year }}"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
   tags:
     - "{{ intellij.tags }}"
 
 #################################################################
 
-- name: "launcher > desktop icon"
-  template:
-    src   : "{{ desktop }}.desktop.j2"
-    dest  : "/usr/share/applications/{{ desktop }}.desktop"
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : "0644"
+- name: "Launcher > desktop icon"
+  ansible.builtin.template:
+    src: "{{ desktop }}.desktop.j2"
+    dest: "/usr/share/applications/{{ desktop }}.desktop"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0644"
   tags:
     - "{{ intellij.tags }}"
     - "launcher"
 
-- name    : "launcher > add"
-  become : yes
-  become_user : "{{ primary_user.id }}"
-  script  : "../../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
-  changed_when: False
+- name: "Launcher > add"
+  become: true
+  become_user: "{{ primary_user.id }}"
+  ansible.builtin.script: "../../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
+  changed_when: false
   tags:
     - "{{ intellij.tags }}"
     - "launcher"
 
 #################################################################
-

@@ -1,28 +1,27 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > add repository"
+- name: "Apt > add repository"
   when:
     - not is_proxy
   with_items:
     - "{{ repos_apt }}"
-  apt_repository:
-    repo  : "{{ item }}"
-    state : "present"
+  ansible.builtin.apt_repository:
+    repo: "{{ item }}"
+    state: "present"
   notify: "application > start"
   tags:
     - "system-monitor"
     - "proxy"
 
-- name: "apt > add repository"
+- name: "Apt > add repository"
   when:
     - is_proxy
-  become: yes
+  become: true
   become_user: "{{ primary_user.id }}"
   with_items:
     - "{{ repos_apt }}"
-  shell: "sudo -E add-apt-repository {{ item }} -y"
+  ansible.builtin.command: "sudo -E add-apt-repository {{ item }} -y"
   notify: "application > start"
   tags:
     - "system-monitor"
@@ -30,48 +29,47 @@
 
 #################################################################
 
-- name: "apt > install"
-  apt:
-    name  : "{{ libraries_apt }}"
-    state : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ libraries_apt }}"
+    state: "latest"
   notify: "application > start"
   tags:
     - "system-monitor"
 
 #################################################################
 
-- name: "mkdir"
-  file:
-    path  : "{{ primary_user.home }}/.config/autostart"
-    state : "directory"
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : "0755"
+- name: "Mkdir"
+  ansible.builtin.file:
+    path: "{{ primary_user.home }}/.config/autostart"
+    state: "directory"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0755"
   notify: "application > start"
   tags:
     - "system-monitor"
 
-- name: "copy > config"
-  template:
-    src   : "indicator-sysmonitor.json.j2"
-    dest  : "{{ primary_user.home }}/.indicator-sysmonitor.json"
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : "0644"
+- name: "Copy > config"
+  ansible.builtin.template:
+    src: "indicator-sysmonitor.json.j2"
+    dest: "{{ primary_user.home }}/.indicator-sysmonitor.json"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0644"
   notify: "application > start"
   tags:
     - "system-monitor"
 
-- name: "copy > autostart"
-  template:
-    src   : "indicator-sysmonitor.desktop.j2"
-    dest  : "{{ primary_user.home }}/.config/autostart/indicator-sysmonitor.desktop"
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : "0644"
+- name: "Copy > autostart"
+  ansible.builtin.template:
+    src: "indicator-sysmonitor.desktop.j2"
+    dest: "{{ primary_user.home }}/.config/autostart/indicator-sysmonitor.desktop"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0644"
   notify: "application > start"
   tags:
     - "system-monitor"
 
 #################################################################
-

@@ -1,40 +1,38 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "mkdirs"
+- name: "Mkdirs"
   with_items:
     - "{{ git.home }}"
-  win_file:
-    name    : "{{ item }}"
-    state   : "directory"
-    owner   : "{{ primary_user.id }}"
-    group   : "{{ primary_user.id }}"
-    mode    : "0755"
+  ansible.windows.win_file:
+    name: "{{ item }}"
+    state: "directory"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0755"
   tags:
     - "git"
 
 #################################################################
 
-- name: "choco > install"
-  win_chocolatey:
-    name    : "{{ git.libraries }}"
-    state   : "latest"
+- name: "Choco > install"
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ git.libraries }}"
+    state: "latest"
   tags:
     - "git"
 
 #################################################################
 
-- name: "config > .gitconfig"
-  win_template:
-    src     : "gitconfig.j2"
-    dest    : "{{ primary_user.home }}/.gitconfig"
-    owner   : "{{ primary_user.id   }}"
-    group   : "{{ primary_user.id   }}"
-    mode    : "0644"
+- name: "Config > .gitconfig"
+  ansible.windows.win_template:
+    src: "gitconfig.j2"
+    dest: "{{ primary_user.home }}/.gitconfig"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0644"
   tags:
     - "git"
     - "proxy"
 
 #################################################################
-

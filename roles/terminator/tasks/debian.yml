@@ -1,11 +1,10 @@
 ---
+# ################################################################
 
-#################################################################
-
-- name: "apt > install"
-  apt:
-    name  : "{{ libraries_apt }}"
-    state : "latest"
+- name: "Apt > install"
+  ansible.builtin.apt:
+    name: "{{ libraries_apt }}"
+    state: "latest"
   register: apt_installed
   tags:
     - "terminator"
@@ -13,67 +12,66 @@
 #################################################################
 # Terminator 1.9.1 doesn't work with python3, so rig it for now
 
-- name: "apt > get version"
+- name: "Apt > get version"
   when: apt_installed.changed | bool
-  command: "apt list terminator | grep terminator | awk '{print $2}'"
+  ansible.builtin.command: "apt list terminator | grep terminator | awk '{print $2}'"
   register: result
   tags:
     - "terminator"
 
-- name: "bugfix"
+- name: "Bugfix"
   when:
     - result.stdout is defined
     - result.stdout is search('1.91-1')
-  lineinfile:
-    path    : /usr/bin/terminator
-    regexp  : "^#!/usr/bin/python"
-    line    : "#!/usr/bin/python2"
+  ansible.builtin.lineinfile:
+    path: /usr/bin/terminator
+    regexp: "^#!/usr/bin/python"
+    line: "#!/usr/bin/python2"
   tags:
     - "terminator"
 
 #################################################################
 
-- name: "mkdir"
-  file:
-    path  : "{{ primary_user.home }}/.config/terminator"
-    state : directory
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : 0755
+- name: "Mkdir"
+  ansible.builtin.file:
+    path: "{{ primary_user.home }}/.config/terminator"
+    state: directory
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0755"
   tags:
     - "terminator"
 
-- name: "copy > config"
-  template:
-    src   : "config.j2"
-    dest  : "{{ primary_user.home }}/.config/terminator/config"
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : 0644
+- name: "Copy > config"
+  ansible.builtin.template:
+    src: "config.j2"
+    dest: "{{ primary_user.home }}/.config/terminator/config"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0644"
   tags:
     - "terminator"
 
 #################################################################
 
-- name: "launcher > desktop icon"
-  template:
-    src   : "{{ desktop }}.desktop.j2"
-    dest  : "/usr/share/applications/{{ desktop }}.desktop"
-    owner : "{{ primary_user.id }}"
-    group : "{{ primary_user.id }}"
-    mode  : "0644"
+- name: "Launcher > desktop icon"
+  ansible.builtin.template:
+    src: "{{ desktop }}.desktop.j2"
+    dest: "/usr/share/applications/{{ desktop }}.desktop"
+    owner: "{{ primary_user.id }}"
+    group: "{{ primary_user.id }}"
+    mode: "0644"
   tags:
     - "terminator"
     - "launcher"
 
-- name    : "launcher > add"
-  become : yes
-  become_user : "{{ primary_user.id }}"
-  script  : "../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
-  changed_when: False
+- name: "Launcher > add"
+  become: true
+  become_user: "{{ primary_user.id }}"
+  ansible.builtin.script: "../../scripts/add_{{ desktop_environment }}_launcher.sh {{ desktop }}"
+  changed_when: false
   tags:
     - "terminator"
     - "launcher"
 
 #################################################################
-

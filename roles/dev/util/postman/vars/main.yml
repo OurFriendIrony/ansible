@@ -1,19 +1,18 @@
 ---
 
 postman:
-  url     : "https://dl.pstmn.io/download/latest/linux64"
-  home    : "/usr/lib/postman"
+  url: "https://dl.pstmn.io/download/latest/linux64"
+  home: "/usr/lib/postman"
 
   libraries:
     apt:
       - "unzip"
       - "libgconf-2-4"
-  
+
   tags:
     - dev
     - dev-util
     - dev-util-postman
     - postman
 
-desktop   : "postman"
-
+desktop: "postman"
