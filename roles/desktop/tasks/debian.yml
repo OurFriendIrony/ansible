@@ -2,7 +2,7 @@
 # ################################################################
 
 - name: "Desktop > apply dock config"
-  become: "yes"
+  become: true
   become_user: "{{ primary_user.id }}"
   tags:
     - "desktop"
